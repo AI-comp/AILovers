@@ -1,0 +1,20 @@
+{
+  "name": "TokiMemo",
+  "version": "0.0.1",
+  "authors": [
+    "TokiMemo team"
+  ],
+  "description": "ギャルゲー",
+  "main": "server/server.js",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

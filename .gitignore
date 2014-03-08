@@ -1,5 +1,6 @@
 .idea/
 npm-debug.log
+client/components
 
 # Logs
 logs
