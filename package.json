@@ -4,7 +4,12 @@
   "description": "ギャルゲー",
   "main": "server.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+      "start": "nodemon ./server/server.js"
   },
-  "author": "TokiMemo team"
+  "author": "TokiMemo team",
+  "dependencies": {
+    "express": "~3.5.0",
+    "jade": "~1.3.0"
+  }
 }
