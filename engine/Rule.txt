@@ -1,0 +1,25 @@
+heroine = (value, date_score[player], love_score[player])
+
+init:
+	players = player[4]
+	heroines = heroine[10] (rnd, {0}, {0})
+	reveal heroines
+
+do_turn:
+	loop for turn times:
+		foreach p in players:
+			p selects target from heroines
+			target.date_score[p] ++
+	foreach p in players:
+		foreach h in heroines:
+			h.love_score[p] += h.value * h.date_score[p] / total{p2 in players}(h.date_score[p2])
+	reveal players, heroines
+	end if turn == 10
+
+end:
+	for each h in heroines:
+		best_players = argmax_p(h.love_score[p])
+		foreach p in best_players:
+			p.star += 1 / best_players.size
+	winner_candidates = argmax_p{p in players}(p.star)
+	winner = argmax_w{w in winner_candidates}(w.total_score)
