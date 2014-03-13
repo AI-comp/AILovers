@@ -2,7 +2,7 @@
   "name": "TokiMemo",
   "version": "0.0.1",
   "description": "ギャルゲー",
-  "main": "server.js",
+  "main": "server/main.js",
   "scripts": {
     "test": "grunt test",
     "start": "grunt dev"
