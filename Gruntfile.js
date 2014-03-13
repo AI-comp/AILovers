@@ -44,6 +44,6 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.registerTask('dev', ['concurrent:dev']);
+    grunt.registerTask('dev', ['less', 'concurrent:dev']);
 
 };
