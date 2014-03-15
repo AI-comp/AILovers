@@ -9,6 +9,9 @@ class exports.Game
   addHeroine: (value) ->
     @heroines.push new Heroine value, @numPlayers
 
+  populateHeroines: (numHeroines) ->
+    @heroines = (new Heroine Math.floor(Math.random() * 6) + 1, @numPlayers for _ in [1 .. numHeroines])
+
   proceed: (moves) ->
     @turn += 1
 

@@ -2,8 +2,9 @@
 (function() {
   var Heroine, Player;
 
-  Heroine = require('./Heroine').Heroine;
-  Player = require('./Player').Player;
+  Heroine = require('./Heroine.coffee').Heroine;
+
+  Player = require('./Player.coffee').Player;
 
   exports.Game = (function() {
     function Game(numPlayers) {
@@ -14,6 +15,18 @@
 
     Game.prototype.addHeroine = function(value) {
       return this.heroines.push(new Heroine(value, this.numPlayers));
+    };
+
+    Game.prototype.populateHeroines = function(numHeroines) {
+      var _;
+      return this.heroines = (function() {
+        var _i, _results;
+        _results = [];
+        for (_ = _i = 1; 1 <= numHeroines ? _i <= numHeroines : _i >= numHeroines; _ = 1 <= numHeroines ? ++_i : --_i) {
+          _results.push(new Heroine(Math.floor(Math.random() * 6) + 1, this.numPlayers));
+        }
+        return _results;
+      }).call(this);
     };
 
     Game.prototype.proceed = function(moves) {

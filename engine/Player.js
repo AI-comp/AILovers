@@ -34,4 +34,3 @@
   exports.Player = Player;
 
 }).call(this);
-
