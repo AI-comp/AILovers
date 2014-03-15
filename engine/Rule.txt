@@ -3,9 +3,9 @@ heroine = (value, date_score[player], love_score[player])
 init:
 	players = player[4]
 	heroines = heroine[10] (rnd, {0}, {0})
-	reveal heroines
 
 do_turn:
+	reveal heroines
 	loop for turn times:
 		foreach p in players:
 			p selects target from heroines
@@ -13,7 +13,6 @@ do_turn:
 	foreach p in players:
 		foreach h in heroines:
 			h.love_score[p] += h.value * h.date_score[p] / total{p2 in players}(h.date_score[p2])
-	reveal players, heroines
 	end if turn == 10
 
 end:
