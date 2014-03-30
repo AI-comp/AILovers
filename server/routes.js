@@ -1,8 +1,6 @@
 var express = require('express'),
     path = require('path'),
-    _ = require('underscore'),
-    spawn = require('child_process').spawn,
-    Game = require('../engine/game.js').Game;
+    Runner = require('./runner.js').Runner;
 
 module.exports = function (app) {
 
@@ -12,60 +10,15 @@ module.exports = function (app) {
         res.render('index');
     });
 
+    var runner = new Runner();
+
     app.get('/run', function (req, res) {
-        var responseText = "";
+        runner.runGame();
+        res.send('Running a game.');
+    });
 
-        var game = new Game();
-        game.initialize(4);
-
-        var ais = [];
-        for (var i = 0; i < 4; i++) {
-            ais.push({
-                process: spawn('python', ['engine/ai.py', '-u']),
-                command: [],
-                ready: false,
-            });
-        }
-
-        _.each(ais, function (ai) {
-            ai.process.stdout.on('data', function (data) {
-                console.log('stdout: ' + data);
-                ai.command = data.toString().trim().split(' ');
-                ai.ready = true;
-            });
-
-            ai.process.stderr.on('data', function (data) {
-                console.log('stderr: ' + data);
-            });
-
-            ai.process.on('close', function (code) {
-                console.log('child process exited with code ' + code);
-            });
-        });
-
-        while (!game.isFinished()) {
-            _.each(ais, function (ai) {
-                ai.ready = false;
-                ai.process.stdin.write('1\n');
-            });
-
-            while (_.some(ais, function (ai) { return !ai.ready }));
-
-            var commands = _.map(ais, function (ai) {
-                return ai.command;
-            });
-
-            game.processTurn(commands);
-            responseText += game.getStatus();
-        }
-
-        _.each(ais, function (ai) {
-            ai.process.stdin.write('0\n');
-        });
-
-        responseText += game.getRanking();
-
-        res.send(responseText);
+    app.get('/result', function (req, res) {
+        res.send('<pre>' + runner.gameResult + '</pre>');
     });
 
 };

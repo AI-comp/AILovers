@@ -1,7 +1,7 @@
 (function () {
-
+  
   var _ = require('underscore');
-
+  
   exports.Game = (function () {
     function Game() {
       this.heroines = [];
@@ -144,5 +144,5 @@
 
     return Heroine;
   })();
-
+  
 }).call(this);
