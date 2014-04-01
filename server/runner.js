@@ -38,7 +38,7 @@ Runner.prototype.runGame = function (done) {
             ai.ready = true;
             self.n_ready += 1;
             clearTimeout(ai.TO);
-            self.onReady(game, ais, done);
+            onReady.call(self, game, ais, done);
         });
 
         ai.process.stderr.on('data', function (data) {
@@ -50,10 +50,10 @@ Runner.prototype.runGame = function (done) {
         });
     });
 
-    this.doTurn(game, ais, done);
+    doTurn.call(this, game, ais, done);
 };
 
-Runner.prototype.onReady = function (game, ais, done) {
+function onReady(game, ais, done) {
     if (this.n_ready == this.n_survivors) {
         console.log('Turn ended');
         var commands = _.map(ais, function (ai) {
@@ -63,11 +63,11 @@ Runner.prototype.onReady = function (game, ais, done) {
         game.processTurn(commands);
         this.gameResult += game.getStatus();
 
-        this.doTurn(game, ais, done);
+        doTurn.call(this, game, ais, done);
     }
 }
 
-Runner.prototype.doTurn = function (game, ais, done) {
+function doTurn(game, ais, done) {
     this.n_ready = 0;
     if (game.isFinished()) {
         _.each(ais, function (ai) {
@@ -92,7 +92,7 @@ Runner.prototype.doTurn = function (game, ais, done) {
 
                 self.n_survivors -= 1;
                 ai.process.kill('SIGINT');
-                self.onReady(game, ais, done);
+                onReady.call(self, game, ais, done);
             }, 1000);
             ai.TO = TO;
         });
