@@ -29,6 +29,3 @@ while True:
     command = []
     for i in range({'W': 5, 'H': 2}[day]):
         command.append(str(random.randrange(numHeroines)))
-
-    print(' '.join(command))
-    sys.stdout.flush()

@@ -16,7 +16,7 @@
             var ais = [];
             for (var i = 0; i < 4; i++) {
                 ais.push({
-                    process: spawn('python', ['engine/ai'+i+'.py','-u']),
+                    process: spawn('python', ['engine/' + (i==0 ? 'ai-tle' : 'ai') + '.py']),
                     command: [],
                     ready: false,
                     expired: false,
@@ -71,7 +71,7 @@
             if (game.isFinished()) {
                 _.each(ais, function (ai) {
                     if (!ai.expired)
-                        ai.process.stdin.write('0\n');
+                        ai.process.stdin.write('-1\n');
                 });
 
                 this.gameResult += game.getRanking();
@@ -82,7 +82,7 @@
                     if (ai.expired)
                         return;
                     ai.ready = false;
-                    ai.process.stdin.write('1\n');
+                    ai.process.stdin.write(game.getStatusForAI(ai.id));
                     console.log("AI"+ai.id+">>"+'writing 1 to stdin, waiting for stdout');
 
                     var TO = setTimeout(function (){
