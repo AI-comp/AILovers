@@ -18,7 +18,7 @@
                 ais.push({
                     process: spawn('python', ['engine/ai.py']),
                     command: [],
-                    ready: false,
+                    ready: false
                 });
             }
 
