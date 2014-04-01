@@ -8,21 +8,11 @@ html
     body
         img(src='/img/toki_memo_logo.jpg')
         
-        div
-            label(for='ai1') AI 1
-            input#ai1(type='text')
-
-        div
-            label(for='ai2') AI 2
-            input#ai2(type='text')
-        
-        div
-            label(for='ai3') AI 3
-            input#ai3(type='text')
-        
-        div
-            label(for='ai4') AI 4
-            input#ai4(type='text')
+        - for (var i=0; i<4; i++) {
+            div
+                label(for='ai'+i) AI #{i}
+                input(id='ai'+i, type='text')
+        - }
 
         div
             button#wsTest Connect to WS server
@@ -31,6 +21,7 @@ html
 
         // Third-party JS
         script(src='/components/jquery/dist/jquery.min.js')
+        script(src='/components/underscore/underscore.js')
         //script(src='/components/bootstrap/dist/js/bootstrap.min.js')
 
         // Custom JS

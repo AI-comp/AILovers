@@ -7,12 +7,9 @@ $(function () {
 
     wsTestBtn.click(function () {
         ws.send(JSON.stringify({
-            commands: [
-                $('#ai1').val(),
-                $('#ai2').val(),
-                $('#ai3').val(),
-                $('#ai4').val(),
-            ]
+            commands: _.map(_.range(4), function (i) {
+                return $('#ai' + i).val();
+            })
         }));
     });
 
