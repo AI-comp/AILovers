@@ -24,7 +24,7 @@ app.configure('development', 'production', function() {
     });
 });
 
-require('../server/routes.js')(app);
+require('./routes.js')(app);
 
 // Start HTTP server
 app.set('port', process.env.PORT || 8000);
@@ -36,12 +36,5 @@ httpServer.listen(app.get('port'), function(){
 // Then attach WebSockets server to same endpoint
 var wsServer = new WebSocketServer({server: httpServer});
 wsServer.on('connection', function(ws) {
-    var id = setInterval(function() {
-        ws.send(JSON.stringify(process.memoryUsage()), function() { /* ignore errors */ });
-    }, 100);
-    console.log('started client interval');
-    ws.on('close', function() {
-        console.log('stopping client interval');
-        clearInterval(id);
-    });
+    require('./wsEvents.js')(ws);
 });
