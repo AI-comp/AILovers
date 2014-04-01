@@ -1,7 +1,8 @@
+var _ = require('underscore'),
+    spawn = require('child_process').spawn,
+    Game = require('../engine/game.js').Game;
+
 (function () {
-    var _ = require('underscore'),
-        spawn = require('child_process').spawn,
-        Game = require('../engine/game.js').Game;
 
     exports.Runner = (function () {
         function Runner(commands) {
