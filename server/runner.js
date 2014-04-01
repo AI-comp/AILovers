@@ -6,15 +6,15 @@ function Runner() {
     function Runner(commands) {
         this.gameResult = "";
         this.commands = commands;
-        console.log('Commands to run for:');
-        console.log(this.commands);
+        this.n_survivors = 0;
+        this.n_ready = 0;
     }
 }
 
 Runner.prototype.runGame = function (done) {
     var game = new Game();
     game.initialize(4);
-    n_survivors = 4;
+    this.n_survivors = 4;
 
     var ais = [];
     for (var i = 0; i < 4; i++) {
@@ -36,7 +36,7 @@ Runner.prototype.runGame = function (done) {
                 return;
             ai.command = data.toString().trim().split(' ');
             ai.ready = true;
-            n_ready += 1;
+            self.n_ready += 1;
             clearTimeout(ai.TO);
             self.onReady(game, ais, done);
         });
@@ -54,7 +54,7 @@ Runner.prototype.runGame = function (done) {
 };
 
 Runner.prototype.onReady = function (game, ais, done) {
-    if (n_ready == n_survivors) {
+    if (this.n_ready == this.n_survivors) {
         console.log('Turn ended');
         var commands = _.map(ais, function (ai) {
             return ai.expired ? "" : ai.command;
@@ -67,10 +67,8 @@ Runner.prototype.onReady = function (game, ais, done) {
     }
 }
 
-var n_survivors = 0;
-var n_ready = 0;
 Runner.prototype.doTurn = function (game, ais, done) {
-    n_ready = 0;
+    this.n_ready = 0;
     if (game.isFinished()) {
         _.each(ais, function (ai) {
             if (!ai.expired)
@@ -91,7 +89,8 @@ Runner.prototype.doTurn = function (game, ais, done) {
             var TO = setTimeout(function () {
                 console.log("AI" + ai.id + ">>" + 'killing due to TLE');
                 ai.expired = true;
-                n_survivors -= 1;
+
+                self.n_survivors -= 1;
                 ai.process.kill('SIGINT');
                 self.onReady(game, ais, done);
             }, 1000);
