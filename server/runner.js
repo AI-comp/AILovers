@@ -8,7 +8,7 @@
             this.gameResult = "";
         }
 
-        Runner.prototype.runGame = function () {
+        Runner.prototype.runGame = function(done) {
             var game = new Game();
             game.initialize(4);
             n_survivors=4;
@@ -35,7 +35,7 @@
                     ai.ready = true;
                     n_ready+=1;
                     clearTimeout(ai.TO);
-                    self.onReady(game,ais);
+                    self.onReady(game,ais, done);
                 });
 
                 ai.process.stderr.on('data', function (data) {
@@ -47,10 +47,10 @@
                 });
             });
 
-            this.doTurn(game, ais);
+            this.doTurn(game, ais, done);
         };
 
-        Runner.prototype.onReady = function(game,ais){
+        Runner.prototype.onReady = function(game, ais, done){
             if (n_ready==n_survivors){
                 console.log('Turn ended');
                 var commands = _.map(ais, function (ai) {
@@ -60,13 +60,13 @@
                 game.processTurn(commands);
                 this.gameResult += game.getStatus();
 
-                this.doTurn(game, ais);
+                this.doTurn(game, ais, done);
             }
         }
 
         var n_survivors=0;
         var n_ready=0;
-        Runner.prototype.doTurn = function (game, ais) {
+        Runner.prototype.doTurn = function (game, ais, done) {
             n_ready=0;
             if (game.isFinished()) {
                 _.each(ais, function (ai) {
@@ -75,6 +75,7 @@
                 });
 
                 this.gameResult += game.getRanking();
+                done();
             } else {
                 var self = this;
                 _.each(ais, function (ai) {
@@ -89,7 +90,7 @@
                         ai.expired=true;
                         n_survivors-=1;
                         ai.process.kill('SIGINT');
-                        self.onReady(game,ais);
+                        self.onReady(game, ais, done);
                     }, 1000);
                     ai.TO=TO;
                 });
