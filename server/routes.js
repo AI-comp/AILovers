@@ -10,15 +10,4 @@ module.exports = function (app) {
         res.render('index');
     });
 
-    var runner = new Runner();
-
-    app.get('/run', function (req, res) {
-        runner.runGame();
-        res.send('Running a game.');
-    });
-
-    app.get('/result', function (req, res) {
-        res.send('<pre>' + runner.gameResult + '</pre>');
-    });
-
 };
