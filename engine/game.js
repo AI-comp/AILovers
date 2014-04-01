@@ -102,7 +102,7 @@
                 text += "-1" + "\n";
             } else {
                 text += this.turn + "\n";
-                text += [this.isHoliday() ? "H" : "W", playerIndex].join(" ") + "\n";
+                text += [this.isHoliday() ? "H" : "W", this.numHeroes, this.heroines.length, playerIndex].join(" ") + "\n";
                 for (var i = 0; i < this.heroines.length; i++) {
                     var heroine = this.heroines[i];
                     text += _.flatten([heroine.value, heroine.revealedScore, heroine.realScore[playerIndex]]).join(" ") + "\n";

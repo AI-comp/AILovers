@@ -12,17 +12,20 @@ public class MockAI {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-		int turn, player;
+		int turn, numHeroes, numHeroines, player;
 		char day;
-		int[][] values = new int[4][6];
 		
 		Scanner scanner = new Scanner(System.in);
 		turn = scanner.nextInt();
 		day = scanner.next("[a-zA-Z]").charAt(0);
+		numHeroes = scanner.nextInt();
+		numHeroines = scanner.nextInt();
 		player = scanner.nextInt();
 		
-		for (int i = 0; i < 4; ++i) {
-			for (int j = 0; j < 6; ++j) {
+		int[][] values = new int[numHeroes][numHeroines];
+
+		for (int i = 0; i < numHeroes; ++i) {
+			for (int j = 0; j < numHeroines; ++j) {
 				values[i][j] = scanner.nextInt();
 			}
 		}
@@ -37,7 +40,7 @@ public class MockAI {
 		Random r = new Random();
 		for (int i = 0; i < retNum; ++i)
 		{
-			System.out.print(r.nextInt(3) + " ");
+			System.out.print(r.nextInt(numHeroines) + " ");
 		}
 	}
 }
