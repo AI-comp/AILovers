@@ -9,7 +9,7 @@
             this.gameResult = "";
         }
 
-        Runner.prototype.runGame = function () {
+        Runner.prototype.runGame = function (done) {
             var game = new Game();
             game.initialize(4);
 
@@ -38,16 +38,19 @@
                 });
             });
 
-            this.doTurn(game, ais);
+            this.doTurn(game, ais, function (){
+                done();
+            });
         };
 
-        Runner.prototype.doTurn = function (game, ais) {
+        Runner.prototype.doTurn = function (game, ais, done) {
             if (game.isFinished()) {
                 _.each(ais, function (ai) {
                     ai.process.stdin.write('0\n');
                 });
 
                 this.gameResult += game.getRanking();
+                done();
             } else {
                 _.each(ais, function (ai) {
                     ai.ready = false;
@@ -63,7 +66,7 @@
                     game.processTurn(commands);
                     self.gameResult += game.getStatus();
 
-                    self.doTurn(game, ais);
+                    self.doTurn(game, ais, done);
                 }, 100);
             }
         };
