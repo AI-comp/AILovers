@@ -16,7 +16,7 @@
             var ais = [];
             for (var i = 0; i < 4; i++) {
                 ais.push({
-                    process: spawn('python', ['engine/ai.py']),
+                    process: spawn('python', ['engine/ai'+i+'.py','-u']),
                     command: [],
                     ready: false,
                     expired: false,
@@ -28,9 +28,9 @@
             var self = this;
             _.each(ais, function (ai) {
                 ai.process.stdout.on('data', function (data) {
+                    console.log("AI"+ai.id+">>"+'stdout: ' + data);
                     if (ai.expired)
                         return;
-                    console.log("AI"+ai.id+">>"+'stdout: ' + data);
                     ai.command = data.toString().trim().split(' ');
                     ai.ready = true;
                     n_ready+=1;
@@ -90,7 +90,7 @@
                         n_survivors-=1;
                         ai.process.kill('SIGINT');
                         self.onReady(game,ais);
-                    }, 10000);
+                    }, 1000);
                     ai.TO=TO;
                 });
             }
