@@ -1,9 +1,10 @@
 console.log('Tokimeki Memorial');
 
-(function() {
+$(function() {
+    var wsTestBtn = $('#wsTest');
+    var log = $('#log');
 
-    var wsTestBtn = document.getElementById("wsTest");
-    wsTestBtn.addEventListener('click', function() {
+    wsTestBtn.click(function() {
         var host = window.document.location.host.replace(/:.*/, '');
         var ws = new WebSocket('ws://' + host + ':8000');
 
@@ -12,5 +13,4 @@ console.log('Tokimeki Memorial');
             //console.log(JSON.parse(event.data));
         };
     });
-
-})();
+});
