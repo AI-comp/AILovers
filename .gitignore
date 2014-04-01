@@ -1,7 +1,7 @@
 .idea/
 npm-debug.log
 client/components
-client/css/**/*.css
+client/css/*.css
 
 # Logs
 logs
