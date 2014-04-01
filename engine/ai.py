@@ -5,5 +5,3 @@ while True:
 	if n == 0:
 		break
 	print('0 0 0 0 0')
-	
-	sys.stdout.flush()

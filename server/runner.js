@@ -16,7 +16,7 @@
             var ais = [];
             for (var i = 0; i < 4; i++) {
                 ais.push({
-                    process: spawn('python', ['engine/ai.py', '-u']),
+                    process: spawn('python', ['engine/ai.py']),
                     command: [],
                     ready: false,
                 });
