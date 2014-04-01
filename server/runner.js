@@ -18,8 +18,11 @@
 
             var ais = [];
             for (var i = 0; i < 4; i++) {
+                var commandAndParameters = this.commands[i].split(' ');
+                var command = _.first(commandAndParameters);
+                var parameters = _.rest(commandAndParameters);
                 ais.push({
-                    process: spawn('python', ['engine/' + (i == 0 ? 'ai-tle' : 'ai') + '.py']),
+                    process: spawn(command, parameters),
                     command: [],
                     ready: false,
                     expired: false,
