@@ -1,5 +1,6 @@
 var express =       require('express')
     , http =        require('http')
+    , WebSocketServer =          require('ws').Server
     , path =        require('path');
 
 var app = module.exports = express();
@@ -25,7 +26,22 @@ app.configure('development', 'production', function() {
 
 require('../server/routes.js')(app);
 
+// Start HTTP server
 app.set('port', process.env.PORT || 8000);
-http.createServer(app).listen(app.get('port'), function(){
+var httpServer = http.createServer(app);
+httpServer.listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
+});
+
+// Then attach WebSockets server to same endpoint
+var wsServer = new WebSocketServer({server: httpServer});
+wsServer.on('connection', function(ws) {
+    var id = setInterval(function() {
+        ws.send(JSON.stringify(process.memoryUsage()), function() { /* ignore errors */ });
+    }, 100);
+    console.log('started client interval');
+    ws.on('close', function() {
+        console.log('stopping client interval');
+        clearInterval(id);
+    });
 });
