@@ -95,6 +95,23 @@
             return text;
         };
 
+        Game.prototype.getStatusForAI = function (playerIndex) {
+            var text = "";
+
+            if (this.isFinished()) {
+                text += "-1" + "\n";
+            } else {
+                text += this.turn + "\n";
+                text += [this.isHoliday() ? "H" : "W", playerIndex].join(" ") + "\n";
+                for (var i = 0; i < this.heroines.length; i++) {
+                    var heroine = this.heroines[i];
+                    text += _.flatten([heroine.value, heroine.revealedScore, heroine.realScore[playerIndex]]).join(" ") + "\n";
+                }
+            }
+
+            return text;
+        };
+
         return Game;
     })();
 
