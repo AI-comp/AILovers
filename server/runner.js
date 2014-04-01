@@ -4,8 +4,11 @@
         Game = require('../engine/game.js').Game;
 
     exports.Runner = (function () {
-        function Runner() {
+        function Runner(commands) {
             this.gameResult = "";
+            this.commands = commands;
+            console.log('Commands to run for:');
+            console.log(this.commands);
         }
 
         Runner.prototype.runGame = function (done) {

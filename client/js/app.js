@@ -6,9 +6,9 @@ $(function() {
     var ws = new WebSocket('ws://' + host + ':8000');
 
     wsTestBtn.click(function() {
-        ws.send({
-            programs: ['program1', 'program2', 'program3']
-        });
+        ws.send(JSON.stringify({
+            commands: ['program1', 'program2', 'program3']
+        }));
     });
 
     ws.onmessage = function (event) {
