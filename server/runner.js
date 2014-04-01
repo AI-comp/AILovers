@@ -1,77 +1,75 @@
-(function () {
+var _ = require('underscore'),
+    spawn = require('child_process').spawn,
+    Game = require('../engine/game.js').Game;
 
-    var _ = require('underscore'),
-        spawn = require('child_process').spawn,
-        Game = require('../engine/game.js').Game;
+var Runner = (function () {
+    function Runner() {
+        this.gameResult = "";
+    }
 
-    exports.Runner = (function () {
-        function Runner() {
-            this.gameResult = "";
+    Runner.prototype.runGame = function (done) {
+        var game = new Game();
+        game.initialize(4);
+
+        var ais = [];
+        for (var i = 0; i < 4; i++) {
+            ais.push({
+                process: spawn('python', ['engine/ai.py']),
+                command: [],
+                ready: false
+            });
         }
 
-        Runner.prototype.runGame = function (done) {
-            var game = new Game();
-            game.initialize(4);
+        _.each(ais, function (ai) {
+            ai.process.stdout.on('data', function (data) {
+                console.log('stdout: ' + data);
+                ai.command = data.toString().trim().split(' ');
+                ai.ready = true;
+            });
 
-            var ais = [];
-            for (var i = 0; i < 4; i++) {
-                ais.push({
-                    process: spawn('python', ['engine/ai.py']),
-                    command: [],
-                    ready: false
-                });
-            }
+            ai.process.stderr.on('data', function (data) {
+                console.log('stderr: ' + data);
+            });
 
+            ai.process.on('close', function (code) {
+                console.log('child process exited with code ' + code);
+            });
+        });
+
+        this.doTurn(game, ais, function (){
+            done();
+        });
+    };
+
+    Runner.prototype.doTurn = function (game, ais, done) {
+        if (game.isFinished()) {
             _.each(ais, function (ai) {
-                ai.process.stdout.on('data', function (data) {
-                    console.log('stdout: ' + data);
-                    ai.command = data.toString().trim().split(' ');
-                    ai.ready = true;
-                });
-
-                ai.process.stderr.on('data', function (data) {
-                    console.log('stderr: ' + data);
-                });
-
-                ai.process.on('close', function (code) {
-                    console.log('child process exited with code ' + code);
-                });
+                ai.process.stdin.write('0\n');
             });
 
-            this.doTurn(game, ais, function (){
-                done();
+            this.gameResult += game.getRanking();
+            done();
+        } else {
+            _.each(ais, function (ai) {
+                ai.ready = false;
+                ai.process.stdin.write('1\n');
             });
-        };
 
-        Runner.prototype.doTurn = function (game, ais, done) {
-            if (game.isFinished()) {
-                _.each(ais, function (ai) {
-                    ai.process.stdin.write('0\n');
+            var self = this;
+            setTimeout(function () {
+                var commands = _.map(ais, function (ai) {
+                    return ai.command;
                 });
 
-                this.gameResult += game.getRanking();
-                done();
-            } else {
-                _.each(ais, function (ai) {
-                    ai.ready = false;
-                    ai.process.stdin.write('1\n');
-                });
+                game.processTurn(commands);
+                self.gameResult += game.getStatus();
 
-                var self = this;
-                setTimeout(function () {
-                    var commands = _.map(ais, function (ai) {
-                        return ai.command;
-                    });
+                self.doTurn(game, ais, done);
+            }, 100);
+        }
+    };
 
-                    game.processTurn(commands);
-                    self.gameResult += game.getStatus();
+    return Runner;
+})();
 
-                    self.doTurn(game, ais, done);
-                }, 100);
-            }
-        };
-
-        return Runner;
-    })();
-
-}).call(this);
+exports.Runner = Runner;
