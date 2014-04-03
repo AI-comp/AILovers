@@ -8,7 +8,11 @@ var _ = require('underscore'),
  * @constructor
  */
 function Runner(commands) {
-    this.gameResult = "";
+    this.gameResult = {
+        log: ""
+        , result: ""
+        , commands: []
+    };
     this.commands = commands;
     this.n_survivors = 0;
     this.n_ready = 0;
@@ -74,7 +78,8 @@ function onReady(game, ais, done) {
         });
 
         game.processTurn(commands);
-        this.gameResult += game.getStatus();
+        this.gameResult.commands.push(commands);
+        this.gameResult.log += game.getStatus();
 
         doTurn.call(this, game, ais, done);
     }
@@ -94,7 +99,7 @@ function doTurn(game, ais, done) {
                 ai.process.stdin.write('-1\n');
         });
 
-        this.gameResult += game.getRanking();
+        this.gameResult.result += game.getRanking();
         done();
     } else {
         var self = this;
