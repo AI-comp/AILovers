@@ -11,6 +11,7 @@ var _ = require('underscore'),
 function Runner(commands, workingDirs) {
     this.gameResult = {
         log: ""
+        , content: ""
         , result: ""
         , replay: [new Date().getTime()]
     };
@@ -25,7 +26,7 @@ function Runner(commands, workingDirs) {
  * @param done
  */
 Runner.prototype.runGame = function (done) {
-    var game = new Game(this.gameResult.seed);
+    var game = new Game(this.gameResult.replay[0]);
     game.initialize(4);
     this.n_survivors = 4;
 
@@ -48,7 +49,7 @@ Runner.prototype.runGame = function (done) {
     var self = this;
     _.each(ais, function (ai) {
         ai.process.stdout.on('data', function (data) {
-            console.log("AI" + ai.id + ">>" + 'stdout: ' + data);
+            self.gameResult.log += "AI" + ai.id + ">>" + 'stdout: ' + data;
             if (ai.expired)
                 return;
             ai.command = data.toString().trim().split(' ');
@@ -59,11 +60,11 @@ Runner.prototype.runGame = function (done) {
         });
 
         ai.process.stderr.on('data', function (data) {
-            console.log("AI" + ai.id + ">>" + 'stderr: ' + data);
+            self.gameResult.log += "AI" + ai.id + ">>" + 'stderr: ' + data;
         });
 
         ai.process.on('close', function (code) {
-            console.log("AI" + ai.id + ">>" + 'child process exited with code ' + code);
+            self.gameResult.log += "AI" + ai.id + ">>" + 'child process exited with code ' + code;
         });
     });
 
@@ -78,14 +79,14 @@ Runner.prototype.runGame = function (done) {
  */
 function onReady(game, ais, done) {
     if (this.n_ready == this.n_survivors) {
-        console.log('Turn ended');
+        this.gameResult.log += 'Turn ended';
         var commands = _.map(ais, function (ai) {
             return ai.expired ? "" : ai.command;
         });
 
         game.processTurn(commands);
         this.gameResult.replay.push(commands);
-        this.gameResult.log += game.getStatus();
+        this.gameResult.content += game.getStatus();
 
         doTurn.call(this, game, ais, done);
     }
@@ -114,10 +115,10 @@ function doTurn(game, ais, done) {
                 return;
             ai.ready = false;
             ai.process.stdin.write(game.getStatusForAI(ai.id));
-            console.log("AI" + ai.id + ">>" + 'writing 1 to stdin, waiting for stdout');
+            self.gameResult.log += "AI" + ai.id + ">>" + 'writing 1 to stdin, waiting for stdout';
 
             var TO = setTimeout(function () {
-                console.log("AI" + ai.id + ">>" + 'killing due to TLE');
+                self.gameResult.log += "AI" + ai.id + ">>" + 'killing due to TLE';
                 ai.expired = true;
 
                 self.n_survivors -= 1;
