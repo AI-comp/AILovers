@@ -10,9 +10,9 @@ var _ = require('underscore'),
  */
 function Runner(commands, workingDirs) {
     this.gameResult = {
-        log: ""
-        , content: ""
-        , result: ""
+        log: ''
+        , content: ''
+        , result: ''
         , replay: [new Date().getTime()]
     };
     this.commands = commands;
@@ -49,7 +49,7 @@ Runner.prototype.runGame = function (done) {
     var self = this;
     _.each(ais, function (ai) {
         ai.process.stdout.on('data', function (data) {
-            self.gameResult.log += "AI" + ai.id + ">>" + 'stdout: ' + data;
+            self.addLog('AI' + ai.id + '>>' + 'stdout: ' + data);
             if (ai.expired)
                 return;
             ai.command = data.toString().trim().split(' ');
@@ -60,16 +60,20 @@ Runner.prototype.runGame = function (done) {
         });
 
         ai.process.stderr.on('data', function (data) {
-            self.gameResult.log += "AI" + ai.id + ">>" + 'stderr: ' + data;
+            self.addLog('AI' + ai.id + '>>' + 'stderr: ' + data);
         });
 
         ai.process.on('close', function (code) {
-            self.gameResult.log += "AI" + ai.id + ">>" + 'child process exited with code ' + code;
+            self.addLog('AI' + ai.id + '>>' + 'child process exited with code ' + code);
         });
     });
 
     doTurn.call(this, game, ais, done);
 };
+
+Runner.prototype.addLog = function (logMessage) {
+    this.gameResult.log += logMessage + '\n';
+}
 
 /**
  * Post-turn handling, and set up of new turn processing
@@ -81,7 +85,7 @@ function onReady(game, ais, done) {
     if (this.n_ready == this.n_survivors) {
         this.gameResult.log += 'Turn ended';
         var commands = _.map(ais, function (ai) {
-            return ai.expired ? "" : ai.command;
+            return ai.expired ? '' : ai.command;
         });
 
         game.processTurn(commands);
@@ -103,7 +107,7 @@ function doTurn(game, ais, done) {
     if (game.isFinished()) {
         _.each(ais, function (ai) {
             if (!ai.expired)
-                ai.process.stdin.write('-1\n');
+                ai.process.stdin.write('-1' + '\n');
         });
 
         this.gameResult.result += game.getRanking();
@@ -115,10 +119,10 @@ function doTurn(game, ais, done) {
                 return;
             ai.ready = false;
             ai.process.stdin.write(game.getStatusForAI(ai.id));
-            self.gameResult.log += "AI" + ai.id + ">>" + 'writing 1 to stdin, waiting for stdout';
+            self.addLog('AI' + ai.id + '>>' + 'writing to stdin, waiting for stdout');
 
             var TO = setTimeout(function () {
-                self.gameResult.log += "AI" + ai.id + ">>" + 'killing due to TLE';
+                self.addLog('AI' + ai.id + '>>' + 'killing due to TLE');
                 ai.expired = true;
 
                 self.n_survivors -= 1;

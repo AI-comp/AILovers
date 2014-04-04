@@ -20,8 +20,8 @@ while (aiCommands.length < numAIs) {
 while (workingDirs.length < numAIs) {
     workingDirs.push('');
 }
-console.log('AI Commands: ' + JSON.stringify(aiCommands));
-console.log('Working Dirs: ' + JSON.stringify(workingDirs));
+console.warn('AI Commands: ' + JSON.stringify(aiCommands));
+console.warn('Working Dirs: ' + JSON.stringify(workingDirs));
 
 var runner = new Runner(aiCommands, workingDirs);
 runner.runGame(function () {
