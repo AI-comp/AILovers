@@ -108,19 +108,23 @@ Runner.prototype.onReady = function (game, ais, done) {
  * @param done
  */
 Runner.prototype.processTurn = function (game, ais, done) {
+    var availableAIs = _.filter(ais, function (ai) {
+        return ai.available;
+    });
+
     if (game.isFinished()) {
-        _.each(ais, function (ai) {
-            if (ai.available) {
-                ai.process.stdin.write('-1' + '\n');
-            }
+        _.each(availableAIs, function (ai) {
+            ai.process.stdin.write('-1' + '\n');
         });
 
         this.gameResult.result += game.getRanking();
         done();
     } else {
         var self = this;
-        _.each(ais, function (ai) {
-            if (ai.available) {
+        if (_.size(availableAIs) == 0) {
+            self.onReady(game, ais, done);
+        } else {
+            _.each(availableAIs, function (ai) {
                 ai.ready = false;
                 ai.process.stdin.write(game.getStatusForAI(ai.id));
                 self.addLog('AI' + ai.id + '>>' + 'writing to stdin, waiting for stdout');
@@ -131,8 +135,8 @@ Runner.prototype.processTurn = function (game, ais, done) {
                     ai.process.kill('SIGINT');
                     self.onReady(game, ais, done);
                 }, 1000);
-            }
-        });
+            });
+        }
     }
 };
 
