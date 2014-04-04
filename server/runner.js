@@ -12,7 +12,7 @@ function Runner(commands, workingDirs) {
     this.gameResult = {
         log: ""
         , result: ""
-        , commands: []
+        , replay: [new Date().getTime()]
     };
     this.commands = commands;
     this.workingDirs = workingDirs;
@@ -25,7 +25,7 @@ function Runner(commands, workingDirs) {
  * @param done
  */
 Runner.prototype.runGame = function (done) {
-    var game = new Game();
+    var game = new Game(this.gameResult.seed);
     game.initialize(4);
     this.n_survivors = 4;
 
@@ -84,7 +84,7 @@ function onReady(game, ais, done) {
         });
 
         game.processTurn(commands);
-        this.gameResult.commands.push(commands);
+        this.gameResult.replay.push(commands);
         this.gameResult.log += game.getStatus();
 
         doTurn.call(this, game, ais, done);

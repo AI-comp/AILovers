@@ -1,11 +1,13 @@
 (function () {
 
-    var _ = require('underscore');
+    var MersenneTwister = require('./mersenne-twister').MersenneTwister,
+        _ = require('underscore');
 
     exports.Game = (function () {
-        function Game() {
+        function Game(seed) {
             this.heroines = [];
             this.turn = 1;
+            this.mt = new MersenneTwister(seed);
         }
 
         Game.prototype.initialize = function (numHeroes) {
@@ -16,7 +18,7 @@
         Game.prototype.populateHeroines = function (numHeroines) {
             this.heroines = []
             for (var i = 0; i < numHeroines; i++) {
-                this.heroines.push(new Heroine(Math.floor(Math.random() * 4) + 3, this.numHeroes));
+                this.heroines.push(new Heroine(Math.floor(this.mt.random() * 4) + 3, this.numHeroes));
             }
         };
 
