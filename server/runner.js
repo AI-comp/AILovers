@@ -17,8 +17,6 @@ function Runner(commands, workingDirs) {
     };
     this.commands = commands;
     this.workingDirs = workingDirs;
-    this.n_survivors = 0;
-    this.n_ready = 0;
 }
 
 /**
@@ -28,7 +26,6 @@ function Runner(commands, workingDirs) {
 Runner.prototype.runGame = function (done) {
     var game = new Game(this.gameResult.replay[0]);
     game.initialize(4);
-    this.n_survivors = 4;
 
     var ais = [];
     for (var i = 0; i < 4; i++) {
@@ -38,10 +35,10 @@ Runner.prototype.runGame = function (done) {
         var workingDir = this.workingDirs ? this.workingDirs[i] : undefined;
         ais.push({
             process: spawn(command, parameters, { cwd: workingDir }),
-            command: [],
+            commands: [],
             ready: false,
-            expired: false,
-            TO: null,
+            available: true,
+            timeout: null,
             id: i
         });
     }
@@ -50,13 +47,12 @@ Runner.prototype.runGame = function (done) {
     _.each(ais, function (ai) {
         ai.process.stdout.on('data', function (data) {
             self.addLog('AI' + ai.id + '>>' + 'stdout: ' + data);
-            if (ai.expired)
-                return;
-            ai.command = data.toString().trim().split(' ');
-            ai.ready = true;
-            self.n_ready += 1;
-            clearTimeout(ai.TO);
-            onReady.call(self, game, ais, done);
+            if (ai.available) {
+                ai.commands = data.toString().trim().split(' ');
+                ai.ready = true;
+                clearTimeout(ai.timeout);
+                self.onReady(game, ais, done);
+            }
         });
 
         ai.process.stderr.on('data', function (data) {
@@ -68,9 +64,13 @@ Runner.prototype.runGame = function (done) {
         });
     });
 
-    doTurn.call(this, game, ais, done);
+    this.processTurn(game, ais, done);
 };
 
+/**
+ * Add a game log message
+ * @param logMessage
+ */
 Runner.prototype.addLog = function (logMessage) {
     this.gameResult.log += logMessage + '\n';
 }
@@ -81,18 +81,23 @@ Runner.prototype.addLog = function (logMessage) {
  * @param ais
  * @param done
  */
-function onReady(game, ais, done) {
-    if (this.n_ready == this.n_survivors) {
-        this.gameResult.log += 'Turn ended';
+Runner.prototype.onReady = function (game, ais, done) {
+    var numReadyAIs = _.size(_.filter(ais, function (ai) {
+        return ai.ready;
+    }));
+    var numAvailableAIs = _.size(_.filter(ais, function (ai) {
+        return ai.available;
+    }));
+    if (numReadyAIs == numAvailableAIs) {
         var commands = _.map(ais, function (ai) {
-            return ai.expired ? '' : ai.command;
+            return ai.available ? ai.commands : [];
         });
-
         game.processTurn(commands);
         this.gameResult.replay.push(commands);
         this.gameResult.content += game.getStatus();
+        this.addLog('Turn ended. Starting a new turn.');
 
-        doTurn.call(this, game, ais, done);
+        this.processTurn(game, ais, done);
     }
 }
 
@@ -102,12 +107,12 @@ function onReady(game, ais, done) {
  * @param ais
  * @param done
  */
-function doTurn(game, ais, done) {
-    this.n_ready = 0;
+Runner.prototype.processTurn = function (game, ais, done) {
     if (game.isFinished()) {
         _.each(ais, function (ai) {
-            if (!ai.expired)
+            if (ai.available) {
                 ai.process.stdin.write('-1' + '\n');
+            }
         });
 
         this.gameResult.result += game.getRanking();
@@ -115,21 +120,18 @@ function doTurn(game, ais, done) {
     } else {
         var self = this;
         _.each(ais, function (ai) {
-            if (ai.expired)
-                return;
-            ai.ready = false;
-            ai.process.stdin.write(game.getStatusForAI(ai.id));
-            self.addLog('AI' + ai.id + '>>' + 'writing to stdin, waiting for stdout');
+            if (ai.available) {
+                ai.ready = false;
+                ai.process.stdin.write(game.getStatusForAI(ai.id));
+                self.addLog('AI' + ai.id + '>>' + 'writing to stdin, waiting for stdout');
 
-            var TO = setTimeout(function () {
-                self.addLog('AI' + ai.id + '>>' + 'killing due to TLE');
-                ai.expired = true;
-
-                self.n_survivors -= 1;
-                ai.process.kill('SIGINT');
-                onReady.call(self, game, ais, done);
-            }, 1000);
-            ai.TO = TO;
+                ai.timeout = setTimeout(function () {
+                    self.addLog('AI' + ai.id + '>>' + 'killing due to TLE');
+                    ai.available = false;
+                    ai.process.kill('SIGINT');
+                    self.onReady(game, ais, done);
+                }, 1000);
+            }
         });
     }
 };
