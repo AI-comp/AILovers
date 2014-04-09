@@ -114,20 +114,22 @@ Hn: デート相手の女の子。順番は関係しない。
 
 ## ルールの疑似コード
 
-    heroine = (enthusiasm, love[4])
+    heroine = (enthusiasm, love[4], real_love[4])
 
     init:
       players = player[4]
-      heroines = heroine[10] (rnd, [0, 0, 0, 0])
+      heroines = heroine[10] (rnd, [0, 0, 0, 0], [0, 0, 0, 0])
       turn = 1
 
     process_turn:
-      reveal heroines
+      for h in heroines:
+        show h.enthusiasm and h.love to all players
 
       for p in players:
         for i in [1 .. (is_holiday ? 2 : 5)]:
           p selects target from heroines
-          target.love[p] += (is_holiday ? 2 : 1)
+          target.love[p] += (is_holiday ? 0 : 1)
+          target.real_love[p] += (is_holiday ? 2 : 1)
       turn += 1
       end if turn > 10
 
@@ -136,7 +138,7 @@ Hn: デート相手の女の子。順番は関係しない。
 
     end:
       for h in heroines:
-        best_players = argmax_p(h.love[p])
+        best_players = argmax_p(h.real_love[p])
         for p in best_players:
           p.popularity += h.enthusiasm
       winners = argmax_p{p in players}(p.popularity)
