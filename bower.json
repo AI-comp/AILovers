@@ -1,8 +1,8 @@
 {
-  "name": "TokiMemo",
+  "name": "AILovers",
   "version": "0.0.1",
   "authors": [
-    "TokiMemo team"
+    "AI-Comp"
   ],
   "description": "ギャルゲー",
   "main": "server/server.js",

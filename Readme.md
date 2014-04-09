@@ -1,4 +1,4 @@
-TokiMemo
+AI Lovers
 ========
 Here are some basic instructions on how to run the server.
 

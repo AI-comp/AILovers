@@ -1,4 +1,4 @@
-console.log('Tokimeki Memorial');
+console.log('AI Lovers');
 
 $(function () {
     var wsTestBtn = $('#wsTest');
