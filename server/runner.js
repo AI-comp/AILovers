@@ -2,15 +2,22 @@ var _ = require('underscore'),
     spawn = require('child_process').spawn,
     Game = require('../engine/game.js').Game;
 
-function Runner() {
-    function Runner(commands) {
-        this.gameResult = "";
-        this.commands = commands;
-        this.n_survivors = 0;
-        this.n_ready = 0;
-    }
+/**
+ *
+ * @param commands
+ * @constructor
+ */
+function Runner(commands) {
+    this.gameResult = "";
+    this.commands = commands;
+    this.n_survivors = 0;
+    this.n_ready = 0;
 }
 
+/**
+ * Sets up game, and runs it till completion
+ * @param done
+ */
 Runner.prototype.runGame = function (done) {
     var game = new Game();
     game.initialize(4);
@@ -53,6 +60,12 @@ Runner.prototype.runGame = function (done) {
     doTurn.call(this, game, ais, done);
 };
 
+/**
+ * Post-turn handling, and set up of new turn processing
+ * @param game
+ * @param ais
+ * @param done
+ */
 function onReady(game, ais, done) {
     if (this.n_ready == this.n_survivors) {
         console.log('Turn ended');
@@ -67,6 +80,12 @@ function onReady(game, ais, done) {
     }
 }
 
+/**
+ * Processes a turn
+ * @param game
+ * @param ais
+ * @param done
+ */
 function doTurn(game, ais, done) {
     this.n_ready = 0;
     if (game.isFinished()) {
