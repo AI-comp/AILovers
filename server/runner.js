@@ -5,15 +5,17 @@ var _ = require('underscore'),
 /**
  *
  * @param commands
+ * @param workingDirs
  * @constructor
  */
-function Runner(commands) {
+function Runner(commands, workingDirs) {
     this.gameResult = {
         log: ""
         , result: ""
         , commands: []
     };
     this.commands = commands;
+    this.workingDirs = workingDirs;
     this.n_survivors = 0;
     this.n_ready = 0;
 }
@@ -29,8 +31,12 @@ Runner.prototype.runGame = function (done) {
 
     var ais = [];
     for (var i = 0; i < 4; i++) {
+        var commandAndParameters = this.commands[i].split(' ');
+        var command = _.first(commandAndParameters);
+        var parameters = _.rest(commandAndParameters);
+        var workingDir = this.workingDirs ? this.workingDirs[i] : undefined;
         ais.push({
-            process: spawn('python', ['engine/' + (i == 0 ? 'ai-tle' : 'ai') + '.py']),
+            process: spawn(command, parameters, { cwd: workingDir }),
             command: [],
             ready: false,
             expired: false,
