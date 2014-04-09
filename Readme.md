@@ -1,5 +1,9 @@
 AI Lovers
 ========
+
+# For Participants
+
+# For Contributors
 Here are some basic instructions on how to run the server.
 
 ## Install development tools
