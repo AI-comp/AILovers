@@ -6,14 +6,16 @@ AI Lovers
 ## How to Execute Game with Sample AIs
 
 1. Install node.js (http://nodejs.org/)
-2. Execute ```npm install```
-3. Execute ```node engine/standalone.js```
+2. Open shell in the AILovers directory
+3. Execute ```npm install```
+4. Execute ```node engine/standalone.js```
 
 ## How to Execute Game with Your AIs
 
 1. Write your AI using any programming language
-2. Execute ```node engine/standalone.js -a "AI command of player 1" -a "AI command of player 2" -a "AI command of player 3" -a "AI command of player 4"```
-e.g. ```node engine/standalone.js -a "python ai/ai.py" -a "python ai/equal.py" -a "python ai/ai.py" -a "python ai/equal.py"```
+2. Execute ```node engine/standalone.js -a "command to execute your AI program"```  
+You can specify four AI programs.
+e.g. ```node engine/standalone.js -a "python ai/ai.py" -a "python ai/equal.py" -a "python ai/ai.py" -a "python ai/equal.py"```.
 
 # For Contributors
 Here are some basic instructions on how to run the server.
