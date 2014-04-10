@@ -45,7 +45,7 @@ Runner.prototype.runGame = function (done) {
     var self = this;
     _.each(ais, function (ai) {
         ai.process.stdout.on('data', function (data) {
-            self.addLog('AI' + ai.id + '>>' + 'stdout: ' + data);
+            self.addLog('AI' + ai.id + '>>' + 'STDOUT: ' + data);
             if (ai.available) {
                 ai.commands = data.toString().trim().split(' ');
                 ai.ready = true;
@@ -55,11 +55,11 @@ Runner.prototype.runGame = function (done) {
         });
 
         ai.process.stderr.on('data', function (data) {
-            self.addLog('AI' + ai.id + '>>' + 'stderr: ' + data);
+            self.addLog('AI' + ai.id + '>>' + 'STDERR: ' + data);
         });
 
         ai.process.on('close', function (code) {
-            self.addLog('AI' + ai.id + '>>' + 'child process exited with code ' + code);
+            self.addLog('AI' + ai.id + '>>' + 'Child process exited with code ' + code);
         });
     });
 
@@ -93,7 +93,6 @@ Runner.prototype.onReady = function (game, ais, done) {
         });
         game.processTurn(commands);
         this.gameResult.replay.push(commands);
-        this.addLog('Turn ended. Starting a new turn.');
 
         this.processTurn(game, ais, done);
     }
@@ -111,6 +110,7 @@ Runner.prototype.processTurn = function (game, ais, done) {
     });
 
     if (game.isFinished()) {
+        this.addLog('Game finished');
         _.each(availableAIs, function (ai) {
             ai.process.stdin.write('-1' + '\n');
         });
@@ -118,6 +118,7 @@ Runner.prototype.processTurn = function (game, ais, done) {
         this.gameResult.winner = game.getWinner();
         done();
     } else {
+        this.addLog('Starting a new turn');
         var self = this;
         if (_.size(availableAIs) == 0) {
             self.onReady(game, ais, done);
@@ -125,10 +126,10 @@ Runner.prototype.processTurn = function (game, ais, done) {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
                 ai.process.stdin.write(game.getStatus(ai.id));
-                self.addLog('AI' + ai.id + '>>' + 'writing to stdin, waiting for stdout');
+                self.addLog('AI' + ai.id + '>>' + 'Writing to stdin, waiting for stdout');
 
                 ai.timeout = setTimeout(function () {
-                    self.addLog('AI' + ai.id + '>>' + 'killing due to TLE');
+                    self.addLog('AI' + ai.id + '>>' + 'Killing due to TLE');
                     ai.available = false;
                     ai.process.kill('SIGINT');
                     self.onReady(game, ais, done);
