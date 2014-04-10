@@ -67,30 +67,43 @@ _女の子_ の _好感度_ によって決まる _人気点_ を、他の _プ�
 
 ## AIの入出力形式
 
-AIはゲーム開始時に実行され、ターンごとに現在の情報を入力として受け取り、そのターンでのデート相手を出力する。
+AIはゲーム開始時に実行され、ゲームの設定を入力として受け取る。
+また、ターンごとに現在の情報を入力として受け取り、そのターンでのデート相手を出力する。
 
-### 入力形式
+### ゲーム設定の入力形式
 
-各ターンで受け取る情報は、以下のフォーマットで標準入力に渡される。
+ゲーム開始時、つまり１ターン目の初めに、ゲームの設定が以下のフォーマットで標準入力に渡される。
 
-    T
-    I
-    E0 L00　L01 L02 L03 R0
-    E1 L10　L11 L12 L13 R1
-    E2 L20　L21 L22 L23 R2
-    :
-    :
-    E9 L90　L91 L92 L93 R9
+<pre>
+T P H
+E<sub>0</sub> E<sub>1</sub> E<sub>2</sub> ... E<sub>9</sub>
+</pre>
 
-T: 現在のターン数。1から始まる。
+* T: 全ターン数。
+* P: プレイヤー数。
+* H: 女の子の数。
+* E<sub>n</sub>: 女の子nの熱狂度。
 
-I: このAIプレイヤーのID。0から3のいずれか。
+### ターン情報の入力形式
 
-En: 女の子nの熱狂度。
+各ターンの初めに、現在の情報が以下のフォーマットで標準入力に渡される。
 
-Lnm: 女の子nからプレイヤーmへの公開されている（つまり平日の情報のみでわかる）好感度。
+<pre>
+T
+D
+L<sub>00</sub>　L<sub>01</sub> L<sub>02</sub> L<sub>03</sub>
+L<sub>10</sub>　L<sub>11</sub> L<sub>12</sub> L<sub>13</sub>
+L<sub>20</sub>　L<sub>21</sub> L<sub>22</sub> L<sub>23</sub>
+:
+:
+L<sub>90</sub>　L<sub>91</sub> L<sub>92</sub> L<sub>93</sub>
+R<sub>0</sub> R<sub>1</sub> R<sub>2</sub> ... R<sub>9</sub>
+</pre>
 
-Rn: 女の子nからこのAIプレイヤーへの真の（つまり休日も合わせた）好感度。
+* T: 現在のターン数。1から始まる。
+* D: 平日の場合は"W", 休日の場合は"H"。
+* L<sub>nm</sub>: 女の子nからプレイヤーmへの公開されている（つまり平日の情報のみでわかる）好感度。
+* R<sub>n</sub>: 女の子nからこのAIプレイヤーへの真の（つまり休日も合わせた）好感度。
 
 全ての値は整数値として与えられる。
 
@@ -102,19 +115,23 @@ Rn: 女の子nからこのAIプレイヤーへの真の（つまり休日も合�
 
 * __平日の場合__
 
-    H0 H1 H2 H3 H4
+  <pre>
+  H<sub>0</sub> H<sub>1</sub> H<sub>2</sub> H<sub>3</sub> H<sub>4</sub>
+  </pre>
   
 * __休日の場合__
 
-    H0 H1
+  <pre>
+  H<sub>0</sub> H<sub>1</sub>
+  </pre>
 
-Hn: デート相手の女の子。順番は関係しない。
+H<sub>n</sub>: デート相手の女の子。順番は関係しない。
 
 <a name="PseudoCode"></a>
 
 ## ルールの疑似コード
 
-    heroine = (enthusiasm, love[4], real_love[4])
+    heroine = (enthusiasm, revealed_love[4], real_love[4])
 
     init:
         players = player[4]
@@ -123,12 +140,12 @@ Hn: デート相手の女の子。順番は関係しない。
 
     process_turn:
         for h in players:
-            show h.enthusiasm and h.love to all players
+            show h.enthusiasm and h.revealed_love to all players
 
         for p in players:
             for i in [1 .. (is_holiday ? 2 : 5)]:
                 p selects target from heroines
-                target.love[p] += (is_holiday ? 0 : 1)
+                target.revealed_love[p] += (is_holiday ? 0 : 1)
                 target.real_love[p] += (is_holiday ? 2 : 1)
         turn += 1
         end if turn > 10
