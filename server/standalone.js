@@ -15,7 +15,7 @@ if (!_.isArray(workingDirs)) {
     workingDirs = workingDirs ? [workingDirs] : [];
 }
 while (aiCommands.length < numAIs) {
-    aiCommands.push('python engine/ai.py');
+    aiCommands.push('python ai/ai.py');
 }
 while (workingDirs.length < numAIs) {
     workingDirs.push('');

@@ -1,6 +1,6 @@
 var _ = require('underscore'),
     spawn = require('child_process').spawn,
-    Game = require('../engine/game.js').Game;
+    Game = require('./engine/game.js').Game;
 
 /**
  *
@@ -45,33 +45,36 @@ Runner.prototype.runGame = function (done) {
     var self = this;
     _.each(ais, function (ai) {
         ai.process.stdout.on('data', function (data) {
-            self.addLog('AI' + ai.id + '>>' + 'STDOUT: ' + data);
+            addLog.call(self, 'AI' + ai.id + '>>' + 'STDOUT: ' + data);
             if (ai.available) {
                 ai.commands = data.toString().trim().split(' ');
                 ai.ready = true;
                 clearTimeout(ai.timeout);
-                self.onReady(game, ais, done);
+                onReady.call(self, game, ais, done);
             }
         });
 
         ai.process.stderr.on('data', function (data) {
-            self.addLog('AI' + ai.id + '>>' + 'STDERR: ' + data);
+            addLog.call(self, 'AI' + ai.id + '>>' + 'STDERR: ' + data);
         });
 
         ai.process.on('close', function (code) {
-            self.addLog('AI' + ai.id + '>>' + 'Child process exited with code ' + code);
+            addLog.call(self, 'AI' + ai.id + '>>' + 'Child process exited with code ' + code);
         });
     });
 
-    this.processTurn(game, ais, done);
+    processTurn.call(this, game, ais, done);
 };
 
 /**
  * Add a game log message
  * @param logMessage
  */
-Runner.prototype.addLog = function (logMessage) {
-    this.gameResult.log += logMessage + '\n';
+function addLog(logMessage) {
+    this.gameResult.log += logMessage;
+    if (logMessage.slice(-1) != '\n') {
+        this.gameResult.log += '\n';
+    }
 }
 
 /**
@@ -80,7 +83,7 @@ Runner.prototype.addLog = function (logMessage) {
  * @param ais
  * @param done
  */
-Runner.prototype.onReady = function (game, ais, done) {
+function onReady(game, ais, done) {
     var numReadyAIs = _.size(_.filter(ais, function (ai) {
         return ai.ready;
     }));
@@ -94,7 +97,7 @@ Runner.prototype.onReady = function (game, ais, done) {
         game.processTurn(commands);
         this.gameResult.replay.push(commands);
 
-        this.processTurn(game, ais, done);
+        processTurn.call(this, game, ais, done);
     }
 }
 
@@ -104,35 +107,38 @@ Runner.prototype.onReady = function (game, ais, done) {
  * @param ais
  * @param done
  */
-Runner.prototype.processTurn = function (game, ais, done) {
+function processTurn(game, ais, done) {
     var availableAIs = _.filter(ais, function (ai) {
         return ai.available;
     });
 
     if (game.isFinished()) {
-        this.addLog('Game finished');
+        addLog.call(this, 'Game finished');
         _.each(availableAIs, function (ai) {
-            ai.process.stdin.write('-1' + '\n');
+            ai.process.stdin.write(game.getTerminationText());
         });
 
         this.gameResult.winner = game.getWinner();
         done();
     } else {
-        this.addLog('Starting a new turn');
+        addLog.call(this, 'Starting a new turn');
         var self = this;
         if (_.size(availableAIs) == 0) {
-            self.onReady(game, ais, done);
+            onReady.call(self, game, ais, done);
         } else {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
+                if (game.isInitialState()) {
+                    ai.process.stdin.write(game.getInitialInformation());
+                }
                 ai.process.stdin.write(game.getStatus(ai.id));
-                self.addLog('AI' + ai.id + '>>' + 'Writing to stdin, waiting for stdout');
+                addLog.call(self, 'AI' + ai.id + '>>' + 'Writing to stdin, waiting for stdout');
 
                 ai.timeout = setTimeout(function () {
-                    self.addLog('AI' + ai.id + '>>' + 'Killing due to TLE');
+                    addLog.call(self, 'AI' + ai.id + '>>' + 'Killing due to TLE');
                     ai.available = false;
                     ai.process.kill('SIGINT');
-                    self.onReady(game, ais, done);
+                    onReady.call(self, game, ais, done);
                 }, 1000);
             });
         }

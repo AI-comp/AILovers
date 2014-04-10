@@ -12,7 +12,7 @@ module.exports = function (ws) {
         var runner = new Runner(data.commands);
         runner.runGame(function () {
             var response = runner.gameResult.log + '\n'
-                + 'Winner: ' + JSON.stringify(runner.gameResult.winner);
+                + 'Winner: ' + JSON.stringify(runner.gameResult.winner) + '\n';
             ws.send(response, function () { /* No error handling yet */ });
         });
     });

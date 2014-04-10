@@ -1,5 +1,5 @@
 var _ = require('underscore'),
-    Game = require('../engine/game.js').Game;
+    Game = require('./engine/game.js').Game;
 
 var args = process.argv.slice(2);
 if (args.length < 1) {
