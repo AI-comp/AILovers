@@ -14,5 +14,5 @@ if (args.length < 1) {
     game.processTurn(commands);
     console.log(game.getStatus());
   });
-  console.log(game.getRanking());
+  console.log(game.getResult());
 }

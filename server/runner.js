@@ -11,8 +11,7 @@ var _ = require('underscore'),
 function Runner(commands, workingDirs) {
     this.gameResult = {
         log: ''
-        , content: ''
-        , result: ''
+        , winner: ''
         , replay: [new Date().getTime()]
     };
     this.commands = commands;
@@ -94,7 +93,6 @@ Runner.prototype.onReady = function (game, ais, done) {
         });
         game.processTurn(commands);
         this.gameResult.replay.push(commands);
-        this.gameResult.content += game.getStatus();
         this.addLog('Turn ended. Starting a new turn.');
 
         this.processTurn(game, ais, done);
@@ -117,7 +115,7 @@ Runner.prototype.processTurn = function (game, ais, done) {
             ai.process.stdin.write('-1' + '\n');
         });
 
-        this.gameResult.result += game.getRanking();
+        this.gameResult.winner = game.getWinner();
         done();
     } else {
         var self = this;
@@ -126,7 +124,7 @@ Runner.prototype.processTurn = function (game, ais, done) {
         } else {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
-                ai.process.stdin.write(game.getStatusForAI(ai.id));
+                ai.process.stdin.write(game.getStatus(ai.id));
                 self.addLog('AI' + ai.id + '>>' + 'writing to stdin, waiting for stdout');
 
                 ai.timeout = setTimeout(function () {

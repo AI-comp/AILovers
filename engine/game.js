@@ -41,7 +41,7 @@
         };
 
         Game.prototype.isFinished = function () {
-            return this.turn === 11;
+            return this.turn > 10;
         };
 
         Game.prototype.getRanking = function () {
@@ -60,44 +60,10 @@
                 }
             });
 
-            var text = "Game Is Over!\n";
-            text += this.getScoreText(true);
-
-            var rankedHeroes = heroes.slice(0).sort(Hero.compareTo).reverse();
-            for (var rank = 0; rank < rankedHeroes.length; rank++) {
-                var hero = rankedHeroes[rank];
-                text += (rank + 1) + ": Player " + hero.index + ", " + hero.star + " pts.\n";
-            }
-            return text;
+            return heroes.slice(0).sort(Hero.compareTo).reverse();
         };
 
-        Game.prototype.getStatus = function () {
-            return _.map(_.range(this.numHeroes), function (i) {
-                var status = "";
-                status += "Turn " + (this.turn) + "\n";
-                status += (this.isHoliday() ? "Holiday" : "Weekday") + "\n";
-                status += this.getScoreText(false, i);
-                return status;
-            }, this);
-        };
-
-        Game.prototype.getScoreText = function (useRealScore, playerIndex) {
-            var text = "";
-            for (var i = 0; i < this.heroines.length; i++) {
-                var heroine = this.heroines[i];
-                text += "Heroine " + i + ": " + heroine.value + ","
-                for (var j = 0; j < this.numHeroes; j++) {
-                    text += " " + (useRealScore ? heroine.realScore[j] : heroine.revealedScore[j]);
-                    if (j === playerIndex) {
-                        text += " (" + heroine.realScore[j] + ")";
-                    }
-                }
-                text += "\n";
-            }
-            return text;
-        };
-
-        Game.prototype.getStatusForAI = function (playerIndex) {
+        Game.prototype.getStatus = function (playerIndex) {
             var text = "";
 
             if (this.isFinished()) {
@@ -113,6 +79,15 @@
 
             return text;
         };
+
+        Game.prototype.getWinner = function () {
+            var ranking = this.getRanking();
+            if (ranking[0].star == ranking[1].star) {
+                return "";
+            } else {
+                return ranking[0].index;
+            }
+        }
 
         return Game;
     })();

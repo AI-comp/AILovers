@@ -7,15 +7,17 @@ module.exports = function (ws) {
     }, 1000);
     console.log('started client interval');*/
 
-    ws.on('message', function(message) {
+    ws.on('message', function (message) {
         var data = JSON.parse(message);
         var runner = new Runner(data.commands);
-        runner.runGame(function() {
-            ws.send(runner.gameResult.log + runner.gameResult.content + runner.gameResult.result, function () { /* No error handling yet */ });
+        runner.runGame(function () {
+            var response = runner.gameResult.log + '\n'
+                + 'Winner: ' + JSON.stringify(runner.gameResult.winner);
+            ws.send(response, function () { /* No error handling yet */ });
         });
     });
 
-    ws.on('close', function() {
+    ws.on('close', function () {
         console.log('Closing WS connection');
     });
 
