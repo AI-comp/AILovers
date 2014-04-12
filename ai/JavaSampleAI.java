@@ -2,42 +2,55 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class JavaSampleAI {
-	static int turn, playerID;
-	static final int HeroesNum = 4, HeroinesNum = 10;
-	static Heroine[] Heroines = new Heroine[HeroinesNum];
+	static int MaxTurn, Turn, HeroesNum, HeroinesNum;
+	static char Day;
+	static Heroine[] Heroines;
 	static final Scanner scanner = new Scanner(System.in);
 	static final PrintWriter writer = new PrintWriter(System.out, true);
 
 	public static void main(String[] args) {
-		while (true) {
-			turn = scanner.nextInt();
-			if (turn == -1) {
-				break;
-			}
+		readInitialData();
+		for (int t = 0; t < MaxTurn; t++) {
 			readData();
 			writeCommand();
 		}
+		int last = scanner.nextInt();
 		scanner.close();
 		writer.close();
 	}
 
-	static void readData() {
-		playerID = scanner.nextInt();
+	static void readInitialData() {
+		MaxTurn = scanner.nextInt();
+		HeroesNum = scanner.nextInt();
+		HeroinesNum = scanner.nextInt();
+		Heroines = new Heroine[HeroinesNum];
 		for (int i = 0; i < HeroinesNum; i++) {
 			int value = scanner.nextInt();
+			Heroine h = new Heroine(value);
+			Heroines[i] = h;
+		}
+	}
+
+	static void readData() {
+		Turn = scanner.nextInt();
+		Day = scanner.next().charAt(0);
+		for (int i = 0; i < HeroinesNum; i++) {
 			int[] revealedScore = new int[HeroesNum];
 			for (int j = 0; j < HeroesNum; j++) {
 				revealedScore[j] = scanner.nextInt();
 			}
+			Heroines[i].revealedScore = revealedScore;
+		}
+		for (int i = 0; i < HeroinesNum; i++) {
 			int realScore = scanner.nextInt();
-			Heroines[i] = new Heroine(value, revealedScore, realScore);
+			Heroines[i].realScore = realScore;
 		}
 	}
 
 	static void writeCommand() {
 		StringBuilder command = new StringBuilder();
 		Random random = new Random();
-		if (turn % 2 == 1) {
+		if (Turn % 2 == 1) {
 			for (int i = 0; i < 5; i++) {
 				int c = random.nextInt(HeroinesNum);
 				command.append(c);
@@ -58,6 +71,10 @@ public class JavaSampleAI {
 
 class Heroine {
 	int value, revealedScore[], realScore;
+
+	Heroine(int value) {
+		this.value = value;
+	}
 
 	Heroine(int value, int[] revealedScore, int realScore) {
 		this.value = value;
