@@ -60,8 +60,6 @@ Runner.prototype.runGame = function (done) {
 
         ai.process.on('close', function (code) {
             addLog.call(self, 'AI' + ai.id + '>>' + 'Child process exited with code ' + code);
-            clearTimeout(ai.timeout);
-            ai.available = false;
         });
     });
 
