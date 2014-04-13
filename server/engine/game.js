@@ -85,6 +85,11 @@
         Game.prototype.getStatus = function () {
             var lines = [];
 
+            lines.push('Enthusiasm:');
+            lines.push(_.map(this.heroines, function (heroine) {
+                return heroine.enthusiasm;
+            }).join(' '));
+
             lines.push('Real Love:');
             _.each(this.heroines, function (heroine) {
                 lines.push(heroine.realLove.join(' '));
