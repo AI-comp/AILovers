@@ -96,6 +96,9 @@ function onReady(game, ais, done) {
         });
         game.processTurn(commands);
         this.gameResult.replay.push(commands);
+        addLog.call(this, 'Turn finished. Game status:');
+        addLog.call(this, game.getStatus());
+        addLog.call(this, '');
 
         processTurn.call(this, game, ais, done);
     }
@@ -128,11 +131,16 @@ function processTurn(game, ais, done) {
         } else {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
-                if (game.isInitialState()) {
-                    ai.process.stdin.write(game.getInitialInformation());
-                }
-                ai.process.stdin.write(game.getStatus(ai.id));
+
                 addLog.call(self, 'AI' + ai.id + '>>' + 'Writing to stdin, waiting for stdout');
+                if (game.isInitialState()) {
+                    var initialInformation = game.getInitialInformation();
+                    ai.process.stdin.write(initialInformation);
+                    addLog.call(self, initialInformation);
+                }
+                var turnInformation = game.getTurnInformation(ai.id);
+                ai.process.stdin.write(turnInformation);
+                addLog.call(self, turnInformation);
 
                 ai.timeout = setTimeout(function () {
                     addLog.call(self, 'AI' + ai.id + '>>' + 'Killing due to TLE');

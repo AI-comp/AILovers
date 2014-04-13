@@ -59,14 +59,13 @@
             return lines.join('\n') + '\n';
         };
 
-        Game.prototype.getStatus = function (playerIndex) {
+        Game.prototype.getTurnInformation = function (playerIndex) {
             var lines = [];
 
             lines.push(this.turn);
             lines.push(this.isHoliday() ? 'H' : 'W');
 
-            for (var i = 0; i < this.heroines.length; i++) {
-                var heroine = this.heroines[i];
+            _.each(this.heroines, function (heroine) {
                 var enemyIndices = _.reject(_.range(this.numPlayers), function (index) {
                     return index == playerIndex;
                 });
@@ -74,11 +73,27 @@
                     return heroine.revealedLove[index];
                 });
                 lines.push(_.flatten([heroine.revealedLove[playerIndex], enemyLove]).join(' '));
-            }
+            }, this);
 
             lines.push(_.map(this.heroines, function (heroine) {
                 return heroine.realLove[playerIndex];
             }).join(' '));
+
+            return lines.join('\n') + '\n';
+        };
+
+        Game.prototype.getStatus = function () {
+            var lines = [];
+
+            lines.push('Real Love:');
+            _.each(this.heroines, function (heroine) {
+                lines.push(heroine.realLove.join(' '));
+            });
+
+            lines.push('Ranking:');
+            _.each(this.getRanking(), function (player) {
+                lines.push('Player ' + player.index + ': ' + player.popularity + ' popularity');
+            });
 
             return lines.join('\n') + '\n';
         };
