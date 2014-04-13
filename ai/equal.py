@@ -10,16 +10,14 @@ class Heroine:
 def readLine():
 	return list(map(int, input().split()))
 
-totalTurn, numPlayers, numHeroines = readLine()
+totalTurns, numPlayers, numHeroines = readLine()
 enthusiasm = readLine()
 heroines = []
 for i in range(numHeroines):
 	heroines.append(Heroine(enthusiasm[i]))
 
-while True:
+for t in range(totalTurns):
 	turn = int(input())
-	if turn == -1:
-		break
 	day = input()
 
 	for i in range(numHeroines):

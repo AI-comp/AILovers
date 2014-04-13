@@ -11,11 +11,9 @@
 	
 	readGameSetting();
 	
-	$turn = rtrim(fgets($fp));
-	while ($turn != -1) {
+	for ($i = 0; $i < $maxTurn; $i++) {
 		readData();
 		writeCommand();
-		$turn = rtrim(fgets($fp));
 	}
 	
 	function readGameSetting() {
@@ -32,15 +30,16 @@
 	}
 	
 	function readData() {
-		global $fp, $numOfHeroes, $numOfHeroines, $heroines;
+		global $fp, $turn, $day, $numOfHeroes, $numOfHeroines, $heroines;
+		$turn = rtrim(fgets($fp));
 		$day = rtrim(fgets($fp));
-			for ($i = 0; $i < $numOfHeroines; $i++) {
-				$revealedScores = explode(' ', rtrim(fgets($fp)));
-			}
-			$realScores = explode(' ', rtrim(fgets($fp)));
-			for ($i = 0; $i < $numOfHeroines; $i++) {
-				$heroines[$i]->setRealScore((integer)$realScores[$i]);
-			}
+		for ($i = 0; $i < $numOfHeroines; $i++) {
+			$revealedScores = explode(' ', rtrim(fgets($fp)));
+		}
+		$realScores = explode(' ', rtrim(fgets($fp)));
+		for ($i = 0; $i < $numOfHeroines; $i++) {
+			$heroines[$i]->setRealScore((integer)$realScores[$i]);
+		}
 	}
 	
 	function writeCommand() {

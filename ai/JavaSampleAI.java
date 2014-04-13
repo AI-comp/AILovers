@@ -14,7 +14,6 @@ public class JavaSampleAI {
 			readData();
 			writeCommand();
 		}
-		int last = scanner.nextInt();
 		scanner.close();
 		writer.close();
 	}

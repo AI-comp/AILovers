@@ -60,6 +60,8 @@ Runner.prototype.runGame = function (done) {
 
         ai.process.on('close', function (code) {
             addLog.call(self, 'AI' + ai.id + '>>' + 'Child process exited with code ' + code);
+            clearTimeout(ai.timeout);
+            ai.available = false;
         });
     });
 
@@ -84,13 +86,13 @@ function addLog(logMessage) {
  * @param done
  */
 function onReady(game, ais, done) {
-    var numReadyAIs = _.size(_.filter(ais, function (ai) {
-        return ai.ready;
-    }));
-    var numAvailableAIs = _.size(_.filter(ais, function (ai) {
+    var availableAIs = _.filter(ais, function (ai) {
         return ai.available;
-    }));
-    if (numReadyAIs == numAvailableAIs) {
+    });
+    var notReadyAIs = _.filter(availableAIs, function (ai) {
+        return !ai.ready;
+    });
+    if (_.isEmpty(notReadyAIs)) {
         var commands = _.map(ais, function (ai) {
             return ai.available ? ai.commands : [];
         });
@@ -118,7 +120,10 @@ function processTurn(game, ais, done) {
     if (game.isFinished()) {
         addLog.call(this, 'Game finished');
         _.each(availableAIs, function (ai) {
-            ai.process.stdin.write(game.getTerminationText());
+            var terminationText = game.getTerminationText();
+            if (terminationText) {
+                ai.process.stdin.write(terminationText);
+            }
         });
 
         this.gameResult.winner = game.getWinner();
@@ -126,7 +131,7 @@ function processTurn(game, ais, done) {
     } else {
         addLog.call(this, 'Starting a new turn');
         var self = this;
-        if (_.size(availableAIs) == 0) {
+        if (_.isEmpty(availableAIs)) {
             onReady.call(self, game, ais, done);
         } else {
             _.each(availableAIs, function (ai) {

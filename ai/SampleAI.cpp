@@ -37,7 +37,7 @@ void readData(){
 }
 
 void writeCommand(){
-	if (turn % 2 == 1){
+	if (Turn % 2 == 1){
 		for(int i=0;i<5;i++){
 			cout << rand() % HeroinesNum;
 			if(i<4){
@@ -57,7 +57,7 @@ void writeCommand(){
 
 int main(){
 	readInitialData();
-	while(cin >> turn, turn!=-1){
+	for (int i=0;i<MaxTurn;i++) {
 		readData();
 		writeCommand();
 	}

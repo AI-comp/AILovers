@@ -7,6 +7,7 @@
         function Game(seed) {
             this.heroines = [];
             this.turn = 1;
+            this.totalTurns = 10;
             this.mt = new MersenneTwister(seed);
         }
 
@@ -45,13 +46,13 @@
         };
 
         Game.prototype.isFinished = function () {
-            return this.turn > 10;
+            return this.turn > this.totalTurns;
         };
 
         Game.prototype.getInitialInformation = function () {
             var lines = [];
 
-            lines.push([this.turn, this.numPlayers, this.heroines.length].join(' '));
+            lines.push([this.totalTurns, this.numPlayers, this.heroines.length].join(' '));
             lines.push(_.map(this.heroines, function (heroine) {
                 return heroine.enthusiasm;
             }).join(' '));
@@ -99,7 +100,7 @@
         };
 
         Game.prototype.getTerminationText = function (playerIndex) {
-            return '-1' + '\n';
+            return null;
         };
 
         Game.prototype.getRanking = function () {
