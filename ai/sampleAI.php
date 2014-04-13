@@ -31,8 +31,7 @@
 	
 	function readData() {
 		global $fp, $turn, $day, $numOfHeroes, $numOfHeroines, $heroines;
-		$turn = rtrim(fgets($fp));
-		$day = rtrim(fgets($fp));
+		list($turn, $day) = explode(' ', rtrim(fgets($fp)));
 		for ($i = 0; $i < $numOfHeroines; $i++) {
 			$revealedScores = explode(' ', rtrim(fgets($fp)));
 		}

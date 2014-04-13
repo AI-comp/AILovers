@@ -89,8 +89,7 @@ E<sub>0</sub> E<sub>1</sub> E<sub>2</sub> ... E<sub>9</sub>
 各ターンの初めに、現在の情報が以下のフォーマットで標準入力に渡される。
 
 <pre>
-T
-D
+T D
 L<sub>00</sub>　L<sub>01</sub> L<sub>02</sub> L<sub>03</sub>
 L<sub>10</sub>　L<sub>11</sub> L<sub>12</sub> L<sub>13</sub>
 L<sub>20</sub>　L<sub>21</sub> L<sub>22</sub> L<sub>23</sub>

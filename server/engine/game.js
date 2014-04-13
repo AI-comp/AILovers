@@ -63,8 +63,7 @@
         Game.prototype.getTurnInformation = function (playerIndex) {
             var lines = [];
 
-            lines.push(this.turn);
-            lines.push(this.isHoliday() ? 'H' : 'W');
+            lines.push([this.turn, this.isHoliday() ? 'H' : 'W'].join(' '));
 
             _.each(this.heroines, function (heroine) {
                 var enemyIndices = _.reject(_.range(this.numPlayers), function (index) {

@@ -17,8 +17,8 @@ for i in range(numHeroines):
 	heroines.append(Heroine(enthusiasm[i]))
 
 for t in range(totalTurns):
-	turn = int(input())
-	day = input()
+	turn, day = input().split()
+	turn = int(turn)
 
 	for i in range(numHeroines):
 		heroines[i].revealedLove = readLine()
