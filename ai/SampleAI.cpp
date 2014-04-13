@@ -7,23 +7,32 @@ struct Heroine{
 	vector<int> revealedScore;
 	int realScore;
 };
-int turn, playerID, HeroesNum = 4, HeroinesNum = 10;
+int MaxTurn, Turn, HeroesNum, HeroinesNum;
 vector<Heroine> Heroines;
+char Day;
+
+void readInitialData(){
+	cin >> MaxTurn >> HeroesNum >> HeroinesNum;
+	for(int i=0;i<HeroinesNum;i++){
+		Heroine h;
+		cin >> h.value;
+		Heroines.push_back(h);
+	}
+}
 
 void readData(){
-	cin >> playerID;
-	int val, rScore;
-	vector<int> rScores;
+	cin >> Turn >> Day;
 	for(int i=0;i<HeroinesNum;i++){
-		cin >> val;
+		vector<int> rScores;
 		for(int j=0;j<HeroesNum;j++){
 			int rs;
 			cin >> rs;
 			rScores.push_back(rs);
 		}
-		cin >> rScore;
-		Heroine h = {val, rScores, rScore};
-		Heroines.push_back(h);
+		Heroines[i].revealedScore = rScores;
+	}
+	for(int i=0;i<HeroinesNum;i++){
+		cin >> Heroines[i].realScore;
 	}
 }
 
@@ -47,6 +56,7 @@ void writeCommand(){
 }
 
 int main(){
+	readInitialData();
 	while(cin >> turn, turn!=-1){
 		readData();
 		writeCommand();
