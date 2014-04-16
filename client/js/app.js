@@ -11,6 +11,7 @@ $(function () {
                 return $('#ai' + i).val();
             })
         }));
+        $('#log').html('');
     });
 
     ws.onmessage = function (event) {
@@ -18,6 +19,6 @@ $(function () {
     };
 
     function log(message) {
-        $('#log').append(message);
+        $('#log').html(message);
     }
 });
