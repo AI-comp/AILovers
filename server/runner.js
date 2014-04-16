@@ -46,7 +46,7 @@ Runner.prototype.runGame = function (done) {
     _.each(ais, function (ai) {
         ai.process.stdout.on('data', function (data) {
             addLog.call(self, 'AI' + ai.id + '>>' + 'STDOUT: ' + data);
-            if (ai.available) {
+            if (ai.available && !ai.ready) {
                 ai.commands = data.toString().trim().split(' ');
                 ai.ready = true;
                 clearTimeout(ai.timeout);
