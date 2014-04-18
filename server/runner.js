@@ -10,17 +10,17 @@ function AI(command, parameters, workingDir, index, addLog) {
     this.ready = false;
     this.available = true;
     this.timeout = null;
-    this.onStdout = function (message) { };
+    this.onStdout = function (data) { };
 
     var self = this;
 
-    this.process.stdout.on('data', function (message) {
-        self.addLog('AI' + self.index + '>>' + 'STDOUT: ' + message);
-        self.onStdout(message);
+    this.process.stdout.on('data', function (data) {
+        self.addLog('AI' + self.index + '>>' + 'STDOUT: ' + data);
+        self.onStdout(data);
     });
 
-    this.process.stderr.on('data', function (message) {
-        self.addLog('AI' + self.index + '>>' + 'STDERR: ' + message);
+    this.process.stderr.on('data', function (data) {
+        self.addLog('AI' + self.index + '>>' + 'STDERR: ' + data);
     });
 
     this.process.on('close', function (code) {
@@ -74,20 +74,47 @@ Runner.prototype.runGame = function (done) {
         }));
     }
 
-    var self = this;
     _.each(ais, function (ai) {
-        ai.onStdout = function (message) {
-            if (ai.available && !ai.ready) {
-                ai.commands = message.toString().trim().split(' ');
+        ai.onStdout = function (data) {
+            if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
                 ai.ready = true;
                 clearTimeout(ai.timeout);
-                onReady.call(self, game, ais, done);
+                onReadyForBeginning.call(self, game, ais, done);
             }
         };
+        ai.setTimer(3000, function () {
+            onReadyForBeginning.call(self, game, ais, done);
+        });
     });
-
-    processTurn.call(this, game, ais, done);
 };
+
+function onReadyForBeginning(game, ais, done) {
+    if (isEveryoneReady(ais)) {
+        var self = this;
+        _.each(ais, function (ai) {
+            ai.onStdout = function (data) {
+                if (ai.available && !ai.ready) {
+                    ai.commands = data.toString().trim().split(' ');
+                    ai.ready = true;
+                    clearTimeout(ai.timeout);
+                    onReady.call(self, game, ais, done);
+                }
+            };
+        });
+
+        processTurn.call(this, game, ais, done);
+    }
+}
+
+function isEveryoneReady(ais) {
+    var availableAIs = _.filter(ais, function (ai) {
+        return ai.available;
+    });
+    var notReadyAIs = _.filter(availableAIs, function (ai) {
+        return !ai.ready;
+    });
+    return _.isEmpty(notReadyAIs);
+}
 
 /**
  * Add a game log message
@@ -107,13 +134,7 @@ function addLog(logMessage) {
  * @param done
  */
 function onReady(game, ais, done) {
-    var availableAIs = _.filter(ais, function (ai) {
-        return ai.available;
-    });
-    var notReadyAIs = _.filter(availableAIs, function (ai) {
-        return !ai.ready;
-    });
-    if (_.isEmpty(notReadyAIs)) {
+    if (isEveryoneReady(ais)) {
         var commands = _.map(ais, function (ai) {
             return ai.available ? ai.commands : [];
         });

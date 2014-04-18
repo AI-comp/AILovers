@@ -56,6 +56,7 @@ void writeCommand(){
 }
 
 int main(){
+	cout << "READY" << endl;
 	readInitialData();
 	for (int i=0;i<MaxTurn;i++) {
 		readData();

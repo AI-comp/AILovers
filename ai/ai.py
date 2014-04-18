@@ -10,6 +10,9 @@ class Heroine:
 def readLine():
 	return list(map(int, input().split()))
 
+print('READY')
+sys.stdout.flush()
+
 totalTurns, numPlayers, numHeroines = readLine()
 enthusiasm = readLine()
 heroines = []

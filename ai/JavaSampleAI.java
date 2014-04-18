@@ -9,6 +9,7 @@ public class JavaSampleAI {
 	static final PrintWriter writer = new PrintWriter(System.out, true);
 
 	public static void main(String[] args) {
+		writer.println("READY");
 		readInitialData();
 		for (int t = 0; t < MaxTurn; t++) {
 			readData();

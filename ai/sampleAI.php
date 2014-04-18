@@ -9,6 +9,7 @@
 	$day;
 	$heroines = [];
 	
+	echo 'READY';
 	readGameSetting();
 	
 	for ($i = 0; $i < $maxTurn; $i++) {
