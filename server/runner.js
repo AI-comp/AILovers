@@ -35,7 +35,7 @@ AI.prototype.setTimer = function (timeLimit, onTLE) {
         self.available = false;
         self.process.kill('SIGINT');
         onTLE();
-    }, timeLimit)
+    }, timeLimit);
 };
 
 /**
