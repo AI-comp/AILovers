@@ -2,6 +2,42 @@ var _ = require('underscore'),
     spawn = require('child_process').spawn,
     Game = require('./engine/game.js').Game;
 
+function AI(command, parameters, workingDir, index, addLog) {
+    this.process = spawn(command, parameters, { cwd: workingDir });
+    this.index = index;
+    this.addLog = addLog;
+    this.commands = [];
+    this.ready = false;
+    this.available = true;
+    this.timeout = null;
+    this.onStdout = function (message) { };
+
+    var self = this;
+
+    this.process.stdout.on('data', function (message) {
+        self.addLog('AI' + self.index + '>>' + 'STDOUT: ' + message);
+        self.onStdout(message);
+    });
+
+    this.process.stderr.on('data', function (message) {
+        self.addLog('AI' + self.index + '>>' + 'STDERR: ' + message);
+    });
+
+    this.process.on('close', function (code) {
+        self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
+    });
+}
+
+AI.prototype.setTimer = function (timeLimit, onTLE) {
+    var self = this;
+    self.timeout = setTimeout(function () {
+        self.addLog('AI' + self.index + '>>' + 'Killing due to TLE');
+        self.available = false;
+        self.process.kill('SIGINT');
+        onTLE();
+    }, timeLimit)
+};
+
 /**
  *
  * @param commands
@@ -23,6 +59,7 @@ function Runner(commands, workingDirs) {
  * @param done
  */
 Runner.prototype.runGame = function (done) {
+    var self = this;
     var game = new Game(this.gameResult.replay[0]);
     game.initialize(4);
 
@@ -32,35 +69,21 @@ Runner.prototype.runGame = function (done) {
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
         var workingDir = this.workingDirs ? this.workingDirs[i] : undefined;
-        ais.push({
-            process: spawn(command, parameters, { cwd: workingDir }),
-            commands: [],
-            ready: false,
-            available: true,
-            timeout: null,
-            id: i
-        });
+        ais.push(new AI(command, parameters, workingDir, i, function (message) {
+            addLog.call(self, message);
+        }));
     }
 
     var self = this;
     _.each(ais, function (ai) {
-        ai.process.stdout.on('data', function (data) {
-            addLog.call(self, 'AI' + ai.id + '>>' + 'STDOUT: ' + data);
+        ai.onStdout = function (message) {
             if (ai.available && !ai.ready) {
-                ai.commands = data.toString().trim().split(' ');
+                ai.commands = message.toString().trim().split(' ');
                 ai.ready = true;
                 clearTimeout(ai.timeout);
                 onReady.call(self, game, ais, done);
             }
-        });
-
-        ai.process.stderr.on('data', function (data) {
-            addLog.call(self, 'AI' + ai.id + '>>' + 'STDERR: ' + data);
-        });
-
-        ai.process.on('close', function (code) {
-            addLog.call(self, 'AI' + ai.id + '>>' + 'Child process exited with code ' + code);
-        });
+        };
     });
 
     processTurn.call(this, game, ais, done);
@@ -135,22 +158,19 @@ function processTurn(game, ais, done) {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
 
-                addLog.call(self, 'AI' + ai.id + '>>' + 'Writing to stdin, waiting for stdout');
+                addLog.call(self, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
                 if (game.isInitialState()) {
                     var initialInformation = game.getInitialInformation();
                     ai.process.stdin.write(initialInformation);
                     addLog.call(self, initialInformation);
                 }
-                var turnInformation = game.getTurnInformation(ai.id);
+                var turnInformation = game.getTurnInformation(ai.index);
                 ai.process.stdin.write(turnInformation);
                 addLog.call(self, turnInformation);
 
-                ai.timeout = setTimeout(function () {
-                    addLog.call(self, 'AI' + ai.id + '>>' + 'Killing due to TLE');
-                    ai.available = false;
-                    ai.process.kill('SIGINT');
+                ai.setTimer(1000, function () {
                     onReady.call(self, game, ais, done);
-                }, 1000);
+                });
             });
         }
     }
