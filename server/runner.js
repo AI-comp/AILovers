@@ -82,7 +82,7 @@ Runner.prototype.runGame = function (done) {
                 onReadyForBeginning.call(self, game, ais, done);
             }
         };
-        ai.setTimer(3000, function () {
+        ai.setTimer(5000, function () {
             onReadyForBeginning.call(self, game, ais, done);
         });
     });
