@@ -5,8 +5,7 @@ var express = require('express'),
 module.exports = function (app) {
 
     app.use(express.static(path.join(__dirname, '../client')));
-    app.use('/cocos2d', express.static(path.join(__dirname, '../client/cocos2d')));
-    app.use('/replay', express.static(path.join(__dirname, '../client/js')));
+    app.use('/replay', express.static(path.join(__dirname, '../client/replay')));
     
     app.get('/', function (req, res) {
         res.render('index');
