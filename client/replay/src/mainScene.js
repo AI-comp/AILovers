@@ -28,9 +28,4 @@ var MainScene = cc.Scene.extend({
       }
     }
   },
-
-  onExit: function () {
-    this._super();
-    console.log('exit');
-  },
 });
