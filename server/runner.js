@@ -1,6 +1,6 @@
 var _ = require('underscore'),
     spawn = require('child_process').spawn,
-    Game = require('./engine/game.js').Game;
+    Game = require('../game/game.js').Game;
 
 function AI(command, parameters, workingDir, index, addLog) {
     this.process = spawn(command, parameters, { cwd: workingDir });

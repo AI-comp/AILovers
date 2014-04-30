@@ -6,7 +6,7 @@ module.exports = function (app) {
 
     app.use(express.static(path.join(__dirname, '../client')));
     app.use('/replay', express.static(path.join(__dirname, '../client/replay')));
-    
+
     app.get('/', function (req, res) {
         res.render('index');
     });

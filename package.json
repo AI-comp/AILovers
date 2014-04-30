@@ -22,5 +22,7 @@
     "grunt-contrib-less": "~0.10.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-concurrent": "~0.5.0",
+    "browserify": "^3.44.2",
+    "grunt-browserify": "^2.0.8"
   }
 }
