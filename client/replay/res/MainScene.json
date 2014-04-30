@@ -1,8 +1,8 @@
 {
   "classname": "CCNode",
-  "name": null,
+  "name": "MainScene",
   "canedit": true,
-  "objecttag": 10000,
+  "objecttag": 0,
   "rotation": 0,
   "scalex": 1,
   "scaley": 1,

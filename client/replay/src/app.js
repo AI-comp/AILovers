@@ -11,9 +11,10 @@ var MainScene = cc.Scene.extend({
   },
 
   setGameStatus: function (game) {
+    var sceneNode = this.getChildByTag(0);
     for (var heroineIndex = 0; heroineIndex < game.heroines.length; heroineIndex++) {
       var heroine = game.heroines[heroineIndex];
-      var heroinePanelNode = this.getChildByTag(heroineIndex);
+      var heroinePanelNode = sceneNode.getChildByTag(heroineIndex);
       var heroinePanel = heroinePanelNode.getChildByTag(0);
       heroinePanel.getChildByName('EnthusiasmLabel').setText(heroine.enthusiasm);
       for (var playerIndex = 0; playerIndex < game.numPlayers; playerIndex++) {

@@ -1,8 +1,8 @@
 {
   "classname": "CCNode",
-  "name": null,
+  "name": "DateScene",
   "canedit": true,
-  "objecttag": 10000,
+  "objecttag": 0,
   "rotation": 0,
   "scalex": 1,
   "scaley": 1,
@@ -14,7 +14,7 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": null,
+      "name": "DatePanel0",
       "canedit": true,
       "objecttag": 0,
       "rotation": 0,
@@ -42,7 +42,7 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "_Copy",
+      "name": "DatePanel1",
       "canedit": true,
       "objecttag": 1,
       "rotation": 0,
@@ -70,7 +70,7 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "_Copy",
+      "name": "DatePanel2",
       "canedit": true,
       "objecttag": 2,
       "rotation": 0,
@@ -98,7 +98,7 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "_Copy",
+      "name": "DatePanel3",
       "canedit": true,
       "objecttag": 3,
       "rotation": 0,
