@@ -12,6 +12,7 @@ module.exports = function (app) {
     });
 
     app.get('/replay', function (req, res) {
+        res.locals.replay = req.param('replay');
         res.render('replay');
     });
 

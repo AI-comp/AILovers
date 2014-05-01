@@ -1,13 +1,13 @@
 var DateScene = cc.Scene.extend({
-  ctor: function (game) {
+  ctor: function (game, commands) {
     this._super();
-    this.game = game;
 
     this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.DateScene_json);
     this.addChild(this.sceneNode);
 
     var onFinish = function () {
-      cc.director.runScene(new MainScene(game));
+      game.processTurn(commands[game.turn]);
+      cc.director.runScene(new MainScene(game, commands));
     };
     this.scheduleOnce(onFinish, 5);
 

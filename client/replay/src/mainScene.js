@@ -1,29 +1,30 @@
 var MainScene = cc.Scene.extend({
-  ctor: function (game) {
+  ctor: function (game, commands) {
     this._super();
-    this.game = game;
 
     this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.MainScene_json);
     this.addChild(this.sceneNode);
 
-    this.setGameStatus();
+    this.setGameStatus(game);
 
     var controlPanelNode = this.sceneNode.getChildByTag(100);
     var controlPanel = controlPanelNode.getChildByTag(0);
     controlPanel.getChildByName('NextButton').onPressStateChangedToPressed = function () {
-      cc.director.runScene(new DateScene(game));
+      if (!game.isFinished()) {
+        cc.director.runScene(new DateScene(game, commands));
+      }
     }
 
     return true;
   },
 
-  setGameStatus: function () {
-    for (var heroineIndex = 0; heroineIndex < this.game.heroines.length; heroineIndex++) {
-      var heroine = this.game.heroines[heroineIndex];
+  setGameStatus: function (game) {
+    for (var heroineIndex = 0; heroineIndex < game.heroines.length; heroineIndex++) {
+      var heroine = game.heroines[heroineIndex];
       var heroinePanelNode = this.sceneNode.getChildByTag(heroineIndex);
       var heroinePanel = heroinePanelNode.getChildByTag(0);
       heroinePanel.getChildByName('EnthusiasmLabel').setText(heroine.enthusiasm);
-      for (var playerIndex = 0; playerIndex < this.game.numPlayers; playerIndex++) {
+      for (var playerIndex = 0; playerIndex < game.numPlayers; playerIndex++) {
         heroinePanel.getChildByName('LoveLabel' + playerIndex).setText(heroine.revealedLove[playerIndex]);
       }
     }
