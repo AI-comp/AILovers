@@ -79,7 +79,6 @@ var DateScene = cc.Scene.extend({
                 var targetPanel = this.getTargetPanel(datePanel);
                 var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
                 this.cursors[playerIndex].setPosition(targetHeroineImage.getPosition());
-                console.log(this.cursors[playerIndex]);
             }, this);
         }
     },
