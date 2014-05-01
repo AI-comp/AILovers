@@ -4,7 +4,7 @@ var MainScene = cc.Scene.extend({
         this.game = game;
         this.commands = commands;
 
-        this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.MainScene_json);
+        this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.mainScene);
         this.addChild(this.sceneNode);
 
         this.loadHeroineImages();
@@ -20,7 +20,7 @@ var MainScene = cc.Scene.extend({
     loadHeroineImages: function () {
         _(this.game.getNumHeroines()).times(function (heroineIndex) {
             var heroinePanel = this.getHeroinePanel(heroineIndex);
-            heroinePanel.getChildByName('FaceImage').loadTexture(res.faceImages[heroineIndex]);
+            heroinePanel.getChildByName('FaceImage').loadTexture(res.image.faces[heroineIndex]);
         }, this);
     },
 

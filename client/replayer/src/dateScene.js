@@ -4,39 +4,83 @@ var DateScene = cc.Scene.extend({
         this.game = game;
         this.commands = commands;
 
-        this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.DateScene_json);
+        this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.dateScene);
         this.addChild(this.sceneNode);
 
         this.showFaceImages();
-        this.scheduleOnce(this.onFinish, 5);
+
+        this.createCursors();
+        this.showNextDateImage();
+        this.schedule(this.showNextDateImage, 0.5, cc.REPEAT_FOREVER, 0.5);
 
         return true;
+    },
+
+    transitionToMainScene: function () {
+        this.game.processTurn(this.commands[this.game.turn]);
+        cc.director.runScene(new MainScene(this.game, this.commands));
     },
 
     showFaceImages: function () {
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
 
-            var weekdayTargetPanel = datePanel.getChildByName('WeekdayTargetPanel');
-            var holidayTargetPanel = datePanel.getChildByName('HolidayTargetPanel');
-            weekdayTargetPanel.setVisible(this.game.isWeekday());
-            holidayTargetPanel.setVisible(!this.game.isWeekday());
-            var targetPanel = this.game.isWeekday() ? weekdayTargetPanel : holidayTargetPanel;
+            datePanel.getChildByName('WeekdayTargetPanel').setVisible(this.game.isWeekday());
+            datePanel.getChildByName('HolidayTargetPanel').setVisible(!this.game.isWeekday());
+            var targetPanel = this.getTargetPanel(datePanel);
 
             _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
                 var targetHeroine = this.commands[this.game.turn][playerIndex][commandIndex];
-                targetPanel.getChildByName('Heroine' + targetHeroine).loadTexture(res.faceImages[targetHeroine]);
+                targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.faces[targetHeroine]);
             }, this);
         }, this);
-    },
-
-    onFinish: function () {
-        this.game.processTurn(this.commands[this.game.turn]);
-        cc.director.runScene(new MainScene(this.game, this.commands));
     },
 
     getDatePanel: function (playerIndex) {
         var datePanelNode = this.sceneNode.getChildByTag(playerIndex);
         return datePanelNode.getChildByTag(0);
+    },
+
+    getTargetPanel: function (datePanel) {
+        if (this.game.isWeekday()) {
+            return datePanel.getChildByName('WeekdayTargetPanel');;
+        } else {
+            return datePanel.getChildByName('HolidayTargetPanel');
+        }
+    },
+
+    createCursors: function () {
+        this.cursors = _.map(_.range(this.game.getNumPlayers()), function (i) {
+            var cursor = ccs.uiReader.widgetFromJsonFile(res.json.cursor);
+            cursor.setAnchorPoint(0.5, 0.5);
+            return cursor;
+        }, this);
+
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var datePanel = this.getDatePanel(playerIndex);
+            datePanel.addChild(this.cursors[playerIndex]);
+        }, this);
+
+        this.cursorPosition = -1;
+    },
+
+    showNextDateImage: function () {
+        this.cursorPosition++;
+        if (this.cursorPosition == this.game.getNumRequiredCommands()) {
+            this.transitionToMainScene();
+        } else {
+            _(this.game.getNumPlayers()).times(function (playerIndex) {
+                var datePanel = this.getDatePanel(playerIndex);
+
+                var screen = datePanel.getChildByName('Screen');
+                var targetHeroine = this.commands[this.game.turn][playerIndex][this.cursorPosition];
+                screen.loadTexture(res.image.dates[targetHeroine]);
+
+                var targetPanel = this.getTargetPanel(datePanel);
+                var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
+                this.cursors[playerIndex].setPosition(targetHeroineImage.getPosition());
+                console.log(this.cursors[playerIndex]);
+            }, this);
+        }
     },
 });
