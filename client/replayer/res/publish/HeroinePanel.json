@@ -34,7 +34,7 @@
           "customProperty": "",
           "flipX": false,
           "flipY": false,
-          "height": 80,
+          "height": 128,
           "ignoreSize": true,
           "layoutParameter": null,
           "opacity": 255,
@@ -42,8 +42,8 @@
           "positionPercentY": 0.7470588,
           "positionType": 0,
           "rotation": 0,
-          "scaleX": 1.64999974,
-          "scaleY": 1.64999974,
+          "scaleX": 1,
+          "scaleY": 1,
           "sizePercentX": 0.444444448,
           "sizePercentY": 0.235294119,
           "sizeType": 0,
@@ -51,7 +51,7 @@
           "touchAble": false,
           "useMergedTexture": false,
           "visible": true,
-          "width": 80,
+          "width": 128,
           "x": 90,
           "y": 254,
           "capInsetsHeight": 1,
@@ -60,13 +60,13 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "GUI/image.png",
+            "path": "face.png",
             "plistFile": "",
             "resourceType": 0
           },
           "scale9Enable": false,
-          "scale9Height": 80,
-          "scale9Width": 80
+          "scale9Height": 128,
+          "scale9Width": 128
         }
       },
       {
