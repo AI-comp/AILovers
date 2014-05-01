@@ -3,8 +3,8 @@ cc.game.onStart = function () {
     cc.view.resizeWithBrowserSize(true);
 
     cc.LoaderScene.preload(g_resources, function () {
-        var seed = replay ? replay.seed : 0;
-        var commands = replay ? replay.commands : [];
+        var seed = typeof replay !== 'undefined' ? replay.seed : 0;
+        var commands = typeof replay !== 'undefined' ? replay.commands : [];
         var game = new Game(seed);
         var commands = commands;
         game.initialize(4);

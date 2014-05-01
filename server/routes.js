@@ -5,15 +5,15 @@ var express = require('express'),
 module.exports = function (app) {
 
     app.use(express.static(path.join(__dirname, '../client')));
-    app.use('/replay', express.static(path.join(__dirname, '../client/replay')));
+    app.use('/replayer', express.static(path.join(__dirname, '../client/replayer')));
 
     app.get('/', function (req, res) {
         res.render('index');
     });
 
-    app.get('/replay', function (req, res) {
+    app.get('/replayer', function (req, res) {
         res.locals.replay = req.param('replay');
-        res.render('replay');
+        res.render('replayer');
     });
 
 };
