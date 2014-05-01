@@ -23,18 +23,30 @@
             }
         };
 
-        Game.prototype.isHoliday = function () {
-            return this.turn % 2 === 0;
+        Game.prototype.isWeekday = function () {
+            return this.turn % 2 == 1;
+        };
+
+        Game.prototype.getNumRequiredCommands = function () {
+            return this.isWeekday() ? 5 : 2;
+        };
+
+        Game.prototype.getNumHeroines = function () {
+            return this.heroines.length;
+        };
+
+        Game.prototype.getNumPlayers = function () {
+            return this.numPlayers;
         };
 
         Game.prototype.processTurn = function (moves) {
-            for (var i = 0; i < (this.isHoliday() ? 2 : 5) ; i++) {
+            for (var i = 0; i < this.getNumRequiredCommands(); i++) {
                 for (var playerIndex = 0; playerIndex < this.numPlayers; playerIndex++) {
                     var targetHeroineIndex = parseInt(moves[playerIndex][i]);
                     if (!(targetHeroineIndex >= 0 && targetHeroineIndex < this.heroines.length)) {
                         targetHeroineIndex = 0;
                     }
-                    this.heroines[targetHeroineIndex].date(playerIndex, this.isHoliday());
+                    this.heroines[targetHeroineIndex].date(playerIndex, this.isWeekday());
                 }
             }
 
@@ -63,7 +75,7 @@
         Game.prototype.getTurnInformation = function (playerIndex) {
             var lines = [];
 
-            lines.push([this.turn, this.isHoliday() ? 'H' : 'W'].join(' '));
+            lines.push([this.turn, this.isWeekday() ? 'W' : 'H'].join(' '));
 
             _.each(this.heroines, function (heroine) {
                 var enemyIndices = _.reject(_.range(this.numPlayers), function (index) {
@@ -162,12 +174,12 @@
             }
         }
 
-        Heroine.prototype.date = function (playerIndex, isHoliday) {
-            if (isHoliday) {
-                this.realLove[playerIndex] += 2;
-            } else {
+        Heroine.prototype.date = function (playerIndex, isWeekday) {
+            if (isWeekday) {
                 this.realLove[playerIndex] += 1;
                 this.revealedLove[playerIndex] += 1;
+            } else {
+                this.realLove[playerIndex] += 2;
             }
         };
 
