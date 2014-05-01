@@ -10,8 +10,7 @@ var DateScene = cc.Scene.extend({
         this.showFaceImages();
 
         this.createCursors();
-        this.showNextDateImage();
-        this.schedule(this.showNextDateImage, 0.5, cc.REPEAT_FOREVER, 0.5);
+        this.schedule(this.showNextDateImage, 0.5, cc.REPEAT_FOREVER);
 
         return true;
     },
@@ -50,15 +49,14 @@ var DateScene = cc.Scene.extend({
     },
 
     createCursors: function () {
-        this.cursors = _.map(_.range(this.game.getNumPlayers()), function (i) {
+        this.cursors = [];
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
             var cursor = ccs.uiReader.widgetFromJsonFile(res.json.cursor);
             cursor.setAnchorPoint(0.5, 0.5);
-            return cursor;
-        }, this);
-
-        _(this.game.getNumPlayers()).times(function (playerIndex) {
-            var datePanel = this.getDatePanel(playerIndex);
-            datePanel.addChild(this.cursors[playerIndex]);
+            cursor.setVisible(false);
+            var targetPanel = this.getTargetPanel(this.getDatePanel(playerIndex));
+            targetPanel.addChild(cursor);
+            this.cursors.push(cursor);
         }, this);
 
         this.cursorPosition = -1;
@@ -79,6 +77,7 @@ var DateScene = cc.Scene.extend({
                 var targetPanel = this.getTargetPanel(datePanel);
                 var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
                 this.cursors[playerIndex].setPosition(targetHeroineImage.getPosition());
+                this.cursors[playerIndex].setVisible(true);
             }, this);
         }
     },
