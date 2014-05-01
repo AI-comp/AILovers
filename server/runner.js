@@ -46,9 +46,12 @@ AI.prototype.setTimer = function (timeLimit, onTLE) {
  */
 function Runner(commands, workingDirs) {
     this.gameResult = {
-        log: ''
-        , winner: ''
-        , replay: [new Date().getTime()]
+        log: '',
+        winner: '',
+        replay: {
+            seed: new Date().getTime(),
+            commands: [],
+        },
     };
     this.commands = commands;
     this.workingDirs = workingDirs;
@@ -60,7 +63,7 @@ function Runner(commands, workingDirs) {
  */
 Runner.prototype.runGame = function (done) {
     var self = this;
-    var game = new Game(this.gameResult.replay[0]);
+    var game = new Game(this.gameResult.replay.seed);
     game.initialize(4);
 
     var ais = [];
@@ -139,7 +142,7 @@ function onReady(game, ais, done) {
             return ai.available ? ai.commands : [];
         });
         game.processTurn(commands);
-        this.gameResult.replay.push(commands);
+        this.gameResult.replay.commands.push(commands);
         addLog.call(this, 'Turn finished. Game status:');
         addLog.call(this, game.getStatus());
         addLog.call(this, '');
