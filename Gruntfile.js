@@ -34,13 +34,16 @@ module.exports = function(grunt) {
                 files: ['client/css/**/*.less'],
                 tasks: ['less'],
                 options: {
-                    nospawn: true
+                    spawn: false
                 }
             },
 
             scripts: {
                 files: ['game/**/*.js'],
-                tasks: ['browserify']
+                tasks: ['browserify'],
+                options: {
+                    spawn: false
+                }
             }
         },
 
