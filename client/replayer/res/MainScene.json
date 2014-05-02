@@ -23,7 +23,7 @@
       "visible": 1,
       "x": 6,
       "y": 420,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -51,7 +51,7 @@
       "visible": 1,
       "x": 215,
       "y": 420,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -79,7 +79,7 @@
       "visible": 1,
       "x": 424,
       "y": 420,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -107,7 +107,7 @@
       "visible": 1,
       "x": 627,
       "y": 420,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -135,7 +135,7 @@
       "visible": 1,
       "x": 838,
       "y": 420,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -163,7 +163,7 @@
       "visible": 1,
       "x": 6,
       "y": 68,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -191,7 +191,7 @@
       "visible": 1,
       "x": 215,
       "y": 68,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -219,7 +219,7 @@
       "visible": 1,
       "x": 424,
       "y": 68,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -247,7 +247,7 @@
       "visible": 1,
       "x": 627,
       "y": 68,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -275,7 +275,7 @@
       "visible": 1,
       "x": 838,
       "y": 68,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -303,7 +303,7 @@
       "visible": 1,
       "x": 272,
       "y": 10,
-      "zorder": 1,
+      "zorder": 2,
       "gameobjects": [],
       "components": [
         {
@@ -313,6 +313,34 @@
           "file": null,
           "fileData": {
             "path": "publish/ControlPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "Background",
+      "canedit": true,
+      "objecttag": 10017,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 512,
+      "y": 384,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCSprite",
+          "name": "CCSprite",
+          "file": null,
+          "fileData": {
+            "path": "background.png",
             "plistFile": "",
             "resourceType": 0
           }

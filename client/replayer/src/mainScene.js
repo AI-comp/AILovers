@@ -42,7 +42,8 @@ var MainScene = ReplayerScene.extend({
         var self = this;
         return function () {
             if (!self.game.isFinished()) {
-                cc.director.runScene(new DateScene());
+                var transition = cc.TransitionFadeBL.create(0.5, new DateScene());
+                cc.director.runScene(transition);
             }
         }
     },

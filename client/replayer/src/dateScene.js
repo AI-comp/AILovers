@@ -8,14 +8,18 @@ var DateScene = ReplayerScene.extend({
         this.showFaceImages();
 
         this.createCursors();
-        this.schedule(this.showNextDateImage, 0.5, cc.REPEAT_FOREVER);
 
         return true;
     },
 
-    transitionToMainScene: function () {
+    onEnterTransitionDidFinish: function () {
+        this.schedule(this.showNextDateImage, 0.5, cc.REPEAT_FOREVER);
+    },
+
+    transitToMainScene: function () {
         this.game.processTurn(this.getCurrentCommands());
-        cc.director.runScene(new MainScene());
+        var transition = cc.TransitionFadeTR.create(0.5, new MainScene());
+        cc.director.runScene(transition);
     },
 
     showFaceImages: function () {
@@ -63,7 +67,8 @@ var DateScene = ReplayerScene.extend({
     showNextDateImage: function () {
         this.cursorPosition++;
         if (this.cursorPosition == this.game.getNumRequiredCommands()) {
-            this.transitionToMainScene();
+            this.unscheduleAllCallbacks();
+            this.transitToMainScene();
         } else {
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var datePanel = this.getDatePanel(playerIndex);
