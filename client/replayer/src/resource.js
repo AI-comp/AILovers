@@ -8,7 +8,6 @@ var res = {
         cursor: 'res/cursor.json',
     },
     image: {
-        cursor: 'res/cursor.png',
     },
 };
 
@@ -19,7 +18,6 @@ var g_resources = [
     res.json.mainScene,
     res.json.dateScene,
     res.json.cursor,
-    res.image.cursor,
 ];
 
 res.image.faces = _.map(_.range(10), function (i) {

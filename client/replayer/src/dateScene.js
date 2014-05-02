@@ -6,14 +6,14 @@ var DateScene = ReplayerScene.extend({
         this.addChild(this.sceneNode);
 
         this.showFaceImages();
-
         this.createCursors();
+        this.setupScreens();
 
         return true;
     },
 
     onEnterTransitionDidFinish: function () {
-        this.schedule(this.showNextDateImage, 0.5, cc.REPEAT_FOREVER);
+        this.schedule(this.switchToNextDate, 0.5, cc.REPEAT_FOREVER);
     },
 
     transitToMainScene: function () {
@@ -64,7 +64,14 @@ var DateScene = ReplayerScene.extend({
         this.cursorPosition = -1;
     },
 
-    showNextDateImage: function () {
+    setupScreens: function () {
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var datePanel = this.getDatePanel(playerIndex);
+            datePanel.getChildByName('Screen').setClippingEnabled(true);
+        }, this);
+    },
+
+    switchToNextDate: function () {
         this.cursorPosition++;
         if (this.cursorPosition == this.game.getNumRequiredCommands()) {
             this.unscheduleAllCallbacks();
@@ -72,17 +79,31 @@ var DateScene = ReplayerScene.extend({
         } else {
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var datePanel = this.getDatePanel(playerIndex);
-
-                var screen = datePanel.getChildByName('Screen');
-                var targetHeroine = this.getCommand(playerIndex, this.cursorPosition);
-                screen.loadTexture(res.image.dates[targetHeroine]);
-
-                var targetPanel = this.getTargetPanel(datePanel);
-                var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
-                this.cursors[playerIndex].setVisible(true);
-                var moveTo = cc.MoveTo.create(0.15, targetHeroineImage.getPosition());
-                this.cursors[playerIndex].runAction(cc.EaseOut.create(moveTo, 2));
+                this.showNextScreenImage(datePanel, playerIndex);
+                this.moveCursorToNextTarget(datePanel, playerIndex);
             }, this);
         }
+    },
+
+    showNextScreenImage: function (datePanel, playerIndex) {
+        var screen = datePanel.getChildByName('Screen');
+        var targetHeroine = this.getCommand(playerIndex, this.cursorPosition);
+
+        var nextScreenImage = ccui.ImageView.create();
+        nextScreenImage.loadTexture(res.image.dates[targetHeroine]);
+        nextScreenImage.setAnchorPoint(new cc.Point(0, 0));
+        nextScreenImage.setPosition(new cc.Point(screen.width, 0));
+        screen.addChild(nextScreenImage);
+        var moveTo = cc.MoveTo.create(0.15, new cc.Point(0, 0));
+        nextScreenImage.runAction(cc.EaseOut.create(moveTo, 2));
+    },
+
+    moveCursorToNextTarget: function (datePanel, playerIndex) {
+        var targetPanel = this.getTargetPanel(datePanel);
+        var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
+
+        this.cursors[playerIndex].setVisible(true);
+        var moveTo = cc.MoveTo.create(0.15, targetHeroineImage.getPosition());
+        this.cursors[playerIndex].runAction(cc.EaseOut.create(moveTo, 2));
     },
 });
