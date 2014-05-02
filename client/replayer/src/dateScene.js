@@ -11,10 +11,14 @@ var DateScene = ReplayerScene.extend({
     },
 
     onEnterTransitionDidFinish: function () {
+        this._super();
+
         this.schedule(this.switchToNextDate, 0.5, cc.REPEAT_FOREVER);
     },
 
     onExitTransitionDidStart: function () {
+        this._super();
+
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
             datePanel.getChildByName('Screen').setClippingEnabled(false);
