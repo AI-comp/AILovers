@@ -15,6 +15,7 @@
 
     "jsList" : [
         "src/resource.js",
+        "src/replayerScene.js",
         "src/mainScene.js",
         "src/dateScene.js"
     ]

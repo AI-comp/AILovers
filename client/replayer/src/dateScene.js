@@ -1,8 +1,6 @@
-var DateScene = cc.Scene.extend({
-    ctor: function (game, commands) {
+var DateScene = ReplayerScene.extend({
+    ctor: function () {
         this._super();
-        this.game = game;
-        this.commands = commands;
 
         this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.dateScene);
         this.addChild(this.sceneNode);

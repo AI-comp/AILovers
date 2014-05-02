@@ -1,8 +1,6 @@
-var MainScene = cc.Scene.extend({
-    ctor: function (game, commands) {
+var MainScene = ReplayerScene.extend({
+    ctor: function () {
         this._super();
-        this.game = game;
-        this.commands = commands;
 
         this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.mainScene);
         this.addChild(this.sceneNode);
