@@ -14,7 +14,7 @@ var DateScene = ReplayerScene.extend({
     },
 
     transitionToMainScene: function () {
-        this.game.processTurn(this.commands[this.game.turn]);
+        this.game.processTurn(this.getCurrentCommands());
         cc.director.runScene(new MainScene(this.game, this.commands));
     },
 
@@ -27,7 +27,7 @@ var DateScene = ReplayerScene.extend({
             var targetPanel = this.getTargetPanel(datePanel);
 
             _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
-                var targetHeroine = this.commands[this.game.turn][playerIndex][commandIndex];
+                var targetHeroine = this.getCommand(playerIndex, commandIndex);
                 targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.faces[targetHeroine]);
             }, this);
         }, this);
@@ -69,7 +69,7 @@ var DateScene = ReplayerScene.extend({
                 var datePanel = this.getDatePanel(playerIndex);
 
                 var screen = datePanel.getChildByName('Screen');
-                var targetHeroine = this.commands[this.game.turn][playerIndex][this.cursorPosition];
+                var targetHeroine = this.getCommand(playerIndex, this.cursorPosition);
                 screen.loadTexture(res.image.dates[targetHeroine]);
 
                 var targetPanel = this.getTargetPanel(datePanel);
