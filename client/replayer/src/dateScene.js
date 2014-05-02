@@ -12,6 +12,13 @@ var DateScene = ReplayerScene.extend({
         return true;
     },
 
+    onExitTransitionDidStart:function(){
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var datePanel = this.getDatePanel(playerIndex);
+            datePanel.getChildByName('Screen').setClippingEnabled(false);
+        }, this);
+    },
+
     onEnterTransitionDidFinish: function () {
         this.schedule(this.switchToNextDate, 0.5, cc.REPEAT_FOREVER);
     },
