@@ -5,43 +5,26 @@ var DateScene = ReplayerScene.extend({
         this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.dateScene);
         this.addChild(this.sceneNode);
 
-        this.showFaceImages();
-        this.createCursors();
-        this.setupScreens();
+        this.setupDatePanels();
 
         return true;
-    },
-
-    onExitTransitionDidStart:function(){
-        _(this.game.getNumPlayers()).times(function (playerIndex) {
-            var datePanel = this.getDatePanel(playerIndex);
-            datePanel.getChildByName('Screen').setClippingEnabled(false);
-        }, this);
     },
 
     onEnterTransitionDidFinish: function () {
         this.schedule(this.switchToNextDate, 0.5, cc.REPEAT_FOREVER);
     },
 
+    onExitTransitionDidStart: function () {
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var datePanel = this.getDatePanel(playerIndex);
+            datePanel.getChildByName('Screen').setClippingEnabled(false);
+        }, this);
+    },
+
     transitToMainScene: function () {
         this.game.processTurn(this.getCurrentCommands());
         var transition = cc.TransitionFadeTR.create(0.5, new MainScene());
         cc.director.runScene(transition);
-    },
-
-    showFaceImages: function () {
-        _(this.game.getNumPlayers()).times(function (playerIndex) {
-            var datePanel = this.getDatePanel(playerIndex);
-
-            datePanel.getChildByName('WeekdayTargetPanel').setVisible(this.game.isWeekday());
-            datePanel.getChildByName('HolidayTargetPanel').setVisible(!this.game.isWeekday());
-            var targetPanel = this.getTargetPanel(datePanel);
-
-            _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
-                var targetHeroine = this.getCommand(playerIndex, commandIndex);
-                targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.faces[targetHeroine]);
-            }, this);
-        }, this);
     },
 
     getDatePanel: function (playerIndex) {
@@ -57,25 +40,35 @@ var DateScene = ReplayerScene.extend({
         }
     },
 
-    createCursors: function () {
+    setupDatePanels: function () {
         this.cursors = [];
-        _(this.game.getNumPlayers()).times(function (playerIndex) {
-            var cursor = ccs.uiReader.widgetFromJsonFile(res.json.cursor);
-            cursor.setAnchorPoint(0.5, 0.5);
-            cursor.setVisible(false);
-            var targetPanel = this.getTargetPanel(this.getDatePanel(playerIndex));
-            targetPanel.addChild(cursor);
-            this.cursors.push(cursor);
-        }, this);
-
         this.cursorPosition = -1;
-    },
-
-    setupScreens: function () {
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
+            this.showFaceImage(datePanel, playerIndex);
+            this.cursors.push(this.createCursor(datePanel));
             datePanel.getChildByName('Screen').setClippingEnabled(true);
         }, this);
+    },
+
+    showFaceImage: function (datePanel, playerIndex) {
+        datePanel.getChildByName('WeekdayTargetPanel').setVisible(this.game.isWeekday());
+        datePanel.getChildByName('HolidayTargetPanel').setVisible(!this.game.isWeekday());
+        var targetPanel = this.getTargetPanel(datePanel);
+
+        _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
+            var targetHeroine = this.getCommand(playerIndex, commandIndex);
+            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.faces[targetHeroine]);
+        }, this);
+    },
+
+    createCursor: function (datePanel) {
+        var cursor = ccs.uiReader.widgetFromJsonFile(res.json.cursor);
+        cursor.setAnchorPoint(0.5, 0.5);
+        cursor.setVisible(false);
+        var targetPanel = this.getTargetPanel(datePanel);
+        targetPanel.addChild(cursor);
+        return cursor;
     },
 
     switchToNextDate: function () {
