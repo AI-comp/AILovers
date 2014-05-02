@@ -42,7 +42,7 @@ var MainScene = ReplayerScene.extend({
         var self = this;
         return function () {
             if (!self.game.isFinished()) {
-                cc.director.runScene(new DateScene(self.game, self.commands));
+                cc.director.runScene(new DateScene());
             }
         }
     },

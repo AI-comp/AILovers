@@ -15,7 +15,7 @@ var DateScene = ReplayerScene.extend({
 
     transitionToMainScene: function () {
         this.game.processTurn(this.getCurrentCommands());
-        cc.director.runScene(new MainScene(this.game, this.commands));
+        cc.director.runScene(new MainScene());
     },
 
     showFaceImages: function () {
