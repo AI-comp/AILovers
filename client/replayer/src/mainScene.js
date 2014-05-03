@@ -5,7 +5,7 @@ var MainScene = ReplayerScene.extend({
         this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.mainScene);
         this.addChild(this.sceneNode);
 
-        this.loadHeroineImages();
+        this.setupHeroinePanels();
         this.setGameStatus();
 
         var controlPanelNode = this.sceneNode.getChildByTag(100);
@@ -15,10 +15,16 @@ var MainScene = ReplayerScene.extend({
         return true;
     },
 
-    loadHeroineImages: function () {
+    setupHeroinePanels: function () {
         _(this.game.getNumHeroines()).times(function (heroineIndex) {
             var heroinePanel = this.getHeroinePanel(heroineIndex);
-            heroinePanel.getChildByName('FaceImage').loadTexture(res.image.faces[heroineIndex]);
+            heroinePanel.setBackGroundImage(res.image.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
+
+            _(this.game.getNumPlayers()).times(function (playerIndex) {
+                var lovePanel = ccs.uiReader.widgetFromJsonFile(res.json.lovePanel);
+                lovePanel.getChildByName('HeartImage').loadTexture(res.image.hearts[playerIndex]);
+                heroinePanel.getChildByName('LoveArea' + playerIndex).addChild(lovePanel);
+            }, this);
         }, this);
     },
 
@@ -27,9 +33,11 @@ var MainScene = ReplayerScene.extend({
             var heroine = this.game.heroines[heroineIndex];
             var heroinePanel = this.getHeroinePanel(heroineIndex);
             heroinePanel.getChildByName('EnthusiasmLabel').setText(heroine.enthusiasm);
-            for (var playerIndex = 0; playerIndex < this.game.getNumPlayers() ; playerIndex++) {
-                heroinePanel.getChildByName('LoveLabel' + playerIndex).setText(heroine.revealedLove[playerIndex]);
-            }
+            _(this.game.getNumPlayers()).times(function (playerIndex) {
+                var lovePanel = heroinePanel.getChildByName('LoveArea' + playerIndex).getChildByName('LovePanel');
+                lovePanel.getChildByName('RevealedLoveLabel').setText(heroine.revealedLove[playerIndex]);
+                lovePanel.getChildByName('HiddenLoveLabel').setText(heroine.realLove[playerIndex] - heroine.revealedLove[playerIndex]);
+            }, this);
         }, this);
     },
 
