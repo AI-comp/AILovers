@@ -55,6 +55,8 @@ function Runner(commands, workingDirs) {
     };
     this.commands = commands;
     this.workingDirs = workingDirs;
+    this.game = null;
+    this.ais = [];
 }
 
 /**
@@ -63,49 +65,49 @@ function Runner(commands, workingDirs) {
  */
 Runner.prototype.runGame = function (done) {
     var self = this;
-    var game = new Game(this.gameResult.replay.seed);
-    game.initialize(4);
+    this.game = new Game(this.gameResult.replay.seed);
+    this.game.initialize(4);
 
-    var ais = [];
+    self.ais = [];
     for (var i = 0; i < 4; i++) {
         var commandAndParameters = this.commands[i].split(' ');
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
         var workingDir = this.workingDirs ? this.workingDirs[i] : undefined;
-        ais.push(new AI(command, parameters, workingDir, i, function (message) {
+        self.ais.push(new AI(command, parameters, workingDir, i, function (message) {
             addLog.call(self, message);
         }));
     }
 
-    _.each(ais, function (ai) {
+    _.each(self.ais, function (ai) {
         ai.onStdout = function (data) {
             if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
                 ai.ready = true;
                 clearTimeout(ai.timeout);
-                onReadyForBeginning.call(self, game, ais, done);
+                onReadyForBeginning.call(self, done);
             }
         };
         ai.setTimer(5000, function () {
-            onReadyForBeginning.call(self, game, ais, done);
+            onReadyForBeginning.call(self, done);
         });
     });
 };
 
-function onReadyForBeginning(game, ais, done) {
-    if (isEveryoneReady(ais)) {
-        var self = this;
-        _.each(ais, function (ai) {
+function onReadyForBeginning(done) {
+    if (isEveryoneReady(this.ais)) {
+        _.each(this.ais, function (ai) {
+            var self = this;
             ai.onStdout = function (data) {
                 if (ai.available && !ai.ready) {
                     ai.commands = data.toString().trim().split(' ');
                     ai.ready = true;
                     clearTimeout(ai.timeout);
-                    onReady.call(self, game, ais, done);
+                    onReady.call(self, done);
                 }
             };
-        });
+        }, this);
 
-        processTurn.call(this, game, ais, done);
+        processTurn.call(this, done);
     }
 }
 
@@ -132,70 +134,66 @@ function addLog(logMessage) {
 
 /**
  * Post-turn handling, and set up of new turn processing
- * @param game
- * @param ais
  * @param done
  */
-function onReady(game, ais, done) {
-    if (isEveryoneReady(ais)) {
-        var commands = _.map(ais, function (ai) {
+function onReady(done) {
+    if (isEveryoneReady(this.ais)) {
+        var commands = _.map(this.ais, function (ai) {
             return ai.available ? ai.commands : [];
         });
-        game.processTurn(commands);
+        this.game.processTurn(commands);
         this.gameResult.replay.commands.push(commands);
         addLog.call(this, 'Turn finished. Game status:');
-        addLog.call(this, game.getStatus());
+        addLog.call(this, this.game.getStatus());
         addLog.call(this, '');
 
-        processTurn.call(this, game, ais, done);
+        processTurn.call(this, done);
     }
 }
 
 /**
  * Processes a turn
- * @param game
- * @param ais
  * @param done
  */
-function processTurn(game, ais, done) {
-    var availableAIs = _.filter(ais, function (ai) {
+function processTurn(done) {
+    var availableAIs = _.filter(this.ais, function (ai) {
         return ai.available;
     });
 
-    if (game.isFinished()) {
+    if (this.game.isFinished()) {
         addLog.call(this, 'Game finished');
         _.each(availableAIs, function (ai) {
-            var terminationText = game.getTerminationText();
+            var terminationText = this.game.getTerminationText();
             if (terminationText) {
                 ai.process.stdin.write(terminationText);
             }
-        });
+        }, this);
 
-        this.gameResult.winner = game.getWinner();
+        this.gameResult.winner = this.game.getWinner();
         done();
     } else {
         addLog.call(this, 'Starting a new turn');
-        var self = this;
         if (_.isEmpty(availableAIs)) {
-            onReady.call(self, game, ais, done);
+            onReady.call(this, done);
         } else {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
 
-                addLog.call(self, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
-                if (game.isInitialState()) {
-                    var initialInformation = game.getInitialInformation();
+                addLog.call(this, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
+                if (this.game.isInitialState()) {
+                    var initialInformation = this.game.getInitialInformation();
                     ai.process.stdin.write(initialInformation);
-                    addLog.call(self, initialInformation);
+                    addLog.call(this, initialInformation);
                 }
-                var turnInformation = game.getTurnInformation(ai.index);
+                var turnInformation = this.game.getTurnInformation(ai.index);
                 ai.process.stdin.write(turnInformation);
-                addLog.call(self, turnInformation);
+                addLog.call(this, turnInformation);
 
+                var self = this;
                 ai.setTimer(1000, function () {
-                    onReady.call(self, game, ais, done);
+                    onReady.call(self, done);
                 });
-            });
+            }, this);
         }
     }
 };
