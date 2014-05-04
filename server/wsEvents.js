@@ -11,8 +11,7 @@ module.exports = function (ws) {
         var data = JSON.parse(message);
         var runner = new Runner(data.commands);
         runner.runGame(function () {
-            var response = runner.gameResult.log + '\n'
-                + 'Winner: ' + JSON.stringify(runner.gameResult.winner) + '\n';
+            var response = JSON.stringify(runner.gameResult);
             ws.send(response, function () { /* No error handling yet */ });
         });
     });

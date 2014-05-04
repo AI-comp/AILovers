@@ -15,10 +15,13 @@ $(function () {
     });
 
     ws.onmessage = function (event) {
-        log(event.data.replace(/\n/g, '<br />'));
+        var aiForLog = $('input:radio[name=log]:checked').val();
+        var result = JSON.parse(event.data);
+        var log = result.log[aiForLog] + '\n' + 'Winner: ' + JSON.stringify(result.winner) + '\n';
+        showLog(log.replace(/\n/g, '<br />'));
     };
 
-    function log(message) {
+    function showLog(message) {
         $('#log').html(message);
     }
 });
