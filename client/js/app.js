@@ -17,8 +17,7 @@ $(function () {
     ws.onmessage = function (event) {
         var aiForLog = $('input:radio[name=log]:checked').val();
         var result = JSON.parse(event.data);
-        var log = result.log[aiForLog] + '\n' + 'Winner: ' + JSON.stringify(result.winner) + '\n';
-        showLog(log.replace(/\n/g, '<br />'));
+        showLog(result.log[aiForLog].replace(/\n/g, '<br />'));
     };
 
     function showLog(message) {

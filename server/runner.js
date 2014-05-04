@@ -180,6 +180,7 @@ function processTurn(done) {
         }, this);
 
         this.gameResult.winner = this.game.getWinner();
+        addLog.call(this, 'Winner: ' + this.gameResult.winner);
         done();
     } else {
         addLog.call(this, 'Starting a new turn');
