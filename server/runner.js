@@ -20,7 +20,7 @@ function AI(command, parameters, workingDir, index, addLog) {
     });
 
     this.process.stderr.on('data', function (data) {
-        self.addLog('AI' + self.index + '>>' + 'STDERR: ' + data);
+        self.addLog('AI' + self.index + '>>' + 'STDERR: ' + data, self.index);
     });
 
     this.process.on('close', function (code) {
@@ -45,19 +45,11 @@ AI.prototype.setTimer = function (timeLimit, onTLE) {
  * @constructor
  */
 function Runner(commands, workingDirs) {
-    this.gameResult = {
-        log: '',
-        winner: '',
-        replay: {
-            seed: new Date().getTime(),
-            commands: [],
-        },
-    };
     this.commands = commands;
     this.workingDirs = workingDirs;
-    this.game = null;
-    this.ais = [];
 }
+
+Runner.prototype.LOG_FOR_EVERYONE = -1;
 
 /**
  * Sets up game, and runs it till completion
@@ -65,21 +57,34 @@ function Runner(commands, workingDirs) {
  */
 Runner.prototype.runGame = function (done) {
     var self = this;
-    this.game = new Game(this.gameResult.replay.seed);
+
+    var seed = new Date().getTime();
+    this.game = new Game(seed);
     this.game.initialize(4);
 
-    self.ais = [];
+    this.gameResult = {
+        log: _.map(_.range(this.game.getNumPlayers()), function (i) {
+            return '';
+        }),
+        winner: '',
+        replay: {
+            seed: seed,
+            commands: [],
+        },
+    };
+
+    this.ais = [];
     for (var i = 0; i < 4; i++) {
         var commandAndParameters = this.commands[i].split(' ');
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
         var workingDir = this.workingDirs ? this.workingDirs[i] : undefined;
-        self.ais.push(new AI(command, parameters, workingDir, i, function (message) {
-            addLog.call(self, message);
+        this.ais.push(new AI(command, parameters, workingDir, i, function (message, aiIndex) {
+            addLog.call(self, message, aiIndex);
         }));
     }
 
-    _.each(self.ais, function (ai) {
+    _.each(this.ais, function (ai) {
         ai.onStdout = function (data) {
             if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
                 ai.ready = true;
@@ -124,12 +129,17 @@ function isEveryoneReady(ais) {
 /**
  * Add a game log message
  * @param logMessage
+ * @param aiIndex
  */
-function addLog(logMessage) {
-    this.gameResult.log += logMessage;
-    if (logMessage.slice(-1) != '\n') {
-        this.gameResult.log += '\n';
-    }
+function addLog(logMessage, aiIndex) {
+    var targetAIs = (aiIndex === undefined || aiIndex == this.LOG_FOR_EVERYONE) ? _.range(this.game.getNumPlayers()) : [aiIndex];
+
+    _.each(targetAIs, function (ai) {
+        this.gameResult.log[ai] += logMessage;
+        if (logMessage.slice(-1) != '\n') {
+            this.gameResult.log[ai] += '\n';
+        }
+    }, this);
 }
 
 /**
