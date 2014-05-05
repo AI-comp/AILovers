@@ -1,4 +1,5 @@
 #!/bin/sh
+
 ORIGINAL=$(pwd)
 CURRENT=$(cd $(dirname $0) && pwd)
 
