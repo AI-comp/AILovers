@@ -68,6 +68,7 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.registerTask('dev', ['less', 'browserify', 'concurrent:dev']);
+    grunt.registerTask('setup', ['less', 'browserify']);
+    grunt.registerTask('dev', ['setup', 'concurrent:dev']);
 
 };
