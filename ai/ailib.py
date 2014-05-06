@@ -21,6 +21,15 @@ class AI:
 	
 	def readLine():
 		return list(map(int, input().split()))
+		
+	def getDay(turn):
+		return ['H', 'W'][turn % 2]
+
+	def getNumRequiredCommands(day):
+		return {'W': 5, 'H': 2}[day]
+		
+	def getLoveIncrement(day):
+		return {'W': 2, 'H': 2}[day]
 
 	def run(self):
 		print('READY')
@@ -52,7 +61,7 @@ class AI:
 			for i in range(self.numHeroines):
 				heroines[i].dated = dated[i]
 			
-		self.states.append(State(turn, day, heroines))
+		self.states.append(self.createState(turn, day, heroines))
 
 	def processTurn(self):
 		self.readTurnInformation()
@@ -61,3 +70,6 @@ class AI:
 		
 	def chooseCommands(self):
 		return []
+		
+	def createState(self, turn, day, heroines):
+		return State(turn, day, heroines)
