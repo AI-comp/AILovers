@@ -7,6 +7,7 @@ class Heroine:
 		self.enthusiasm = enthusiasm
 		self.revealedLove = []
 		self.myRealLove = 0
+		self.dated = False
 
 class State:
 	def __init__(self, turn, day, heroines):
@@ -46,6 +47,11 @@ class AI:
 		for i in range(self.numHeroines):
 			heroines[i].myRealLove = realLove[i]
 
+		if day == 'W':
+			dated = list(map(bool, AI.readLine()))
+			for i in range(self.numHeroines):
+				heroines[i].dated = dated[i]
+			
 		self.states.append(State(turn, day, heroines))
 
 	def processTurn(self):

@@ -19,7 +19,8 @@
         Game.prototype.populateHeroines = function (numHeroines) {
             this.heroines = [];
             for (var i = 0; i < numHeroines; i++) {
-                this.heroines.push(new Heroine(Math.floor(this.mt.random() * 4) + 3, this.numPlayers));
+                var enthusiasm = (Math.floor(this.mt.random() * 4) + 3) * 6;
+                this.heroines.push(new Heroine(enthusiasm, this.numPlayers));
             }
         };
 
@@ -40,7 +41,11 @@
         };
 
         Game.prototype.processTurn = function (moves) {
-            for (var i = 0; i < this.getNumRequiredCommands(); i++) {
+            _.each(this.heroines, function (heroine) {
+                heroine.refresh();
+            });
+
+            for (var i = 0; i < this.getNumRequiredCommands() ; i++) {
                 for (var playerIndex = 0; playerIndex < this.numPlayers; playerIndex++) {
                     var targetHeroineIndex = parseInt(moves[playerIndex][i]);
                     if (!(targetHeroineIndex >= 0 && targetHeroineIndex < this.heroines.length)) {
@@ -91,6 +96,12 @@
                 return heroine.realLove[playerIndex];
             }).join(' '));
 
+            if (this.isWeekday()) {
+                lines.push(_.map(this.heroines, function (heroine) {
+                    return heroine.getDatedBit();
+                }).join(' '));
+            }
+
             return lines.join('\n') + '\n';
         };
 
@@ -106,6 +117,13 @@
             _.each(this.heroines, function (heroine) {
                 lines.push(heroine.realLove.join(' '));
             });
+
+            if (this.isWeekday()) {
+                lines.push('Dated:');
+                lines.push(_.map(this.heroines, function (heroine) {
+                    return heroine.getDatedBit();
+                }).join(' '));
+            }
 
             lines.push('Ranking:');
             _.each(this.getRanking(), function (player) {
@@ -130,7 +148,7 @@
                     var func = [Math.max, Math.min][i];
                     var targetHeroes = heroine.filterHeroesByLove(players, func);
                     _.each(targetHeroes, function (targetHero) {
-                        targetHero.popularity += (i == 0 ? 1 : -1) * heroine.enthusiasm;
+                        targetHero.popularity += (i == 0 ? 1 : -1) * heroine.enthusiasm / _.size(targetHeroes);
                     });
                 }
             });
@@ -172,6 +190,7 @@
                 this.revealedLove.push(0);
                 this.realLove.push(0);
             }
+            this.dated = false;
         }
 
         Heroine.prototype.date = function (playerIndex, isWeekday) {
@@ -181,6 +200,7 @@
             } else {
                 this.realLove[playerIndex] += 2;
             }
+            this.dated = true;
         };
 
         Heroine.prototype.filterHeroesByLove = function (players, func) {
@@ -192,6 +212,14 @@
                 }
             }, this);
             return targetHeroes;
+        };
+
+        Heroine.prototype.refresh = function () {
+            this.dated = false;
+        };
+
+        Heroine.prototype.getDatedBit = function () {
+            return this.dated ? 1 : 0;
         };
 
         return Heroine;
