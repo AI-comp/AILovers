@@ -6,6 +6,7 @@ struct Heroine{
 	int value;
 	vector<int> revealedScore;
 	int realScore;
+	bool dated;
 };
 int MaxTurn, Turn, HeroesNum, HeroinesNum;
 vector<Heroine> Heroines;
@@ -34,14 +35,23 @@ void readData(){
 	for(int i=0;i<HeroinesNum;i++){
 		cin >> Heroines[i].realScore;
 	}
+	if(Day == 'W'){
+		for(int i=0;i<HeroinesNum;i++){
+			int d;
+			cin >> d;
+			Heroines[i].dated = (d==1);
+		}
+	}
 }
 
 void writeCommand(){
-	if (Turn % 2 == 1){
+	if(Day == 'W'){
 		for(int i=0;i<5;i++){
 			cout << rand() % HeroinesNum;
 			if(i<4){
 				cout << " ";
+			} else {
+				cout << endl;
 			}
 		}
 	} else {
@@ -49,10 +59,11 @@ void writeCommand(){
 			cout << rand() % HeroinesNum;
 			if(i<1){
 				cout << " ";
+			} else {
+				cout << endl;
 			}
 		}
 	}
-	cout << endl;
 }
 
 int main(){
