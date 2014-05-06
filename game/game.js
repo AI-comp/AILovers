@@ -3,7 +3,7 @@
     var MersenneTwister = require('./mersenne-twister').MersenneTwister,
         _ = require('underscore');
 
-    exports.Game = (function () {
+    Game = exports.Game = (function () {
         function Game(seed) {
             this.heroines = [];
             this.turn = 1;
@@ -17,24 +17,41 @@
         };
 
         Game.prototype.populateHeroines = function (numHeroines) {
-            this.heroines = []
+            this.heroines = [];
             for (var i = 0; i < numHeroines; i++) {
-                this.heroines.push(new Heroine(Math.floor(this.mt.random() * 4) + 3, this.numPlayers));
+                var enthusiasm = (Math.floor(this.mt.random() * 4) + 3) * 6;
+                this.heroines.push(new Heroine(enthusiasm, this.numPlayers));
             }
         };
 
-        Game.prototype.isHoliday = function () {
-            return this.turn % 2 === 0;
+        Game.prototype.isWeekday = function () {
+            return this.turn % 2 == 1;
+        };
+
+        Game.prototype.getNumRequiredCommands = function () {
+            return this.isWeekday() ? 5 : 2;
+        };
+
+        Game.prototype.getNumHeroines = function () {
+            return this.heroines.length;
+        };
+
+        Game.prototype.getNumPlayers = function () {
+            return this.numPlayers;
         };
 
         Game.prototype.processTurn = function (moves) {
-            for (var i = 0; i < (this.isHoliday() ? 2 : 5) ; i++) {
+            _.each(this.heroines, function (heroine) {
+                heroine.refresh();
+            });
+
+            for (var i = 0; i < this.getNumRequiredCommands() ; i++) {
                 for (var playerIndex = 0; playerIndex < this.numPlayers; playerIndex++) {
                     var targetHeroineIndex = parseInt(moves[playerIndex][i]);
                     if (!(targetHeroineIndex >= 0 && targetHeroineIndex < this.heroines.length)) {
                         targetHeroineIndex = 0;
                     }
-                    this.heroines[targetHeroineIndex].date(playerIndex, this.isHoliday());
+                    this.heroines[targetHeroineIndex].date(playerIndex, this.isWeekday());
                 }
             }
 
@@ -63,7 +80,7 @@
         Game.prototype.getTurnInformation = function (playerIndex) {
             var lines = [];
 
-            lines.push([this.turn, this.isHoliday() ? 'H' : 'W'].join(' '));
+            lines.push([this.turn, this.isWeekday() ? 'W' : 'H'].join(' '));
 
             _.each(this.heroines, function (heroine) {
                 var enemyIndices = _.reject(_.range(this.numPlayers), function (index) {
@@ -78,6 +95,12 @@
             lines.push(_.map(this.heroines, function (heroine) {
                 return heroine.realLove[playerIndex];
             }).join(' '));
+
+            if (this.isWeekday()) {
+                lines.push(_.map(this.heroines, function (heroine) {
+                    return heroine.getDatedBit();
+                }).join(' '));
+            }
 
             return lines.join('\n') + '\n';
         };
@@ -94,6 +117,13 @@
             _.each(this.heroines, function (heroine) {
                 lines.push(heroine.realLove.join(' '));
             });
+
+            if (this.isWeekday()) {
+                lines.push('Dated:');
+                lines.push(_.map(this.heroines, function (heroine) {
+                    return heroine.getDatedBit();
+                }).join(' '));
+            }
 
             lines.push('Ranking:');
             _.each(this.getRanking(), function (player) {
@@ -118,7 +148,7 @@
                     var func = [Math.max, Math.min][i];
                     var targetHeroes = heroine.filterHeroesByLove(players, func);
                     _.each(targetHeroes, function (targetHero) {
-                        targetHero.popularity += (i == 0 ? 1 : -1) * heroine.enthusiasm;
+                        targetHero.popularity += (i == 0 ? 1 : -1) * heroine.enthusiasm / _.size(targetHeroes);
                     });
                 }
             });
@@ -133,7 +163,7 @@
             } else {
                 return ranking[0].index;
             }
-        }
+        };
 
         return Game;
     })();
@@ -160,15 +190,17 @@
                 this.revealedLove.push(0);
                 this.realLove.push(0);
             }
+            this.dated = false;
         }
 
-        Heroine.prototype.date = function (playerIndex, isHoliday) {
-            if (isHoliday) {
-                this.realLove[playerIndex] += 2;
-            } else {
+        Heroine.prototype.date = function (playerIndex, isWeekday) {
+            if (isWeekday) {
                 this.realLove[playerIndex] += 1;
                 this.revealedLove[playerIndex] += 1;
+            } else {
+                this.realLove[playerIndex] += 2;
             }
+            this.dated = true;
         };
 
         Heroine.prototype.filterHeroesByLove = function (players, func) {
@@ -180,6 +212,14 @@
                 }
             }, this);
             return targetHeroes;
+        };
+
+        Heroine.prototype.refresh = function () {
+            this.dated = false;
+        };
+
+        Heroine.prototype.getDatedBit = function () {
+            return this.dated ? 1 : 0;
         };
 
         return Heroine;

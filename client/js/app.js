@@ -11,13 +11,16 @@ $(function () {
                 return $('#ai' + i).val();
             })
         }));
+        $('#log').html('');
     });
 
     ws.onmessage = function (event) {
-        log(event.data.replace(/\n/g, '<br />'));
+        var aiForLog = $('input:radio[name=log]:checked').val();
+        var result = JSON.parse(event.data);
+        showLog(result.log[aiForLog].replace(/\n/g, '<br />'));
     };
 
-    function log(message) {
-        $('#log').append(message);
+    function showLog(message) {
+        $('#log').html(message);
     }
 });

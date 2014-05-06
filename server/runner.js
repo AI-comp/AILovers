@@ -1,6 +1,42 @@
 var _ = require('underscore'),
     spawn = require('child_process').spawn,
-    Game = require('./engine/game.js').Game;
+    Game = require('../game/game.js').Game;
+
+function AI(command, parameters, workingDir, index, addLog) {
+    this.process = spawn(command, parameters, { cwd: workingDir });
+    this.index = index;
+    this.addLog = addLog;
+    this.commands = [];
+    this.ready = false;
+    this.available = true;
+    this.timeout = null;
+    this.onStdout = function (data) { };
+
+    var self = this;
+
+    this.process.stdout.on('data', function (data) {
+        self.addLog('AI' + self.index + '>>' + 'STDOUT: ' + data);
+        self.onStdout(data);
+    });
+
+    this.process.stderr.on('data', function (data) {
+        self.addLog('AI' + self.index + '>>' + 'STDERR: ' + data, self.index);
+    });
+
+    this.process.on('close', function (code) {
+        self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
+    });
+}
+
+AI.prototype.setTimer = function (timeLimit, onTLE) {
+    var self = this;
+    self.timeout = setTimeout(function () {
+        self.addLog('AI' + self.index + '>>' + 'Killing due to TLE');
+        self.available = false;
+        self.process.kill('SIGINT');
+        onTLE();
+    }, timeLimit);
+};
 
 /**
  *
@@ -9,149 +45,166 @@ var _ = require('underscore'),
  * @constructor
  */
 function Runner(commands, workingDirs) {
-    this.gameResult = {
-        log: ''
-        , winner: ''
-        , replay: [new Date().getTime()]
-    };
     this.commands = commands;
     this.workingDirs = workingDirs;
 }
+
+Runner.prototype.LOG_FOR_EVERYONE = -1;
 
 /**
  * Sets up game, and runs it till completion
  * @param done
  */
 Runner.prototype.runGame = function (done) {
-    var game = new Game(this.gameResult.replay[0]);
-    game.initialize(4);
+    var self = this;
 
-    var ais = [];
+    var seed = new Date().getTime();
+    this.game = new Game(seed);
+    this.game.initialize(4);
+
+    this.gameResult = {
+        log: _.map(_.range(this.game.getNumPlayers()), function (i) {
+            return '';
+        }),
+        winner: '',
+        replay: {
+            seed: seed,
+            commands: [],
+        },
+    };
+
+    this.ais = [];
     for (var i = 0; i < 4; i++) {
         var commandAndParameters = this.commands[i].split(' ');
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
         var workingDir = this.workingDirs ? this.workingDirs[i] : undefined;
-        ais.push({
-            process: spawn(command, parameters, { cwd: workingDir }),
-            commands: [],
-            ready: false,
-            available: true,
-            timeout: null,
-            id: i
-        });
+        this.ais.push(new AI(command, parameters, workingDir, i, function (message, aiIndex) {
+            addLog.call(self, message, aiIndex);
+        }));
     }
 
-    var self = this;
-    _.each(ais, function (ai) {
-        ai.process.stdout.on('data', function (data) {
-            addLog.call(self, 'AI' + ai.id + '>>' + 'STDOUT: ' + data);
-            if (ai.available) {
-                ai.commands = data.toString().trim().split(' ');
+    _.each(this.ais, function (ai) {
+        ai.onStdout = function (data) {
+            if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
                 ai.ready = true;
                 clearTimeout(ai.timeout);
-                onReady.call(self, game, ais, done);
+                onReadyForBeginning.call(self, done);
             }
-        });
-
-        ai.process.stderr.on('data', function (data) {
-            addLog.call(self, 'AI' + ai.id + '>>' + 'STDERR: ' + data);
-        });
-
-        ai.process.on('close', function (code) {
-            addLog.call(self, 'AI' + ai.id + '>>' + 'Child process exited with code ' + code);
+        };
+        ai.setTimer(5000, function () {
+            onReadyForBeginning.call(self, done);
         });
     });
-
-    processTurn.call(this, game, ais, done);
 };
 
-/**
- * Add a game log message
- * @param logMessage
- */
-function addLog(logMessage) {
-    this.gameResult.log += logMessage;
-    if (logMessage.slice(-1) != '\n') {
-        this.gameResult.log += '\n';
+function onReadyForBeginning(done) {
+    if (isEveryoneReady(this.ais)) {
+        _.each(this.ais, function (ai) {
+            var self = this;
+            ai.onStdout = function (data) {
+                if (ai.available && !ai.ready) {
+                    ai.commands = data.toString().trim().split(' ');
+                    ai.ready = true;
+                    clearTimeout(ai.timeout);
+                    onReady.call(self, done);
+                }
+            };
+        }, this);
+
+        processTurn.call(this, done);
     }
 }
 
-/**
- * Post-turn handling, and set up of new turn processing
- * @param game
- * @param ais
- * @param done
- */
-function onReady(game, ais, done) {
+function isEveryoneReady(ais) {
     var availableAIs = _.filter(ais, function (ai) {
         return ai.available;
     });
     var notReadyAIs = _.filter(availableAIs, function (ai) {
         return !ai.ready;
     });
-    if (_.isEmpty(notReadyAIs)) {
-        var commands = _.map(ais, function (ai) {
+    return _.isEmpty(notReadyAIs);
+}
+
+/**
+ * Add a game log message
+ * @param logMessage
+ * @param aiIndex
+ */
+function addLog(logMessage, aiIndex) {
+    var targetAIs = (aiIndex === undefined || aiIndex == this.LOG_FOR_EVERYONE) ? _.range(this.game.getNumPlayers()) : [aiIndex];
+
+    _.each(targetAIs, function (ai) {
+        this.gameResult.log[ai] += logMessage;
+        if (logMessage.slice(-1) != '\n') {
+            this.gameResult.log[ai] += '\n';
+        }
+    }, this);
+}
+
+/**
+ * Post-turn handling, and set up of new turn processing
+ * @param done
+ */
+function onReady(done) {
+    if (isEveryoneReady(this.ais)) {
+        var commands = _.map(this.ais, function (ai) {
             return ai.available ? ai.commands : [];
         });
-        game.processTurn(commands);
-        this.gameResult.replay.push(commands);
+        this.game.processTurn(commands);
+        this.gameResult.replay.commands.push(commands);
         addLog.call(this, 'Turn finished. Game status:');
-        addLog.call(this, game.getStatus());
+        addLog.call(this, this.game.getStatus());
         addLog.call(this, '');
 
-        processTurn.call(this, game, ais, done);
+        processTurn.call(this, done);
     }
 }
 
 /**
  * Processes a turn
- * @param game
- * @param ais
  * @param done
  */
-function processTurn(game, ais, done) {
-    var availableAIs = _.filter(ais, function (ai) {
+function processTurn(done) {
+    var availableAIs = _.filter(this.ais, function (ai) {
         return ai.available;
     });
 
-    if (game.isFinished()) {
+    if (this.game.isFinished()) {
         addLog.call(this, 'Game finished');
         _.each(availableAIs, function (ai) {
-            var terminationText = game.getTerminationText();
+            var terminationText = this.game.getTerminationText();
             if (terminationText) {
                 ai.process.stdin.write(terminationText);
             }
-        });
+        }, this);
 
-        this.gameResult.winner = game.getWinner();
+        this.gameResult.winner = this.game.getWinner();
+        addLog.call(this, 'Winner: ' + this.gameResult.winner);
         done();
     } else {
         addLog.call(this, 'Starting a new turn');
-        var self = this;
         if (_.isEmpty(availableAIs)) {
-            onReady.call(self, game, ais, done);
+            onReady.call(this, done);
         } else {
             _.each(availableAIs, function (ai) {
                 ai.ready = false;
 
-                addLog.call(self, 'AI' + ai.id + '>>' + 'Writing to stdin, waiting for stdout');
-                if (game.isInitialState()) {
-                    var initialInformation = game.getInitialInformation();
+                addLog.call(this, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
+                if (this.game.isInitialState()) {
+                    var initialInformation = this.game.getInitialInformation();
                     ai.process.stdin.write(initialInformation);
-                    addLog.call(self, initialInformation);
+                    addLog.call(this, initialInformation);
                 }
-                var turnInformation = game.getTurnInformation(ai.id);
+                var turnInformation = this.game.getTurnInformation(ai.index);
                 ai.process.stdin.write(turnInformation);
-                addLog.call(self, turnInformation);
+                addLog.call(this, turnInformation);
 
-                ai.timeout = setTimeout(function () {
-                    addLog.call(self, 'AI' + ai.id + '>>' + 'Killing due to TLE');
-                    ai.available = false;
-                    ai.process.kill('SIGINT');
-                    onReady.call(self, game, ais, done);
-                }, 1000);
-            });
+                var self = this;
+                ai.setTimer(1000, function () {
+                    onReady.call(self, done);
+                });
+            }, this);
         }
     }
 };

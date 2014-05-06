@@ -1,15 +1,17 @@
 html
     head
-        // Third-part CSS
+        // Third-party CSS
         link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
 
-        // Custom JS
+        // Custom CSS
         link(rel='stylesheet', href='/css/app.css')
     body
         - for (var i=0; i<4; i++) {
             div
                 label(for='ai'+i) AI #{i}
                 input(id='ai'+i, type='text', value='python ai/ai.py')
+                input(id='log'+i, type='radio', name='log', value=i, checked=i==0)
+                label(for='log'+i) Show log for this AI
         - }
 
         div

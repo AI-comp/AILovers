@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-browserify');
 
     grunt.initConfig({
 
@@ -19,14 +20,30 @@ module.exports = function(grunt) {
             }
         },
 
+        browserify: {
+            development: {
+                files: {
+                    'client/js/game.bundle.js': ['game/game.js']
+                }
+            }
+        },
+
         watch: {
             styles: {
                 // Which files to watch (all .less files recursively in the less directory)
                 files: ['client/css/**/*.less'],
-                    tasks: ['less'],
-                    options: {
-                        nospawn: true
-                    }
+                tasks: ['less'],
+                options: {
+                    spawn: false
+                }
+            },
+
+            scripts: {
+                files: ['game/**/*.js'],
+                tasks: ['browserify'],
+                options: {
+                    spawn: false
+                }
             }
         },
 
@@ -51,6 +68,7 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.registerTask('dev', ['less', 'concurrent:dev']);
+    grunt.registerTask('setup', ['less', 'browserify']);
+    grunt.registerTask('dev', ['setup', 'concurrent:dev']);
 
 };

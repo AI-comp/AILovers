@@ -10,6 +10,9 @@ class Heroine:
 def readLine():
 	return list(map(int, input().split()))
 
+print('READY')
+sys.stdout.flush()
+
 totalTurns, numPlayers, numHeroines = readLine()
 enthusiasm = readLine()
 heroines = []
@@ -26,6 +29,11 @@ for t in range(totalTurns):
 	realLove = readLine()
 	for i in range(numHeroines):
 		heroines[i].myRealLove = realLove[i]
+	
+	if day == 'W':
+		dated = readLine()
+	else:
+		dated = [0] * numHeroines
 
 	command = []
 	for i in range({'W': 5, 'H': 2}[day]):

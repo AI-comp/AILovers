@@ -1,47 +1,27 @@
 import sys
 import random
+import ailib
 
-class Heroine:
-	def __init__(self, enthusiasm):
-		self.enthusiasm = enthusiasm
-		self.revealedLove = []
-		self.myRealLove = 0
+class AI(ailib.AI):
+	def chooseCommands(self):
+		state = self.states[-1]
+		commands = []
 
-def readLine():
-	return list(map(int, input().split()))
+		targetValue = 45 / self.numHeroines
+		if state.day == 'W':
+			dateCount = 5
+		else:
+			dateCount = 2
+		for i in range(self.numHeroines):
+			for j in range(int(targetValue - {'W': 0, 'H': 1}[state.day] - state.heroines[i].myRealLove)):
+				commands.append(i)
+			if len(commands) >= dateCount:
+				break
+		while len(commands) < dateCount:
+			commands.append(random.randrange(self.numHeroines))
 
-totalTurns, numPlayers, numHeroines = readLine()
-enthusiasm = readLine()
-heroines = []
-for i in range(numHeroines):
-	heroines.append(Heroine(enthusiasm[i]))
+		return commands
 
-for t in range(totalTurns):
-	turn, day = input().split()
-	turn = int(turn)
-
-	for i in range(numHeroines):
-		heroines[i].revealedLove = readLine()
-	
-	realLove = readLine()
-	for i in range(numHeroines):
-		heroines[i].myRealLove = realLove[i]
-
-	# for h in heroines:
-		# print(h.myRealLove, file=sys.stderr)
-	command = []
-	targetValue = 45 / numHeroines
-	if day == 'W':
-		dateCount = 5
-	else:
-		dateCount = 2
-	for i in range(numHeroines):
-		for j in range(int(targetValue - {'W': 0, 'H': 1}[day] - heroines[i].myRealLove)):
-			command.append(i)
-		if len(command) >= dateCount:
-			break
-	while len(command) < dateCount:
-		command.append(str(random.randrange(numHeroines)))
-
-	print(' '.join(map(str,command)))
-	sys.stdout.flush()
+if __name__ == "__main__":
+	ai = AI()
+	ai.run()
