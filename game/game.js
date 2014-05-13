@@ -19,7 +19,7 @@
         Game.prototype.populateHeroines = function (numHeroines) {
             this.heroines = [];
             for (var i = 0; i < numHeroines; i++) {
-                var enthusiasm = (Math.floor(this.mt.random() * 4) + 3) * 6;
+                var enthusiasm = Math.floor(this.mt.random() * 4) + 3;
                 this.heroines.push(new Heroine(enthusiasm, this.numPlayers));
             }
         };
@@ -127,7 +127,7 @@
 
             lines.push('Ranking:');
             _.each(this.getRanking(), function (player) {
-                lines.push('Player ' + player.index + ': ' + player.popularity + ' popularity');
+                lines.push('Player ' + player.index + ': ' + player.getPopularity() + ' popularity');
             });
 
             return lines.join('\n') + '\n';
@@ -140,15 +140,15 @@
         Game.prototype.getRanking = function () {
             var players = [];
             for (var index = 0; index < this.numPlayers; index++) {
-                players.push(new Player(index));
+                players.push(new Player(index, this.getNumPlayers()));
             }
 
             _.each(this.heroines, function (heroine) {
                 for (var i = 0; i < 2; i++) {
                     var func = [Math.max, Math.min][i];
-                    var targetHeroes = heroine.filterHeroesByLove(players, func);
-                    _.each(targetHeroes, function (targetHero) {
-                        targetHero.popularity += (i == 0 ? 1 : -1) * heroine.enthusiasm / _.size(targetHeroes);
+                    var targetPlayers = heroine.filterPlayersByLove(players, func);
+                    _.each(targetPlayers, function (targetPlayer) {
+                        targetPlayer.addPopularity((i == 0 ? 1 : -1) * heroine.enthusiasm, _.size(targetPlayers));
                     });
                 }
             });
@@ -158,7 +158,7 @@
 
         Game.prototype.getWinner = function () {
             var ranking = this.getRanking();
-            if (ranking[0].popularity == ranking[1].popularity) {
+            if (ranking[0].getPopularity() == ranking[1].getPopularity()) {
                 return '';
             } else {
                 return ranking[0].index;
@@ -169,13 +169,22 @@
     })();
 
     var Player = (function () {
-        function Player(index) {
+        function Player(index, numPlayers) {
             this.index = index;
-            this.popularity = 0;
+            this.integerPopularity = 0;
+            this.numPlayers = numPlayers;
         }
 
         Player.compareTo = function (self, other) {
-            return self.popularity > other.popularity ? 1 : -1;
+            return self.integerPopularity > other.integerPopularity ? 1 : -1;
+        };
+
+        Player.prototype.addPopularity = function (numerator, denominator) {
+            this.integerPopularity += numerator * this.numPlayers / denominator;
+        };
+
+        Player.prototype.getPopularity = function () {
+            return this.integerPopularity / this.numPlayers;
         };
 
         return Player;
@@ -203,15 +212,15 @@
             this.dated = true;
         };
 
-        Heroine.prototype.filterHeroesByLove = function (players, func) {
+        Heroine.prototype.filterPlayersByLove = function (players, func) {
             var targetLove = func.apply(null, this.realLove);
-            var targetHeroes = [];
+            var targetPlayers = [];
             _.each(players, function (player) {
                 if (this.realLove[player.index] === targetLove) {
-                    targetHeroes.push(player);
+                    targetPlayers.push(player);
                 }
             }, this);
-            return targetHeroes;
+            return targetPlayers;
         };
 
         Heroine.prototype.refresh = function () {
