@@ -6,8 +6,8 @@ CURRENT=$(cd $(dirname $0) && pwd)
 cd $CURRENT
 
 npm install update
-sudo npm install -g bower grunt-cli
-yes Y | bower install
+npm install -g bower grunt-cli
+yes Y | bower install --allow-root
 grunt setup
 
 rm -Rf ../../public/contests/1
