@@ -7,6 +7,7 @@ class Heroine:
 		self.enthusiasm = enthusiasm
 		self.revealedLove = []
 		self.myRealLove = 0
+		self.dated = False
 
 class State:
 	def __init__(self, turn, day, heroines):
@@ -20,6 +21,15 @@ class AI:
 	
 	def readLine():
 		return list(map(int, input().split()))
+		
+	def getDay(turn):
+		return ['H', 'W'][turn % 2]
+
+	def getNumRequiredCommands(day):
+		return {'W': 5, 'H': 2}[day]
+		
+	def getLoveIncrement(day):
+		return {'W': 2, 'H': 2}[day]
 
 	def run(self):
 		print('READY')
@@ -46,7 +56,12 @@ class AI:
 		for i in range(self.numHeroines):
 			heroines[i].myRealLove = realLove[i]
 
-		self.states.append(State(turn, day, heroines))
+		if day == 'W':
+			dated = list(map(bool, AI.readLine()))
+			for i in range(self.numHeroines):
+				heroines[i].dated = dated[i]
+			
+		self.states.append(self.createState(turn, day, heroines))
 
 	def processTurn(self):
 		self.readTurnInformation()
@@ -55,3 +70,6 @@ class AI:
 		
 	def chooseCommands(self):
 		return []
+		
+	def createState(self, turn, day, heroines):
+		return State(turn, day, heroines)

@@ -8,9 +8,11 @@ var MainScene = ReplayerScene.extend({
         this.setupHeroinePanels();
         this.setGameStatus();
 
-        var controlPanelNode = this.sceneNode.getChildByTag(100);
-        var controlPanel = controlPanelNode.getChildByTag(0);
-        controlPanel.getChildByName('NextButton').onPressStateChangedToPressed = this.getTransitionToDateScene();
+        if (this.game.isFinished()) {
+            this.showResults();
+        } else {
+            this.setupControlPanel();
+        }
 
         return true;
     },
@@ -46,6 +48,12 @@ var MainScene = ReplayerScene.extend({
         return heroinePanelNode.getChildByTag(0);
     },
 
+    setupControlPanel: function () {
+        var controlPanelNode = this.sceneNode.getChildByTag(100);
+        var controlPanel = controlPanelNode.getChildByTag(0);
+        controlPanel.getChildByName('NextButton').onPressStateChangedToPressed = this.getTransitionToDateScene();
+    },
+
     getTransitionToDateScene: function () {
         var self = this;
         return function () {
@@ -54,5 +62,19 @@ var MainScene = ReplayerScene.extend({
                 cc.director.runScene(transition);
             }
         }
+    },
+
+    showResults: function () {
+        var resultLabel = cc.LabelTTF.create('', 'Arial', 18);
+        var lines = [];
+        lines.push('Winner: ' + this.game.getWinner());
+        _.each(this.game.getRanking(), function (player) {
+            lines.push('Player ' + player.index + ': ' + player.popularity + ' popularity');
+        });
+        resultLabel.setString(lines.join('\n'));
+        resultLabel.setFontFillColor(new cc.Color(0, 0, 0));
+        this.sceneNode.addChild(resultLabel, 5);
+        var size = cc.director.getWinSize();
+        resultLabel.setPosition(size.width / 2, size.height / 2);
     },
 });

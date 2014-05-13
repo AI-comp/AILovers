@@ -6,7 +6,7 @@ var res = {
         lovePanel: 'res/publish/LovePanel.json',
         mainScene: 'res/MainScene.json',
         dateScene: 'res/DateScene.json',
-        cursor: 'res/cursor.json',
+        cursor: 'res/Cursor.json',
     },
     image: {
     },

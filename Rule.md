@@ -28,7 +28,7 @@ _女の子_ の _好感度_ によって決まる _人気点_ を、他の _プ�
 ## ゲームの開始
 
 ゲームが開始すると、まずそれぞれの女の子に _熱狂度_ が3から6の間でランダムに設定され、プレイヤーに公開される。
-熱狂度が高い女の子ほど、ゲーム終了時にもらえる（または失う！）人気点が多くなる。
+熱狂度が高い女の子ほど、ゲーム終了時にもらえる（または失う）人気点が多くなる。
 
 ## ターンの流れ
 
@@ -45,15 +45,16 @@ _女の子_ の _好感度_ によって決まる _人気点_ を、他の _プ�
 なお、デート相手が他のプレイヤーと被っても、好感度はそれぞれ通常通り上昇する。
 
 全プレイヤーがデート相手を選んだら、女の子たちの好感度が計算される。
-そのターンが平日なら、誰が誰とデートしたか全員に公開されるが、休日の場合は公開されない。
+そのターンが平日なら、誰が誰とデートしたか全員に公開される。
+休日の場合は、どの女の子がデートを1回以上したかのみ公開される。
 
 下の表は、平日と休日のデートの特徴をまとめたものである。
 
-|                     | 平日 | 休日   |
-| ------------------- | ---- | ------ |
-| デート回数            | 5    | 2      |
-| デート1回で上がる好感度 | 1    | 2      |
-| デート情報の公開       | 公開 | 非公開 |
+|                     | 平日 | 休日 |
+| ------------------- | ---- | ---- |
+| デート回数            | 5    | 2    |
+| デート1回で上がる好感度 | 1    | 2    |
+| デート情報の公開       | 全情報公開 | 女の子のデートの有無のみ公開 |
 
 ## ゲームの終了
 
@@ -62,7 +63,7 @@ _女の子_ の _好感度_ によって決まる _人気点_ を、他の _プ�
 女の子からもらえる人気点は、その女の子の好感度を他のプレイヤーと比べて決められる。
 その女の子からの好感度が全プレイヤー中で最も高い場合は、熱狂度と同じ点数を獲得する。
 逆に全プレイヤー中で最も低い場合は、熱狂度と同じ点数を失う。
-同点でトップや最下位のプレイヤーがいる場合は、そのプレイヤー全員が熱狂度と同じだけ得点あるいは失点する。
+トップや最下位のプレイヤーが複数いる場合は、熱狂度をそれらのプレイヤーの人数で割った点だけ得点あるいは失点する。
 
 各プレイヤーの人気点を全員の女の子に対して計算したら、最も人気点の高いプレイヤーが勝利する。
 人気点トップのプレイヤーが複数いる場合は、そのゲームは引き分けとなる。
@@ -105,14 +106,16 @@ L<sub>20</sub>　L<sub>21</sub> L<sub>22</sub> L<sub>23</sub>
 :
 L<sub>90</sub>　L<sub>91</sub> L<sub>92</sub> L<sub>93</sub>
 R<sub>0</sub> R<sub>1</sub> R<sub>2</sub> ... R<sub>9</sub>
+B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>9</sub>
 </pre>
 
 * T: 現在のターン数。1から始まる。
 * D: 平日の場合は"W", 休日の場合は"H"。
 * L<sub>nm</sub>: 女の子nからプレイヤーmへの公開されている（つまり平日の情報のみでわかる）好感度。このAIプレイヤー自身はプレイヤー0である。
 * R<sub>n</sub>: 女の子nからこのAIプレイヤーへの真の（つまり休日も合わせた）好感度。
+* B<sub>n</sub>: 女の子nが前日の休日にデートをした(1)かしていない(0)か。
 
-全ての値は整数値として与えられる。
+B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>9</sub>の行は、平日のターンでのみ含まれる。
 
 ### 行動の出力形式
 
@@ -146,14 +149,18 @@ H<sub>n</sub>: デート相手の女の子。順番は関係しない。
         turn = 1
 
     process_turn:
-        for h in players:
+        for h in heroines:
             show h.enthusiasm and h.revealed_love to all players
+            if not is_holiday:
+                show h.dated to all players
+            h.dated = false
 
         for p in players:
             for i in [1 .. (is_holiday ? 2 : 5)]:
                 p selects target from heroines
                 target.revealed_love[p] += (is_holiday ? 0 : 1)
                 target.real_love[p] += (is_holiday ? 2 : 1)
+                target.dated = true
         turn += 1
         end if turn > 10
 
@@ -164,6 +171,11 @@ H<sub>n</sub>: デート相手の女の子。順番は関係しない。
         for h in heroines:
             best_players = argmax_p(h.real_love[p])
             for p in best_players:
-                p.popularity += h.enthusiasm
+                p.popularity += h.enthusiasm / best_players.size
+
+            worst_players = argmin_p(h.real_love[p])
+            for p in worst_players:
+                p.popularity -= h.enthusiasm / worst_players.size
+
         winners = argmax_p{p in players}(p.popularity)
         draw if winners.size > 1
