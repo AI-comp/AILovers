@@ -172,7 +172,7 @@
         function Player(index, numPlayers) {
             this.index = index;
             this.integerPopularity = 0;
-            this.numPlayers = numPlayers;
+            this.multiplier = this.factorial(numPlayers);
         }
 
         Player.compareTo = function (self, other) {
@@ -180,11 +180,19 @@
         };
 
         Player.prototype.addPopularity = function (numerator, denominator) {
-            this.integerPopularity += numerator * this.numPlayers / denominator;
+            this.integerPopularity += numerator * this.multiplier / denominator;
         };
 
         Player.prototype.getPopularity = function () {
-            return this.integerPopularity / this.numPlayers;
+            return this.integerPopularity / this.multiplier;
+        };
+
+        Player.prototype.factorial = function (n) {
+            if (n <= 0) {
+                return 1;
+            } else {
+                return n * this.factorial(n - 1);
+            }
         };
 
         return Player;
