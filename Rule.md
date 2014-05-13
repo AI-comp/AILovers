@@ -143,39 +143,45 @@ H<sub>n</sub>: デート相手の女の子。順番は関係しない。
 
     heroine = (enthusiasm, revealed_love[4], real_love[4])
 
+    main:
+        init
+        while turn <= 10:
+            process_turn
+            turn += 1
+        finish
+
     init:
         players = player[4]
-        heroines = heroine[10] (rnd, [0, 0, 0, 0], [0, 0, 0, 0])
+        heroines = heroine[10] (rand(3, 6), [0, 0, 0, 0], [0, 0, 0, 0])
         turn = 1
 
     process_turn:
         for h in heroines:
-            show h.enthusiasm and h.revealed_love to all players
+            display_to_all_players(h.enthusiasm)
+            display_to_all_players(h.revealed_love)
             if not is_holiday:
-                show h.dated to all players
+                display_to_all_players(h.dated)
             h.dated = false
 
         for p in players:
             for i in [1 .. (is_holiday ? 2 : 5)]:
-                p selects target from heroines
+                target = heroines[p.selected[i]]
                 target.revealed_love[p] += (is_holiday ? 0 : 1)
                 target.real_love[p] += (is_holiday ? 2 : 1)
                 target.dated = true
-        turn += 1
-        end if turn > 10
 
     is_holiday:
         turn % 2 == 0
 
-    end:
+    finish:
         for h in heroines:
-            best_players = argmax_p(h.real_love[p])
+            best_players = players.max_by(p -> h.real_love[p])
             for p in best_players:
                 p.popularity += h.enthusiasm / best_players.size
 
-            worst_players = argmin_p(h.real_love[p])
+            worst_players = players.min_by(p -> h.real_love[p])
             for p in worst_players:
                 p.popularity -= h.enthusiasm / worst_players.size
 
-        winners = argmax_p{p in players}(p.popularity)
+        winners = players.max_by(p -> p.popularity)
         draw if winners.size > 1
