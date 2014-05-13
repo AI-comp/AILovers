@@ -6,7 +6,8 @@ CURRENT=$(cd $(dirname $0) && pwd)
 cd $CURRENT
 
 npm install
-bower install
+npm install -g bower grunt
+yes Y | bower install
 grunt setup
 
 rm -Rf ../../public/contests/1
