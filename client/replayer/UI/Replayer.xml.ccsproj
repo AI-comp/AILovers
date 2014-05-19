@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<GameProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>C:\Users\Seiji\Desktop\cocostudio\Replayer</ProjectDir>
+  <Version>1.3.0.1</Version>
+  <Resources>C:\Users\Seiji\Desktop\cocostudio\Replayer</Resources>
+  <Name>Replayer</Name>
+  <JsonFileName>Replayer.json</JsonFileName>
+  <JsonList />
+  <CanvasSize>
+    <Width>480</Width>
+    <Height>320</Height>
+  </CanvasSize>
+  <filePath>C:\Users\Seiji\Desktop\cocostudio\Replayer\Replayer.xml.ccsproj</filePath>
+  <ProjectType>GameProject</ProjectType>
+  <ResRelativePath />
+  <ResProjFolder>C:\Users\Seiji\Desktop\cocostudio\Replayer\CocoStudio\ccsprojs</ResProjFolder>
+  <AssetsDir>C:\Users\Seiji\Desktop\cocostudio\Replayer\CocoStudio\assets</AssetsDir>
+  <LanaguageType>cpp</LanaguageType>
+</GameProject>
