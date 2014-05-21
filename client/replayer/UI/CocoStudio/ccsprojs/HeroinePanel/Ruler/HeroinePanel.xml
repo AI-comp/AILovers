@@ -5,7 +5,11 @@
     <GuidesList />
   </GuidesProject>
   <GuidesProject>
-    <Project>LovePanel</Project>
+    <Project>HeartLovePanel</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>BarLovePanel</Project>
     <GuidesList />
   </GuidesProject>
 </ArrayOfGuidesProject>

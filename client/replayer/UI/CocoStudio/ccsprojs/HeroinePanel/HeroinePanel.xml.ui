@@ -8,11 +8,12 @@
   <JsonFolder>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\HeroinePanel\Json</JsonFolder>
   <JsonList>
     <string>HeroinePanel.json</string>
-    <string>LovePanel.json</string>
+    <string>HeartLovePanel.json</string>
+    <string>BarLovePanel.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>64</Width>
-    <Height>64</Height>
+    <Width>172</Width>
+    <Height>40</Height>
   </CanvasSize>
   <filePath>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\HeroinePanel\HeroinePanel.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
@@ -22,5 +23,5 @@
     <string>dummyHeart.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>LovePanel.json</CurrentUIJson>
+  <CurrentUIJson>HeartLovePanel.json</CurrentUIJson>
 </UIProject>

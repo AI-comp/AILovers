@@ -17,6 +17,9 @@
         "src/resource.js",
         "src/replayerScene.js",
         "src/mainScene.js",
-        "src/dateScene.js"
+        "src/dateScene.js",
+		"src/lovePanel.js",
+		"src/heartLovePanel.js",
+		"src/barLovePanel.js"
     ]
 }

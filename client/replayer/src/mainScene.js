@@ -23,7 +23,8 @@ var MainScene = ReplayerScene.extend({
             heroinePanel.setBackGroundImage(res.image.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
 
             _(this.game.getNumPlayers()).times(function (playerIndex) {
-                var lovePanel = ccs.uiReader.widgetFromJsonFile(res.json.lovePanel);
+                //var lovePanel = new HeartLovePanel(res.image.hearts[playerIndex]);
+                var lovePanel = new BarLovePanel();
                 heroinePanel.getChildByName('LoveArea' + playerIndex).addChild(lovePanel);
             }, this);
         }, this);
@@ -36,13 +37,7 @@ var MainScene = ReplayerScene.extend({
             heroinePanel.getChildByName('EnthusiasmLabel').setText(heroine.enthusiasm);
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var lovePanel = heroinePanel.getChildByName('LoveArea' + playerIndex).getChildByName('LovePanel');
-                var love = heroine.revealedLove[playerIndex];
-                if (love >= 10) {
-                    lovePanel.getChildByName('HeartImage10').loadTexture(res.image.hearts[playerIndex]);
-                }
-                _(love % 10).times(function (loveIndex) {
-                    lovePanel.getChildByName('HeartImage' + (loveIndex + 1)).loadTexture(res.image.hearts[playerIndex]);
-                }, this);
+                lovePanel.setLove(heroine.revealedLove[playerIndex], heroine.realLove[playerIndex]);
             }, this);
         }, this);
     },
