@@ -20,7 +20,7 @@
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
   <imagePngList>
-    <string>dummyHeart.png</string>
+    <string>emptyHeart.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>HeartLovePanel.json</CurrentUIJson>
