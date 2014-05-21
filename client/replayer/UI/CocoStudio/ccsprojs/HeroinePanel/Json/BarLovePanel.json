@@ -11,7 +11,7 @@
   "designWidth": 172,
   "textures": [],
   "texturesPng": [
-    "GUI/loadingbar.png"
+    "dummyHeart.png"
   ],
   "version": "1.4.0.1",
   "widgetTree": {

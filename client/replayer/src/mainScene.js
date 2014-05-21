@@ -23,8 +23,8 @@ var MainScene = ReplayerScene.extend({
             heroinePanel.setBackGroundImage(res.image.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
 
             _(this.game.getNumPlayers()).times(function (playerIndex) {
-                //var lovePanel = new HeartLovePanel(res.image.hearts[playerIndex]);
-                var lovePanel = new BarLovePanel();
+                var lovePanel = new HeartLovePanel(res.image.hearts[playerIndex]);
+                //var lovePanel = new BarLovePanel();
                 heroinePanel.getChildByName('LoveArea' + playerIndex).addChild(lovePanel);
             }, this);
         }, this);
