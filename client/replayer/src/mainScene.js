@@ -24,7 +24,6 @@ var MainScene = ReplayerScene.extend({
 
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var lovePanel = ccs.uiReader.widgetFromJsonFile(res.json.lovePanel);
-                lovePanel.getChildByName('HeartImage').loadTexture(res.image.hearts[playerIndex]);
                 heroinePanel.getChildByName('LoveArea' + playerIndex).addChild(lovePanel);
             }, this);
         }, this);
@@ -37,8 +36,13 @@ var MainScene = ReplayerScene.extend({
             heroinePanel.getChildByName('EnthusiasmLabel').setText(heroine.enthusiasm);
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var lovePanel = heroinePanel.getChildByName('LoveArea' + playerIndex).getChildByName('LovePanel');
-                lovePanel.getChildByName('RevealedLoveLabel').setText(heroine.revealedLove[playerIndex]);
-                lovePanel.getChildByName('HiddenLoveLabel').setText(heroine.realLove[playerIndex] - heroine.revealedLove[playerIndex]);
+                var love = heroine.revealedLove[playerIndex];
+                if (love >= 10) {
+                    lovePanel.getChildByName('HeartImage10').loadTexture(res.image.hearts[playerIndex]);
+                }
+                _(love % 10).times(function (loveIndex) {
+                    lovePanel.getChildByName('HeartImage' + (loveIndex + 1)).loadTexture(res.image.hearts[playerIndex]);
+                }, this);
             }, this);
         }, this);
     },
