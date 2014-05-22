@@ -77,7 +77,7 @@ var MainScene = ReplayerScene.extend({
         var lines = [];
         lines.push('Winner: ' + this.game.getWinner());
         _.each(this.game.getRanking(), function (player) {
-            lines.push('Player ' + player.index + ': ' + player.popularity + ' popularity');
+            lines.push('Player ' + player.index + ': ' + player.getPopularity() + ' popularity');
         });
         resultLabel.setString(lines.join('\n'));
         resultLabel.setFontFillColor(new cc.Color(0, 0, 0));
