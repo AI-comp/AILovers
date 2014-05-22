@@ -5,11 +5,13 @@ var res = {
         controlPanel: 'res/publish/ControlPanel.json',
         heartLovePanel: 'res/publish/HeartLovePanel.json',
         barLovePanel: 'res/publish/BarLovePanel.json',
+        enthusiasmPanel: 'res/publish/EnthusiasmPanel.json',
         mainScene: 'res/MainScene.json',
         dateScene: 'res/DateScene.json',
         cursor: 'res/Cursor.json',
     },
     image: {
+        enthusiasm: 'res/enthusiasm.png',
     },
 };
 
@@ -19,9 +21,11 @@ var g_resources = [
     res.json.controlPanel,
     res.json.heartLovePanel,
     res.json.barLovePanel,
+    res.json.enthusiasmPanel,
     res.json.mainScene,
     res.json.dateScene,
     res.json.cursor,
+    res.image.enthusiasm,
 ];
 
 res.image.heroines = _.map(_.range(10), function (i) {

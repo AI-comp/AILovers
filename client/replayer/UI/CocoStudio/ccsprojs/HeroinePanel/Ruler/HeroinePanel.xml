@@ -12,4 +12,8 @@
     <Project>BarLovePanel</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>EnthusiasmPanel</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

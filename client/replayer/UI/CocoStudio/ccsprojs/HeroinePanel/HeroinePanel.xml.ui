@@ -10,6 +10,7 @@
     <string>HeroinePanel.json</string>
     <string>HeartLovePanel.json</string>
     <string>BarLovePanel.json</string>
+    <string>EnthusiasmPanel.json</string>
   </JsonList>
   <CanvasSize>
     <Width>172</Width>
@@ -20,7 +21,7 @@
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
   <imagePngList>
-    <string>emptyHeart.png</string>
+    <string>emptyEnthusiasm.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>HeartLovePanel.json</CurrentUIJson>

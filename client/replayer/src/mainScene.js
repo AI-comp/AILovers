@@ -22,6 +22,9 @@ var MainScene = ReplayerScene.extend({
             var heroinePanel = this.getHeroinePanel(heroineIndex);
             heroinePanel.setBackGroundImage(res.image.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
 
+            var enthusiasmPanel = ccs.uiReader.widgetFromJsonFile(res.json.enthusiasmPanel);
+            heroinePanel.getChildByName('EnthusiasmArea').addChild(enthusiasmPanel);
+
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var lovePanel = new HeartLovePanel(res.image.hearts[playerIndex]);
                 //var lovePanel = new BarLovePanel();
@@ -34,7 +37,13 @@ var MainScene = ReplayerScene.extend({
         _(this.game.getNumHeroines()).times(function (heroineIndex) {
             var heroine = this.game.heroines[heroineIndex];
             var heroinePanel = this.getHeroinePanel(heroineIndex);
-            heroinePanel.getChildByName('EnthusiasmLabel').setText(heroine.enthusiasm);
+
+            var enthusiasmPanel = heroinePanel.getChildByName('EnthusiasmArea').getChildByName('EnthusiasmPanel');
+            _(heroine.enthusiasm).times(function (enthusiasmIndex) {
+                var enthusiasmImage = enthusiasmPanel.getChildByName('EnthusiasmImage' + (enthusiasmIndex + 1));
+                enthusiasmImage.loadTexture(res.image.enthusiasm);
+            }, this);
+
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var lovePanel = heroinePanel.getChildByName('LoveArea' + playerIndex).getChildByName('LovePanel');
                 lovePanel.setLove(heroine.revealedLove[playerIndex], heroine.realLove[playerIndex]);
