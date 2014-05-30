@@ -10,9 +10,7 @@
   "designHeight": 340,
   "designWidth": 200,
   "textures": [],
-  "texturesPng": [
-    "black.png"
-  ],
+  "texturesPng": [],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",
@@ -398,7 +396,7 @@
       "classname": "Panel",
       "name": "HeroinePanel",
       "ZOrder": 0,
-      "actiontag": 1,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",
