@@ -25,6 +25,7 @@ function AI(command, parameters, workingDir, index, addLog) {
 
     this.process.on('close', function (code) {
         self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
+        self.available = false;
     });
 }
 
