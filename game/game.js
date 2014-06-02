@@ -11,9 +11,9 @@
             this.mt = new MersenneTwister(seed);
         }
 
-        Game.prototype.initialize = function (numPlayers) {
-            this.numPlayers = numPlayers;
-            this.populateHeroines(numPlayers * 2.5);
+        Game.prototype.initialize = function (numPlayers, numHeroines) {
+            this.numPlayers = numPlayers || 4;
+            this.populateHeroines(numHeroines || this.numPlayers * 2);
         };
 
         Game.prototype.populateHeroines = function (numHeroines) {

@@ -69,7 +69,7 @@ Runner.prototype.runGame = function (done) {
 
     var seed = new Date().getTime();
     this.game = new Game(seed);
-    this.game.initialize(4);
+    this.game.initialize();
 
     this.gameResult = {
         log: _.map(_.range(this.game.getNumPlayers()), function (i) {
@@ -83,7 +83,7 @@ Runner.prototype.runGame = function (done) {
     };
 
     this.ais = [];
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < this.game.getNumPlayers(); i++) {
         var commandAndParameters = this.commands[i].split(' ');
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
