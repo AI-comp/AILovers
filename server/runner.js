@@ -26,6 +26,7 @@ function AI(command, parameters, workingDir, index, addLog) {
     this.process.on('close', function (code) {
         self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
         self.available = false;
+        self.clearTimer();
     });
 }
 
@@ -35,8 +36,15 @@ AI.prototype.setTimer = function (timeLimit, onTLE) {
         self.addLog('AI' + self.index + '>>' + 'Killing due to TLE');
         self.available = false;
         self.process.kill('SIGINT');
-        onTLE();
+        if (onTLE) {
+            onTLE();
+        }
     }, timeLimit);
+};
+
+AI.prototype.clearTimer = function () {
+    clearTimeout(this.timeout);
+    this.timeout = null;
 };
 
 /**
@@ -89,7 +97,7 @@ Runner.prototype.runGame = function (done) {
         ai.onStdout = function (data) {
             if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
                 ai.ready = true;
-                clearTimeout(ai.timeout);
+                ai.clearTimer();
                 onReadyForBeginning.call(self, done);
             }
         };
@@ -107,7 +115,7 @@ function onReadyForBeginning(done) {
                 if (ai.available && !ai.ready) {
                     ai.commands = data.toString().trim().split(' ');
                     ai.ready = true;
-                    clearTimeout(ai.timeout);
+                    ai.clearTimer();
                     onReady.call(self, done);
                 }
             };
@@ -178,6 +186,7 @@ function processTurn(done) {
             if (terminationText) {
                 ai.process.stdin.write(terminationText);
             }
+            ai.setTimer(1000);
         }, this);
 
         this.gameResult.winner = this.game.getWinner();
