@@ -17,7 +17,7 @@ _女の子_ の _好感度_ によって決まる _人気点_ を、他の _プ�
 
 ## ゲームの大まかな流れ
 
-プレイヤーは4人、女の子は10人いる。
+プレイヤーは4人、女の子は8人いる。
 
 このゲームはターン制であり、各ターンごとに、プレイヤーたちは好きな女の子と _デート_ して好感度をためる。
 デートの情報は一部が隠されているため、他のプレイヤーとの駆け引きが重要となる。
@@ -87,7 +87,7 @@ AIはゲーム開始時に実行される。
 
 <pre>
 T P H
-E<sub>0</sub> E<sub>1</sub> E<sub>2</sub> ... E<sub>9</sub>
+E<sub>0</sub> E<sub>1</sub> E<sub>2</sub> ... E<sub>7</sub>
 </pre>
 
 * T: 全ターン数。
@@ -106,9 +106,9 @@ L<sub>10</sub>　L<sub>11</sub> L<sub>12</sub> L<sub>13</sub>
 L<sub>20</sub>　L<sub>21</sub> L<sub>22</sub> L<sub>23</sub>
 :
 :
-L<sub>90</sub>　L<sub>91</sub> L<sub>92</sub> L<sub>93</sub>
-R<sub>0</sub> R<sub>1</sub> R<sub>2</sub> ... R<sub>9</sub>
-B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>9</sub>
+L<sub>70</sub>　L<sub>71</sub> L<sub>72</sub> L<sub>73</sub>
+R<sub>0</sub> R<sub>1</sub> R<sub>2</sub> ... R<sub>7</sub>
+B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>7</sub>
 </pre>
 
 * T: 現在のターン数。1から始まる。
@@ -117,7 +117,7 @@ B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>9</sub>
 * R<sub>n</sub>: 女の子nからこのAIプレイヤーへの真の（つまり休日も合わせた）好感度。
 * B<sub>n</sub>: 女の子nが前日の休日にデートをした(1)かしていない(0)か。
 
-B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>9</sub>の行は、平日のターンでのみ含まれる。
+B<sub>0</sub> B<sub>1</sub> B<sub>2</sub> ... B<sub>7</sub>の行は、平日のターンでのみ含まれる。
 
 ### 行動の出力形式
 
@@ -154,7 +154,7 @@ H<sub>n</sub>: デート相手の女の子。順番は関係しない。
 
     init:
         players = player[4]
-        heroines = heroine[10] (rand(3, 6), [0, 0, 0, 0], [0, 0, 0, 0])
+        heroines = heroine[8] (rand(3, 6), [0, 0, 0, 0], [0, 0, 0, 0])
         turn = 1
 
     process_turn:
