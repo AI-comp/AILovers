@@ -10,16 +10,14 @@
     <string>PlayerPanel.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>480</Width>
-    <Height>320</Height>
+    <Width>200</Width>
+    <Height>150</Height>
   </CanvasSize>
   <filePath>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\PlayerPanel.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
-  <imagePngList>
-    <string>dummyPlayerIcon.png</string>
-  </imagePngList>
+  <imagePngList />
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>PlayerPanel.json</CurrentUIJson>
 </UIProject>
