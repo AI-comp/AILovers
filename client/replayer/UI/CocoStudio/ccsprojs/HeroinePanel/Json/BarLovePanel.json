@@ -10,7 +10,9 @@
   "designHeight": 40,
   "designWidth": 172,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "black.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",
@@ -76,7 +78,7 @@
       "classname": "Panel",
       "name": "LovePanel",
       "ZOrder": 0,
-      "actiontag": 1,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

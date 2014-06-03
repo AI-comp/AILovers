@@ -10,7 +10,9 @@
   "designHeight": 150,
   "designWidth": 200,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "dummyPlayerIcon.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",

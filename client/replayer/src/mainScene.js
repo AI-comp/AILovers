@@ -47,7 +47,7 @@ var MainScene = ReplayerScene.extend({
 
             var enthusiasmPanel = heroinePanel.getChildByName('EnthusiasmArea').getChildByName('EnthusiasmPanel');
             _(heroine.enthusiasm).times(function (enthusiasmIndex) {
-                var enthusiasmImage = enthusiasmPanel.getChildByName('EnthusiasmImage' + (enthusiasmIndex + 1));
+                var enthusiasmImage = enthusiasmPanel.getChildByName('Enthusiasm' + (enthusiasmIndex + 1));
                 enthusiasmImage.loadTexture(res.image.enthusiasm);
             }, this);
 

@@ -11,6 +11,8 @@
   "designWidth": 172,
   "textures": [],
   "texturesPng": [
+    "black.png",
+    "emptyHeart.png",
     "GUI/loadingbar.png"
   ],
   "version": "1.4.0.1",
@@ -41,8 +43,8 @@
           "ignoreSize": false,
           "layoutParameter": null,
           "opacity": 255,
-          "positionPercentX": 0.502907,
-          "positionPercentY": 0.5105003,
+          "positionPercentX": 0.5,
+          "positionPercentY": 0.5,
           "positionType": 0,
           "rotation": 0,
           "scaleX": 1,
@@ -78,7 +80,7 @@
       "classname": "Panel",
       "name": "LovePanel",
       "ZOrder": 0,
-      "actiontag": 1,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

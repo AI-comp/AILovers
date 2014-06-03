@@ -10,7 +10,9 @@
   "designHeight": 384,
   "designWidth": 200,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "black.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",

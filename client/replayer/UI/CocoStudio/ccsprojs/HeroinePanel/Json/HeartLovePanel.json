@@ -10,7 +10,12 @@
   "designHeight": 40,
   "designWidth": 172,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "black.png",
+    "emptyHeart.png",
+    "GUI/loadingbar.png",
+    "emptyEnthusiasm.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",
@@ -23,7 +28,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage10",
+          "name": "Heart10",
           "ZOrder": 0,
           "actiontag": 99,
           "anchorPointX": 0.5,
@@ -77,7 +82,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage1",
+          "name": "Heart1",
           "ZOrder": 0,
           "actiontag": 5,
           "anchorPointX": 0.5,
@@ -131,7 +136,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage2",
+          "name": "Heart2",
           "ZOrder": 0,
           "actiontag": 6,
           "anchorPointX": 0.5,
@@ -185,7 +190,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage3",
+          "name": "Heart3",
           "ZOrder": 0,
           "actiontag": 8,
           "anchorPointX": 0.5,
@@ -239,7 +244,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage4",
+          "name": "Heart4",
           "ZOrder": 0,
           "actiontag": 10,
           "anchorPointX": 0.5,
@@ -293,7 +298,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage5",
+          "name": "Heart5",
           "ZOrder": 0,
           "actiontag": 12,
           "anchorPointX": 0.5,
@@ -347,7 +352,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage6",
+          "name": "Heart6",
           "ZOrder": 0,
           "actiontag": 3,
           "anchorPointX": 0.5,
@@ -401,7 +406,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage7",
+          "name": "Heart7",
           "ZOrder": 0,
           "actiontag": 7,
           "anchorPointX": 0.5,
@@ -455,7 +460,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage8",
+          "name": "Heart8",
           "ZOrder": 0,
           "actiontag": 9,
           "anchorPointX": 0.5,
@@ -509,7 +514,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "HeartImage9",
+          "name": "Heart9",
           "ZOrder": 0,
           "actiontag": 11,
           "anchorPointX": 0.5,
@@ -562,7 +567,7 @@
       "classname": "Panel",
       "name": "LovePanel",
       "ZOrder": 0,
-      "actiontag": -1,
+      "actiontag": 1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

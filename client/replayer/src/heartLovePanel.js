@@ -8,10 +8,10 @@ var HeartLovePanel = LovePanel.extend({
         this._super(revealedLove, realLove);
 
         if (revealedLove >= 10) {
-            this.innerPanel.getChildByName('HeartImage10').loadTexture(this.heartResource);
+            this.innerPanel.getChildByName('Heart10').loadTexture(this.heartResource);
         }
         _(revealedLove % 10).times(function (heartIndex) {
-            this.innerPanel.getChildByName('HeartImage' + (heartIndex + 1)).loadTexture(this.heartResource);
+            this.innerPanel.getChildByName('Heart' + (heartIndex + 1)).loadTexture(this.heartResource);
         }, this);
     },
 });

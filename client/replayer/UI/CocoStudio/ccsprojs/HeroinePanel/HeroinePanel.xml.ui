@@ -20,7 +20,12 @@
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
-  <imagePngList />
+  <imagePngList>
+    <string>black.png</string>
+    <string>emptyHeart.png</string>
+    <string>GUI/loadingbar.png</string>
+    <string>emptyEnthusiasm.png</string>
+  </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>HeroinePanel.json</CurrentUIJson>
+  <CurrentUIJson>HeartLovePanel.json</CurrentUIJson>
 </UIProject>
