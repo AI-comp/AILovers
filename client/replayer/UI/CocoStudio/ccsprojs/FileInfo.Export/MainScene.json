@@ -2,7 +2,10 @@
   "publish/black.png",
   "publish/GUI/button.png",
   "background.png",
+  "publish/dummy.png",
+  "publish/dummyPlayerIcon.png",
   "publish\\MainScene.json",
   "publish/HeroinePanel.json",
+  "publish/PlayerPanel.json",
   "publish/ControlPanel.json"
 ]

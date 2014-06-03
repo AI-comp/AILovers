@@ -2,6 +2,7 @@ var res = {
     json: {
         heroinePanel: 'res/publish/HeroinePanel.json',
         datePanel: 'res/publish/DatePanel.json',
+        playerPanel: 'res/publish/PlayerPanel.json',
         controlPanel: 'res/publish/ControlPanel.json',
         heartLovePanel: 'res/publish/HeartLovePanel.json',
         barLovePanel: 'res/publish/BarLovePanel.json',
@@ -18,6 +19,7 @@ var res = {
 var g_resources = [
     res.json.heroinePanel,
     res.json.datePanel,
+    res.json.playerPanel,
     res.json.controlPanel,
     res.json.heartLovePanel,
     res.json.barLovePanel,
@@ -28,28 +30,18 @@ var g_resources = [
     res.image.enthusiasm,
 ];
 
-res.image.heroines = _.map(_.range(10), function (i) {
-    return 'res/heroine/' + i + '.png';
-});
-res.image.hearts = _.map(_.range(4), function (i) {
-    return 'res/heart/' + i + '.png';
-});
-res.image.dates = _.map(_.range(10), function (i) {
-    return 'res/date/' + i + '.png';
-});
-res.image.faces = _.map(_.range(10), function (i) {
-    return 'res/face/' + i + '.png';
-});
+function addNumberedResources(directory, count, extension) {
+    var resources = _.map(_.range(count), function (i) {
+        return 'res/' + directory + '/' + i + '.' + extension;
+    });
+    _.each(resources, function (resource) {
+        g_resources.push(resource);
+    });
+    return resources;
+}
 
-_.each(res.image.heroines, function (resource) {
-    g_resources.push(resource);
-});
-_.each(res.image.hearts, function (resource) {
-    g_resources.push(resource);
-});
-_.each(res.image.dates, function (resource) {
-    g_resources.push(resource);
-});
-_.each(res.image.faces, function (resource) {
-    g_resources.push(resource);
-});
+res.image.heroines = addNumberedResources('heroine', 8, 'png');
+res.image.hearts = addNumberedResources('heart', 4, 'png');
+res.image.dates = addNumberedResources('date', 8, 'png');
+res.image.faces = addNumberedResources('face', 8, 'png');
+res.image.playerBackgrounds = addNumberedResources('playerBackground', 4, 'png');

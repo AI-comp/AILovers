@@ -6,12 +6,12 @@ var MainScene = ReplayerScene.extend({
         this.addChild(this.sceneNode);
 
         this.setupHeroinePanels();
+        this.setupPlayerPanels();
         this.setGameStatus();
+        this.setupControlPanel();
 
         if (this.game.isFinished()) {
             this.showResults();
-        } else {
-            this.setupControlPanel();
         }
 
         return true;
@@ -30,6 +30,13 @@ var MainScene = ReplayerScene.extend({
                 //var lovePanel = new BarLovePanel();
                 heroinePanel.getChildByName('LoveArea' + playerIndex).addChild(lovePanel);
             }, this);
+        }, this);
+    },
+
+    setupPlayerPanels: function () {
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var playerPanel = this.getPlayerPanel(playerIndex);
+            playerPanel.setBackGroundImage(res.image.playerBackgrounds[playerIndex], ccui.Widget.LOCAL_TEXTURE);
         }, this);
     },
 
@@ -52,14 +59,24 @@ var MainScene = ReplayerScene.extend({
     },
 
     getHeroinePanel: function (heroineIndex) {
-        var heroinePanelNode = this.sceneNode.getChildByTag(heroineIndex);
-        return heroinePanelNode.getChildByTag(0);
+        return this.getPanel(heroineIndex);
+    },
+
+    getPlayerPanel: function (playerIndex) {
+        return this.getPanel(10 + playerIndex);
+    },
+
+    getPanel: function (tag) {
+        var panelNode = this.sceneNode.getChildByTag(tag);
+        return panelNode.getChildByTag(0);
     },
 
     setupControlPanel: function () {
-        var controlPanelNode = this.sceneNode.getChildByTag(100);
-        var controlPanel = controlPanelNode.getChildByTag(0);
-        controlPanel.getChildByName('NextButton').onPressStateChangedToPressed = this.getTransitionToDateScene();
+        if (!this.game.isFinished()) {
+            var controlPanelNode = this.sceneNode.getChildByTag(100);
+            var controlPanel = controlPanelNode.getChildByTag(0);
+            controlPanel.getChildByName('NextButton').onPressStateChangedToPressed = this.getTransitionToDateScene();
+        }
     },
 
     getTransitionToDateScene: function () {
