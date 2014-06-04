@@ -11,6 +11,7 @@ function AI(command, parameters, workingDir, index, addLog) {
     this.available = true;
     this.timeout = null;
     this.onStdout = function (data) { };
+    this.onExit = function () { };
 
     var self = this;
 
@@ -27,18 +28,17 @@ function AI(command, parameters, workingDir, index, addLog) {
         self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
         self.available = false;
         self.clearTimer();
+        self.onExit();
     });
 }
 
-AI.prototype.setTimer = function (timeLimit, onTLE) {
+AI.prototype.setTimer = function (timeLimit) {
     var self = this;
     self.timeout = setTimeout(function () {
         self.addLog('AI' + self.index + '>>' + 'Killing due to TLE');
         self.available = false;
         self.process.kill('SIGINT');
-        if (onTLE) {
-            onTLE();
-        }
+        self.onExit();
     }, timeLimit);
 };
 
@@ -101,9 +101,10 @@ Runner.prototype.runGame = function (done) {
                 onReadyForBeginning.call(self, done);
             }
         };
-        ai.setTimer(5000, function () {
+        ai.onExit = function () {
             onReadyForBeginning.call(self, done);
-        });
+        }
+        ai.setTimer(5000);
     });
 };
 
@@ -185,6 +186,7 @@ function processTurn(done) {
             if (terminationText) {
                 ai.process.stdin.write(terminationText);
             }
+            ai.onExit = function () { };
             ai.setTimer(1000);
         }, this);
 
@@ -211,9 +213,10 @@ function processTurn(done) {
                 addLog.call(this, turnInformation);
 
                 var self = this;
-                ai.setTimer(1000, function () {
+                ai.onExit = function () {
                     onReady.call(self, done);
-                });
+                };
+                ai.setTimer(1000);
             }, this);
         }
     }
