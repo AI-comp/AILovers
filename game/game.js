@@ -9,6 +9,10 @@
             this.turn = 1;
             this.totalTurns = 10;
             this.mt = new MersenneTwister(seed);
+            this.replay = {
+                seed: seed,
+                commands: [],
+            };
         }
 
         Game.prototype.initialize = function (numPlayers, numHeroines) {
@@ -40,20 +44,25 @@
             return this.numPlayers;
         };
 
-        Game.prototype.processTurn = function (moves) {
+        Game.prototype.processTurn = function (commands) {
             _.each(this.heroines, function (heroine) {
                 heroine.refresh();
             });
 
-            for (var i = 0; i < this.getNumRequiredCommands() ; i++) {
-                for (var playerIndex = 0; playerIndex < this.numPlayers; playerIndex++) {
-                    var targetHeroineIndex = parseInt(moves[playerIndex][i]);
+            this.replay.commands.push(_.map(_.range(this.getNumPlayers()), function () {
+                return [];
+            }, this));
+
+            _(this.numPlayers).times(function (playerIndex) {
+                _(this.getNumRequiredCommands()).times(function (i) {
+                    var targetHeroineIndex = parseInt(commands[playerIndex][i]);
                     if (!(targetHeroineIndex >= 0 && targetHeroineIndex < this.heroines.length)) {
                         targetHeroineIndex = 0;
                     }
                     this.heroines[targetHeroineIndex].date(playerIndex, this.isWeekday());
-                }
-            }
+                    this.replay.commands[this.turn - 1][playerIndex].push(targetHeroineIndex);
+                }, this);
+            }, this);
 
             this.turn += 1;
         };
@@ -163,6 +172,10 @@
             } else {
                 return ranking[0].index;
             }
+        };
+
+        Game.prototype.getReplay = function () {
+            return this.replay;
         };
 
         return Game;

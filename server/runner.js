@@ -83,7 +83,7 @@ Runner.prototype.runGame = function (done) {
     };
 
     this.ais = [];
-    for (var i = 0; i < this.game.getNumPlayers(); i++) {
+    for (var i = 0; i < this.game.getNumPlayers() ; i++) {
         var commandAndParameters = this.commands[i].split(' ');
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
@@ -161,7 +161,6 @@ function onReady(done) {
             return ai.available ? ai.commands : [];
         });
         this.game.processTurn(commands);
-        this.gameResult.replay.commands.push(commands);
         addLog.call(this, 'Turn finished. Game status:');
         addLog.call(this, this.game.getStatus());
         addLog.call(this, '');
@@ -189,6 +188,7 @@ function processTurn(done) {
             ai.setTimer(1000);
         }, this);
 
+        this.gameResult.replay = this.game.getReplay();
         this.gameResult.winner = this.game.getWinner();
         addLog.call(this, 'Winner: ' + this.gameResult.winner);
         done();
