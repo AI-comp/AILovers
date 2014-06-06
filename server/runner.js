@@ -72,9 +72,7 @@ Runner.prototype.runGame = function (done) {
     this.game.initialize();
 
     this.gameResult = {
-        log: _.map(_.range(this.game.getNumPlayers()), function (i) {
-            return '';
-        }),
+        log: [],
         winner: '',
         replay: {
             seed: seed,
@@ -142,14 +140,8 @@ function isEveryoneReady(ais) {
  * @param aiIndex
  */
 function addLog(logMessage, aiIndex) {
-    var targetAIs = (aiIndex === undefined || aiIndex == this.LOG_FOR_EVERYONE) ? _.range(this.game.getNumPlayers()) : [aiIndex];
-
-    _.each(targetAIs, function (ai) {
-        this.gameResult.log[ai] += logMessage;
-        if (logMessage.slice(-1) != '\n') {
-            this.gameResult.log[ai] += '\n';
-        }
-    }, this);
+    aiIndex = aiIndex || this.LOG_FOR_EVERYONE;
+    this.gameResult.log.push({ target: aiIndex, message: logMessage.trim() });
 }
 
 /**

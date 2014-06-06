@@ -11,13 +11,15 @@ $(function () {
                 return $('#ai' + i).val();
             })
         }));
-        $('#log').html('');
+        $('#log').html('Running a game...');
     });
 
     ws.onmessage = function (event) {
-        var aiForLog = $('input:radio[name=log]:checked').val();
         var result = JSON.parse(event.data);
-        showLog(result.log[aiForLog].replace(/\n/g, '<br />'));
+        var htmlLog = _.map(result.log, function (log) {
+            return log.message.replace(/\n/g, '<br />');
+        }, this).join('<br />');
+        showLog(htmlLog);
     };
 
     function showLog(message) {
