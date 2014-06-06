@@ -140,7 +140,9 @@ function isEveryoneReady(ais) {
  * @param aiIndex
  */
 function addLog(logMessage, aiIndex) {
-    aiIndex = aiIndex || this.LOG_FOR_EVERYONE;
+    if (aiIndex === undefined) {
+        aiIndex = this.LOG_FOR_EVERYONE;
+    }
     this.gameResult.log.push({ target: aiIndex, message: logMessage.trim() });
 }
 
