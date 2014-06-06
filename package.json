@@ -1,6 +1,6 @@
 {
   "name": "AILovers",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "ギャルゲー",
   "main": "server/main.js",
   "scripts": {
@@ -8,6 +8,10 @@
     "start": "grunt dev"
   },
   "author": "AI-Comp",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/AI-comp/AILovers.git"
+  },
   "dependencies": {
     "express": "~3.5.0",
     "jade": "~1.3.0",
