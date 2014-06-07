@@ -1,11 +1,11 @@
 console.log('AI Lovers');
 
 $(function () {
-    var wsTestBtn = $('#wsTest');
+    var runGameBtn = $('#runGame');
     var host = window.document.location.host.replace(/:.*/, '');
     var ws = new WebSocket('ws://' + host + ':8000');
 
-    wsTestBtn.click(function () {
+    runGameBtn.click(function () {
         ws.send(JSON.stringify({
             commands: _.map(_.range(4), function (i) {
                 return $('#ai' + i).val();
