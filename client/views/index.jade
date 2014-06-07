@@ -15,7 +15,10 @@ html
         div
             button#runGame Run Game
 
-        div#log
+        div
+            div.box#log(style='float:left; width:400; height:800;')
+            iframe#replayer(src='' style='width:1024; height:800;')
+        div(style='clear:both')
 
         // Third-party JS
         script(src='/components/jquery/dist/jquery.min.js')

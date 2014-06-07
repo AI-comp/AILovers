@@ -15,14 +15,20 @@ $(function () {
     });
 
     ws.onmessage = function (event) {
-        var result = JSON.parse(event.data);
-        var htmlLog = _.map(result.log, function (log) {
-            return log.message.replace(/\n/g, '<br />');
-        }, this).join('<br />');
-        showLog(htmlLog);
+        var gameResult = JSON.parse(event.data);
+        showLog(gameResult.log);
+        loadReplayer(gameResult.replay);
     };
 
-    function showLog(message) {
-        $('#log').html(message);
+    function showLog(rawLog) {
+        var htmlLog = _.map(rawLog, function (log) {
+            return log.message.replace(/\n/g, '<br />');
+        }, this).join('<br />');
+        $('#log').html(htmlLog);
+    }
+
+    function loadReplayer(replay) {
+        console.log('/replayer?' + JSON.stringify(replay));
+        $('#replayer').attr('src', '/replayer/?replay=' + JSON.stringify(replay));
     }
 });
