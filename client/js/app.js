@@ -28,7 +28,6 @@ $(function () {
     }
 
     function loadReplayer(replay) {
-        console.log('/replayer?' + JSON.stringify(replay));
         $('#replayer').attr('src', '/replayer/?replay=' + JSON.stringify(replay));
     }
 });
