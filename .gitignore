@@ -31,4 +31,5 @@ build/Release
 node_modules
 
 __pycache__
+*.pyc
 *.swp

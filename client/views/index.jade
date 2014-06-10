@@ -1,9 +1,6 @@
 html
     head
-        // Third-party CSS
         link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
-
-        // Custom CSS
         link(rel='stylesheet', href='/css/app.css')
     body
         - for (var i=0; i<4; i++) {
@@ -11,17 +8,16 @@ html
                 label(for='ai'+i) AI #{i}
                 input(id='ai'+i, type='text', value='python ai/ai.py')
         - }
+        div
+            button#runGame Run Game
 
         div
-            button#wsTest Connect to WS server
+            div.box#log(style='float:left; width:400; height:800;')
+            iframe#replayer(src='' style='width:1024; height:800;')
+        div(style='clear:both')
 
-        div#log
-
-        // Third-party JS
         script(src='/components/jquery/dist/jquery.min.js')
         script(src='/components/underscore/underscore.js')
         //script(src='/components/bootstrap/dist/js/bootstrap.min.js')
-
-        // Custom JS
         script(src='/js/app.js')
         

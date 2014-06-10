@@ -1,11 +1,11 @@
 console.log('AI Lovers');
 
 $(function () {
-    var wsTestBtn = $('#wsTest');
+    var runGameBtn = $('#runGame');
     var host = window.document.location.host.replace(/:.*/, '');
     var ws = new WebSocket('ws://' + host + ':8000');
 
-    wsTestBtn.click(function () {
+    runGameBtn.click(function () {
         ws.send(JSON.stringify({
             commands: _.map(_.range(4), function (i) {
                 return $('#ai' + i).val();
@@ -15,14 +15,19 @@ $(function () {
     });
 
     ws.onmessage = function (event) {
-        var result = JSON.parse(event.data);
-        var htmlLog = _.map(result.log, function (log) {
-            return log.message.replace(/\n/g, '<br />');
-        }, this).join('<br />');
-        showLog(htmlLog);
+        var gameResult = JSON.parse(event.data);
+        showLog(gameResult.log);
+        loadReplayer(gameResult.replay);
     };
 
-    function showLog(message) {
-        $('#log').html(message);
+    function showLog(rawLog) {
+        var htmlLog = _.map(rawLog, function (log) {
+            return log.message.replace(/\n/g, '<br />');
+        }, this).join('<br />');
+        $('#log').html(htmlLog);
+    }
+
+    function loadReplayer(replay) {
+        $('#replayer').attr('src', '/replayer/?replay=' + JSON.stringify(replay));
     }
 });
