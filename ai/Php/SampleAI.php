@@ -3,7 +3,7 @@
 	$fp = fopen('php://stdin', 'r');
 	
 	$maxTurn;
-	$numOfHeroes;
+	$numOfPlayers;
 	$numOfHeroines;
 	$turn;
 	$day;
@@ -18,20 +18,20 @@
 	}
 	
 	function readGameSetting() {
-		global $fp, $maxTurn, $numOfHeroes, $numOfHeroines, $heroines;
+		global $fp, $maxTurn, $numOfPlayers, $numOfHeroines, $heroines;
 		$gameSettings = explode(' ', rtrim(fgets($fp)));
 		$maxTurn = $gameSettings[0];
-		$numOfHeroes = $gameSettings[1];
+		$numOfPlayers = $gameSettings[1];
 		$numOfHeroines = $gameSettings[2];
 	
 		$gameSettings = explode(' ', rtrim(fgets($fp)));
-		foreach ($gameSettings as $value) {
-			array_push($heroines, new Heroine((integer)$value));
+		foreach ($gameSettings as $enthusiasm) {
+			array_push($heroines, new Heroine((integer)$enthusiasm));
 		}
 	}
 	
 	function readData() {
-		global $fp, $turn, $day, $numOfHeroes, $numOfHeroines, $heroines;
+		global $fp, $turn, $day, $numOfPlayers, $numOfHeroines, $heroines;
 		list($turn, $day) = explode(' ', rtrim(fgets($fp)));
 		for ($i = 0; $i < $numOfHeroines; $i++) {
 			$revealedScores = explode(' ', rtrim(fgets($fp)));
@@ -40,12 +40,16 @@
 		for ($i = 0; $i < $numOfHeroines; $i++) {
 			$heroines[$i]->setRealScore((integer)$realScores[$i]);
 		}
+		$dated = explode(' ', rtrim(fgets($fp)));
+		if ($day === 'H') {
+			$heroines[$i]->setDated((integer)$dated[$i]);
+		}
 	}
 	
 	function writeCommand() {
-		global $numOfHeroines, $turn;
+		global $numOfHeroines, $turn, $day;
 		$command = '';
-		if ($turn % 2 === 1) {
+		if ($day === 'W') {
 			for ($i = 0; $i < 5; $i++) {
 				$command = $command . mt_rand(0, $numOfHeroines - 1);
 				if($i < 4) {
@@ -61,22 +65,23 @@
 	}
 
 	class Heroine {
-		private $value;
+		private $enthusiasm;
 		private $revealedScore;
 		private $realScore;
+		private $dated;
 		
-		function __construct($value = 0, $revealedScore = 0, $realScore = 0) {
-			$this->value = $value;
+		function __construct($enthusiasm = 0, $revealedScore = 0, $realScore = 0) {
+			$this->enthusiasm = $enthusiasm;
 			$this->revealedScore = $revealedScore;
 			$this->realScore = $realScore;
 		}
 		
-		public function getValue() {
-			return $this->value;
+		public function getEnthusiasm() {
+			return $this->enthusiasm;
 		}
 		
-		public function setValue($value) {
-			$this->value = $value;
+		public function setEnthusiasm($enthusiasm) {
+			$this->enthusiasm = $enthusiasm;
 		}
 		
 		public function getRevealedScore() {
@@ -93,5 +98,13 @@
 		
 		public function setRealScore($realScore) {
 			$this->realScore = $realScore;
+		}
+
+		public function getDated() {
+			return $this->dated;
+		}
+		
+		public function setDated($dated) {
+			$this->dated = $dated;
 		}
 	}
