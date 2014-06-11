@@ -4,20 +4,20 @@
 using namespace std;
 
 struct Heroine{
-	int value;
+	int enthusiasm;
 	vector<int> revealedScore;
 	int realScore;
 	bool dated;
 };
-int MaxTurn, Turn, HeroesNum, HeroinesNum;
+int MaxTurn, Turn, PlayersNum, HeroinesNum;
 vector<Heroine> Heroines;
 char Day;
 
 void readInitialData(){
-	cin >> MaxTurn >> HeroesNum >> HeroinesNum;
+	cin >> MaxTurn >> PlayersNum >> HeroinesNum;
 	for(int i=0;i<HeroinesNum;i++){
 		Heroine h;
-		cin >> h.value;
+		cin >> h.enthusiasm;
 		Heroines.push_back(h);
 	}
 }
@@ -26,7 +26,7 @@ void readData(){
 	cin >> Turn >> Day;
 	for(int i=0;i<HeroinesNum;i++){
 		vector<int> rScores;
-		for(int j=0;j<HeroesNum;j++){
+		for(int j=0;j<PlayersNum;j++){
 			int rs;
 			cin >> rs;
 			rScores.push_back(rs);
