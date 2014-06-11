@@ -2,7 +2,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class SampleAI {
-	static int MaxTurn, Turn, HeroesNum, HeroinesNum;
+	static int MaxTurn, Turn, PlayersNum, HeroinesNum;
 	static char Day;
 	static Heroine[] Heroines;
 	static final Scanner scanner = new Scanner(System.in);
@@ -21,12 +21,12 @@ public class SampleAI {
 
 	static void readInitialData() {
 		MaxTurn = scanner.nextInt();
-		HeroesNum = scanner.nextInt();
+		PlayersNum = scanner.nextInt();
 		HeroinesNum = scanner.nextInt();
 		Heroines = new Heroine[HeroinesNum];
 		for (int i = 0; i < HeroinesNum; i++) {
-			int value = scanner.nextInt();
-			Heroine h = new Heroine(value);
+			int enthusiasm = scanner.nextInt();
+			Heroine h = new Heroine(enthusiasm);
 			Heroines[i] = h;
 		}
 	}
@@ -35,8 +35,8 @@ public class SampleAI {
 		Turn = scanner.nextInt();
 		Day = scanner.next().charAt(0);
 		for (int i = 0; i < HeroinesNum; i++) {
-			int[] revealedScore = new int[HeroesNum];
-			for (int j = 0; j < HeroesNum; j++) {
+			int[] revealedScore = new int[PlayersNum];
+			for (int j = 0; j < PlayersNum; j++) {
 				revealedScore[j] = scanner.nextInt();
 			}
 			Heroines[i].revealedScore = revealedScore;
@@ -45,40 +45,33 @@ public class SampleAI {
 			int realScore = scanner.nextInt();
 			Heroines[i].realScore = realScore;
 		}
+		if (Day == 'W') {
+			for (int i = 0; i < HeroinesNum; i++) {
+				int dated = scanner.nextInt();
+				Heroines[i].dated = (dated == 1);
+			}
+		}
 	}
 
 	static void writeCommand() {
 		StringBuilder command = new StringBuilder();
 		Random random = new Random();
-		if (Turn % 2 == 1) {
-			for (int i = 0; i < 5; i++) {
-				int c = random.nextInt(HeroinesNum);
-				command.append(c);
-				if (i < 4) {
-					command.append(" ");
-				}
-			}
-		} else {
+		for (int i = 0; i < (Day == 'W' ? 5 : 2); i++) {
 			int c = random.nextInt(HeroinesNum);
 			command.append(c);
-			command.append(" ");
-			c = random.nextInt(HeroinesNum);
-			command.append(c);
+			if (i < 4) {
+				command.append(" ");
+			}
 		}
 		writer.println(command.toString());
 	}
 }
 
 class Heroine {
-	int value, revealedScore[], realScore;
+	int enthusiasm, revealedScore[], realScore;
+	boolean dated;
 
-	Heroine(int value) {
-		this.value = value;
-	}
-
-	Heroine(int value, int[] revealedScore, int realScore) {
-		this.value = value;
-		this.revealedScore = revealedScore;
-		this.realScore = realScore;
+	Heroine(int enthusiasm) {
+		this.enthusiasm = enthusiasm;
 	}
 }

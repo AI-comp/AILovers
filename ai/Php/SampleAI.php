@@ -40,9 +40,11 @@
 		for ($i = 0; $i < $numOfHeroines; $i++) {
 			$heroines[$i]->setRealScore((integer)$realScores[$i]);
 		}
-		$dated = explode(' ', rtrim(fgets($fp)));
-		if ($day === 'H') {
-			$heroines[$i]->setDated((integer)$dated[$i]);
+		if ($day === 'W') {
+			$dated = explode(' ', rtrim(fgets($fp)));
+			for ($i = 0; $i < $numOfHeroines; $i++) {
+				$heroines[$i]->setDated((integer)$dated[$i]);
+			}
 		}
 	}
 	
@@ -70,10 +72,11 @@
 		private $realScore;
 		private $dated;
 		
-		function __construct($enthusiasm = 0, $revealedScore = 0, $realScore = 0) {
+		function __construct($enthusiasm = 0, $revealedScore = 0, $realScore = 0, $dated = 0) {
 			$this->enthusiasm = $enthusiasm;
 			$this->revealedScore = $revealedScore;
 			$this->realScore = $realScore;
+			$this->dated = $dated;
 		}
 		
 		public function getEnthusiasm() {
