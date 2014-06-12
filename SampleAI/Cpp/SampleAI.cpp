@@ -3,7 +3,7 @@
 #include <stdlib.h>
 using namespace std;
 
-struct Heroine{
+struct Heroine {
 	int enthusiasm;
 	vector<int> revealedScore;
 	int realScore;
@@ -13,31 +13,31 @@ int MaxTurn, Turn, PlayersNum, HeroinesNum;
 vector<Heroine> Heroines;
 char Day;
 
-void readInitialData(){
+void readInitialData() {
 	cin >> MaxTurn >> PlayersNum >> HeroinesNum;
-	for(int i=0;i<HeroinesNum;i++){
+	for(int i = 0; i < HeroinesNum; i++) {
 		Heroine h;
 		cin >> h.enthusiasm;
 		Heroines.push_back(h);
 	}
 }
 
-void readData(){
+void readData() {
 	cin >> Turn >> Day;
-	for(int i=0;i<HeroinesNum;i++){
+	for(int i = 0; i < HeroinesNum; i++) {
 		vector<int> rScores;
-		for(int j=0;j<PlayersNum;j++){
+		for(int j = 0; j < PlayersNum; j++){
 			int rs;
 			cin >> rs;
 			rScores.push_back(rs);
 		}
 		Heroines[i].revealedScore = rScores;
 	}
-	for(int i=0;i<HeroinesNum;i++){
+	for(int i = 0; i < HeroinesNum; i++) {
 		cin >> Heroines[i].realScore;
 	}
 	if(Day == 'W'){
-		for(int i=0;i<HeroinesNum;i++){
+		for(int i = 0; i < HeroinesNum; i++) {
 			int d;
 			cin >> d;
 			Heroines[i].dated = (d==1);
@@ -45,20 +45,20 @@ void readData(){
 	}
 }
 
-void writeCommand(){
+void writeCommand() {
 	if(Day == 'W'){
-		for(int i=0;i<5;i++){
+		for(int i = 0; i < 5; i++) {
 			cout << rand() % HeroinesNum;
-			if(i<4){
+			if (i < 4) {
 				cout << " ";
 			} else {
 				cout << endl;
 			}
 		}
 	} else {
-		for(int i=0;i<2;i++){
+		for(int i = 0; i < 2; i++) {
 			cout << rand() % HeroinesNum;
-			if(i<1){
+			if (i < 1) {
 				cout << " ";
 			} else {
 				cout << endl;
@@ -67,10 +67,10 @@ void writeCommand(){
 	}
 }
 
-int main(){
+int main() {
 	cout << "READY" << endl;
 	readInitialData();
-	for (int i=0;i<MaxTurn;i++) {
+	for (int i = 0; i < MaxTurn; i++) {
 		readData();
 		writeCommand();
 	}
