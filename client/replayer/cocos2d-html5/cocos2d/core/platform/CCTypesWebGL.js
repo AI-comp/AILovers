@@ -1,5 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2014 cocos2d-x.org
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,7 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-_tmp.WebGLColor = function () {
+var cc = cc || {};
+cc._tmp = cc._tmp || {};
+
+cc._tmp.WebGLColor = function () {
     //redefine some types with ArrayBuffer for WebGL
     cc.color = function (r, g, b, a, arrayBuffer, offset) {
         if (r === undefined)
@@ -49,7 +54,7 @@ _tmp.WebGLColor = function () {
         this._rU8[0] = r || 0;
         this._gU8[0] = g || 0;
         this._bU8[0] = b || 0;
-        this._aU8[0] = a || 0;
+        this._aU8[0] = a || 255;
 
         if (a === undefined) {
             this.a_undefined = true;

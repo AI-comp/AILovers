@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  Copyright (c) 2008-2009 Jason Booth
 
  http://www.cocos2d-x.org
@@ -70,8 +70,8 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
     _className:"MotionStreak",
 
     /**
-     * creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename or texture
-     * @constructor
+     * creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename or texture   <br/>
+     * Constructor of cc.MotionStreak
      * @param {Number} fade time to fade
      * @param {Number} minSeg minimum segment size
      * @param {Number} stroke stroke's width

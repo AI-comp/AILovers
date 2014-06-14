@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-_tmp.WebGLTexture2D = function () {
+cc._tmp.WebGLTexture2D = function () {
 
     /**
      * <p>
@@ -409,6 +409,9 @@ _tmp.WebGLTexture2D = function () {
                 if (!img) return;
                 self.initWithElement(img);
             }
+            if (!self._htmlElementObj.width || !self._htmlElementObj.height) {
+                return;
+            }
             self._isLoaded = true;
             //upload image to buffer
             var gl = cc._renderContext;
@@ -739,7 +742,7 @@ _tmp.WebGLTexture2D = function () {
 };
 
 
-_tmp.WebGLTextureAtlas = function () {
+cc._tmp.WebGLTextureAtlas = function () {
 
     var _p = cc.TextureAtlas.prototype;
 
@@ -813,8 +816,8 @@ _tmp.WebGLTextureAtlas = function () {
         //cc.checkGLErrorDebug();
     };
 
-}
-_tmp.WebGLTextureCache = function () {
+};
+cc._tmp.WebGLTextureCache = function () {
 
     var _p = cc.textureCache;
 

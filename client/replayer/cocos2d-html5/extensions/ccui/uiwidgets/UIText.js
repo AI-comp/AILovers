@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -42,26 +43,25 @@ ccui.Text = ccui.Widget.extend(/** @lends ccui.Text# */{
     touchScaleEnabled: false,
     _normalScaleValueX: 0,
     _normalScaleValueY: 0,
-    _fontName: "",
-    _fontSize: 0,
-    _onSelectedScaleOffset: 0,
+    _fontName: "Thonburi",
+    _fontSize: 10,
+    _onSelectedScaleOffset:0.5,
     _labelRenderer: "",
     _textAreaSize: null,
     _textVerticalAlignment: 0,
     _textHorizontalAlignment: 0,
     _className: "Text",
+
+    /**
+     * allocates and initializes a UILabel.
+     * Constructor of ccui.Text
+     * @example
+     * // example
+     * var uiLabel = new ccui.Text();
+     */
     ctor: function () {
-        ccui.Widget.prototype.ctor.call(this);
-        this.touchScaleEnabled = false;
-        this._normalScaleValueX = 0;
-        this._normalScaleValueY = 0;
-        this._fontName = "Thonburi";
-        this._fontSize = 10;
-        this._onSelectedScaleOffset = 0.5;
-        this._labelRenderer = "";
         this._textAreaSize = cc.size(0, 0);
-        this._textVerticalAlignment = 0;
-        this._textHorizontalAlignment = 0;
+        ccui.Widget.prototype.ctor.call(this);
     },
 
     init: function () {
@@ -77,19 +77,40 @@ ccui.Text = ccui.Widget.extend(/** @lends ccui.Text# */{
     },
 
     /**
-     *  Changes the  value of label.
+     * Changes the  value of label.
+     * @deprecated
      * @param {String} text
      */
     setText: function (text) {
+        cc.log("Please use the setString");
+        this._labelRenderer.setString(text);
+        this.labelScaleChangedWithSize();
+    },
+
+    /**
+     * Changes the  value of label.
+     * @param {String} text
+     */
+    setString: function (text) {
         this._labelRenderer.setString(text);
         this.labelScaleChangedWithSize();
     },
 
     /**
      * Gets the string value of label.
+     * @deprecated
      * @returns {String}
      */
     getStringValue: function () {
+        cc.log("Please use the getString");
+        return this._labelRenderer.getString();
+    },
+
+    /**
+     * Gets the string value of label.
+     * @returns {String}
+     */
+    getString: function () {
         return this._labelRenderer.getString();
     },
 
@@ -363,7 +384,7 @@ ccui.Text = ccui.Widget.extend(/** @lends ccui.Text# */{
     copySpecialProperties: function (uiLabel) {
         this.setFontName(uiLabel._fontName);
         this.setFontSize(uiLabel._labelRenderer.getFontSize());
-        this.setText(uiLabel.getStringValue());
+        this.setString(uiLabel.getString());
         this.setTouchScaleChangeEnabled(uiLabel.touchScaleEnabled);
         this.setTextAreaSize(uiLabel._size);
         this.setTextHorizontalAlignment(uiLabel._textHorizontalAlignment);
@@ -382,7 +403,7 @@ _p.boundingHeight;
 cc.defineGetterSetter(_p, "boundingHeight", _p._getBoundingHeight, _p._setBoundingHeight);
 /** @expose */
 _p.string;
-cc.defineGetterSetter(_p, "string", _p.getStringValue, _p.setText);
+cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
 /** @expose */
 _p.stringLength;
 cc.defineGetterSetter(_p, "stringLength", _p.getStringLength);
@@ -413,11 +434,7 @@ _p = null;
  * var uiLabel = ccui.Text.create();
  */
 ccui.Text.create = function () {
-    var uiLabel = new ccui.Text();
-    if (uiLabel && uiLabel.init()) {
-        return uiLabel;
-    }
-    return null;
+    return new ccui.Text();
 };
 
 ccui.Text.RENDERER_ZORDER = -1;

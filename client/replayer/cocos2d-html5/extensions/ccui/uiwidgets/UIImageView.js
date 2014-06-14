@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -33,18 +34,21 @@ ccui.ImageView = ccui.Widget.extend(/** @lends ccui.ImageView# */{
     _capInsets: null,
     _imageRenderer: null,
     _textureFile: "",
-    _imageTexType: null,
+    _imageTexType: ccui.Widget.LOCAL_TEXTURE,
     _imageTextureSize: null,
     _className:"ImageView",
+
+    /**
+     * allocates and initializes a UIImageView.
+     * Constructor of ccui.ImageView
+     * @example
+     * // example
+     * var uiImageView = new ccui.ImageView;
+     */
     ctor: function () {
-        ccui.Widget.prototype.ctor.call(this);
-        this._scale9Enabled = false;
-        this._prevIgnoreSize = true;
         this._capInsets = cc.rect(0,0,0,0);
-        this._imageRenderer = null;
-        this._textureFile = "";
-        this._imageTexType = ccui.Widget.LOCAL_TEXTURE;
         this._imageTextureSize = cc.size(this._size.width, this._size.height);
+        ccui.Widget.prototype.ctor.call(this);
     },
 
     initRenderer: function () {
@@ -64,7 +68,7 @@ ccui.ImageView = ccui.Widget.extend(/** @lends ccui.ImageView# */{
         texType = texType || ccui.Widget.LOCAL_TEXTURE;
         this._textureFile = fileName;
         this._imageTexType = texType;
-        var imageRenderer = this._imageRenderer
+        var imageRenderer = this._imageRenderer;
         switch (this._imageTexType) {
             case ccui.Widget.LOCAL_TEXTURE:
                 imageRenderer.initWithFile(fileName);
@@ -78,13 +82,13 @@ ccui.ImageView = ccui.Widget.extend(/** @lends ccui.ImageView# */{
 
         var locRendererSize = imageRenderer.getContentSize();
         if(imageRenderer.textureLoaded()){
-            this._imageTextureSize.width = locRendererSize.width;
-            this._imageTextureSize.height = locRendererSize.height;
+            this._imageTextureSize.width = this._customSize.width ? this._customSize.width : locRendererSize.width;
+            this._imageTextureSize.height = this._customSize.height ? this._customSize.height : locRendererSize.height;
         }else{
             imageRenderer.addLoadedEventListener(function(){
                 var locSize = imageRenderer.getContentSize();
-                this._imageTextureSize.width = locSize.width;
-                this._imageTextureSize.height = locSize.height;
+                this._imageTextureSize.width = this._customSize.width ? this._customSize.width : locSize.width;
+                this._imageTextureSize.height = this._customSize.height ? this._customSize.height : locSize.height;
                 if (imageRenderer.setCapInsets) {
                     imageRenderer.setCapInsets(this._capInsets);
                 }
@@ -319,11 +323,7 @@ ccui.ImageView = ccui.Widget.extend(/** @lends ccui.ImageView# */{
  * var uiImageView = ccui.ImageView.create();
  */
 ccui.ImageView.create = function () {
-    var uiImageView = new ccui.ImageView();
-    if (uiImageView && uiImageView.init()) {
-        return uiImageView;
-    }
-    return null;
+    return new ccui.ImageView();
 };
 
 // Constants

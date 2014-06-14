@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -41,7 +41,7 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
     _userInfo:null,
 
     /**
-     * @constructor
+     * Constructor of cc.AnimationFrame
      * @param spriteFrame
      * @param delayUnits
      * @param userInfo
@@ -177,7 +177,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
 
 	/**
 	 * Creates an animation.
-	 * @constructor
+	 * Constructor of cc.Animation
 	 * @param {Array} frames
 	 * @param {Number} delay
 	 * @param {Number} [loops=1]

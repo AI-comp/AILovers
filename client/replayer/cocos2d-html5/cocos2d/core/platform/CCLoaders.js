@@ -1,7 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,7 +28,7 @@ cc._txtLoader = {
         cc.loader.loadTxt(realUrl, cb);
     }
 };
-cc.loader.register(["txt", "xml", "vsh", "fsh"], cc._txtLoader);
+cc.loader.register(["txt", "xml", "vsh", "fsh", "atlas"], cc._txtLoader);
 
 cc._jsonLoader = {
     load : function(realUrl, url, res, cb){
@@ -74,10 +73,10 @@ cc.loader.register(["plist"], cc._plistLoader);
 
 cc._fontLoader = {
     TYPE : {
-        "eot" : "embedded-opentype",
-        "ttf" : "truetype",
-        "woff" : "woff",
-        "svg" : "svg"
+        ".eot" : "embedded-opentype",
+        ".ttf" : "truetype",
+        ".woff" : "woff",
+        ".svg" : "svg"
     },
     _loadFont : function(name, srcs, type){
         var doc = document, path = cc.path, TYPE = this.TYPE, fontStyle = cc.newElement("style");

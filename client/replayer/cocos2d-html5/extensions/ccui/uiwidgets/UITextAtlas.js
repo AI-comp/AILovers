@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -37,9 +38,16 @@ ccui.TextAtlas = ccui.Widget.extend(/** @lends ccui.TextAtlas# */{
     _itemHeight: 0,
     _startCharMap: "",
     _className: "TextAtlas",
+
+    /**
+     * allocates and initializes a UILabelAtlas.
+     * Constructor of ccui.TextAtlas
+     * @example
+     * // example
+     * var uiLabelAtlas = new ccui.TextAtlas();
+     */
     ctor: function () {
         ccui.Widget.prototype.ctor.call(this);
-        this._labelAtlasRenderer = null;
     },
 
     initRenderer: function () {
@@ -85,9 +93,19 @@ ccui.TextAtlas = ccui.Widget.extend(/** @lends ccui.TextAtlas# */{
 
     /**
      * get string value for labelatlas.
+     * @deprecated
      * @returns {String}
      */
     getStringValue: function () {
+        cc.log("Please use the getString");
+        return this._labelAtlasRenderer.getString();
+    },
+
+    /**
+     * get string value for labelatlas.
+     * @returns {String}
+     */
+    getString: function () {
         return this._labelAtlasRenderer.getString();
     },
 
@@ -191,7 +209,7 @@ var _p = ccui.TextAtlas.prototype;
 // Extended properties
 /** @expose */
 _p.string;
-cc.defineGetterSetter(_p, "string", _p.getStringValue, _p.setStringValue);
+cc.defineGetterSetter(_p, "string", _p.getString, _p.setStringValue);
 
 _p = null;
 
@@ -204,11 +222,7 @@ _p = null;
  * var uiLabelAtlas = ccui.TextAtlas.create();
  */
 ccui.TextAtlas.create = function () {
-    var uiLabelAtlas = new ccui.TextAtlas();
-    if (uiLabelAtlas && uiLabelAtlas.init()) {
-        return uiLabelAtlas;
-    }
-    return null;
+   return new ccui.TextAtlas();
 };
 
 // Constants

@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  Copyright (c) 2012 Pierre-David Bélanger
 
  http://www.cocos2d-x.org
@@ -66,7 +66,7 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
     /**
      * Creates and initializes a clipping node with an other node as its stencil.
      * The stencil node will be retained.
-     * @constructor
+     * Constructor of cc.ClippingNode
      * @param {cc.Node} [stencil=null]
      */
     ctor: function (stencil) {
@@ -395,7 +395,6 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
 
     _setStencilForCanvas: function (stencil) {
         this._stencil = stencil;
-        var locEGL_ScaleX = cc.view.getScaleX(), locEGL_ScaleY = cc.view.getScaleY();
         var locContext = cc._renderContext;
         // For texture stencil, use the sprite itself
         if (stencil instanceof cc.Sprite) {
@@ -404,6 +403,7 @@ cc.ClippingNode = cc.Node.extend(/** @lends cc.ClippingNode# */{
         // For shape stencil, rewrite the draw of stencil ,only init the clip path and draw nothing.
         else if (stencil instanceof cc.DrawNode) {
             stencil.draw = function () {
+                var locEGL_ScaleX = cc.view.getScaleX(), locEGL_ScaleY = cc.view.getScaleY();
                 for (var i = 0; i < stencil._buffer.length; i++) {
                     var element = stencil._buffer[i];
                     var vertices = element.verts;

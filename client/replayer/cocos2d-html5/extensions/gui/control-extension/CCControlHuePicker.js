@@ -1,6 +1,8 @@
 /**
  *
- * Copyright (c) 2010-2012 cocos2d-x.org
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011-2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Copyright 2012 Stewart Hamilton-Arrandale.
  * http://creativewax.co.uk
@@ -133,7 +135,7 @@ cc.ControlHuePicker = cc.Control.extend(/** @lends cc.ControlHuePicker# */{
 
         // Update angle by using the direction of the location
         var angle = Math.atan2(dy, dx);
-        var angleDeg = cc.radiansToDegress(angle) + 180.0;
+        var angleDeg = cc.radiansToDegrees(angle) + 180.0;
 
         // use the position / slider width to determin the percentage the dragger is at
         this.setHue(angleDeg);

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -37,6 +38,13 @@ ccui.ListView = ccui.ScrollView.extend(/** @lends ccui.ListView# */{
     _curSelectedIndex: 0,
     _refreshViewDirty: true,
     _className:"ListView",
+    /**
+     * allocates and initializes a UIListView.
+     * Constructor of ccui.ListView
+     * @example
+     * // example
+     * var uiPageView = new ccui.ListView();
+     */
     ctor: function () {
         ccui.ScrollView.prototype.ctor.call(this);
         this._model = null;
@@ -47,6 +55,8 @@ ccui.ListView = ccui.ScrollView.extend(/** @lends ccui.ListView# */{
         this._listViewEventSelector = null;
         this._curSelectedIndex = 0;
         this._refreshViewDirty = true;
+
+        this.init();
     },
 
     init: function () {
@@ -454,12 +464,15 @@ ccui.ListView = ccui.ScrollView.extend(/** @lends ccui.ListView# */{
     }
 });
 
+/**
+ * allocates and initializes a UIListView.
+ * @constructs
+ * @example
+ * // example
+ * var uiPageView = ccui.ListView.create();
+ */
 ccui.ListView.create = function () {
-    var uiListView = new ccui.ListView();
-    if (uiListView && uiListView.init()) {
-        return uiListView;
-    }
-    return null;
+     return new ccui.ListView();
 };
 
 // Constants

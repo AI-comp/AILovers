@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  Copyright (c) 2008 Radu Gruian
  Copyright (c) 2011 Vit Valentin
 
@@ -129,7 +129,7 @@ cc.CardinalSplineTo = cc.ActionInterval.extend(/** @lends cc.CardinalSplineTo# *
 	/**
 	 * Creates an action with a Cardinal Spline array of points and tension
 	 *
-	 * @constructor
+	 * Constructor of cc.CardinalSplineTo
 	 * @param {Number} duration
 	 * @param {Array} points array of control points
 	 * @param {Number} tension
@@ -189,6 +189,7 @@ cc.CardinalSplineTo = cc.ActionInterval.extend(/** @lends cc.CardinalSplineTo# *
      * @param {Number} time
      */
     update:function (time) {
+        time = this._computeEaseTime(time);
         var p, lt;
         var ps = this._points;
         // eg.
@@ -294,7 +295,7 @@ cc.CardinalSplineBy = cc.CardinalSplineTo.extend(/** @lends cc.CardinalSplineBy#
 	/**
 	 * creates an action with a Cardinal Spline array of points and tension
 	 *
-	 * @constructor
+	 * Constructor of cc.CardinalSplineBy
 	 * @param {Number} duration
 	 * @param {Array} points
 	 * @param {Number} tension
@@ -408,7 +409,7 @@ cc.CatmullRomTo = cc.CardinalSplineTo.extend(/** @lends cc.CatmullRomTo# */{
 	/**
 	 * creates an action with a Cardinal Spline array of points and tension
 	 *
-	 * @constructor
+	 * Constructor of cc.CatmullRomTo
 	 * @param {Number} dt
 	 * @param {Array} points
 	 *
@@ -471,7 +472,7 @@ cc.CatmullRomBy = cc.CardinalSplineBy.extend({
 	/**
 	 * Creates an action with a Cardinal Spline array of points and tension
 	 *
-	 * @constructor
+	 * Constructor of cc.CatmullRomBy
 	 * @param {Number} dt
 	 * @param {Array} points
 	 *

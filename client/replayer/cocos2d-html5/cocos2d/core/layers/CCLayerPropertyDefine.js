@@ -1,5 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2014 cocos2d-x.org
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-_tmp.PrototypeLayerRGBA = function () {
+cc._tmp.PrototypeLayerRGBA = function () {
     var _p = cc.LayerRGBA.prototype;
     // Extended properties
     /** @expose */
@@ -42,14 +44,14 @@ _tmp.PrototypeLayerRGBA = function () {
     cc.defineGetterSetter(_p, "cascadeColor", _p.isCascadeColorEnabled, _p.setCascadeColorEnabled);
 };
 
-_tmp.PrototypeLayerColor = function () {
+cc._tmp.PrototypeLayerColor = function () {
     var _p = cc.LayerColor.prototype;
     // Override properties
     cc.defineGetterSetter(_p, "width", _p._getWidth, _p._setWidth);
     cc.defineGetterSetter(_p, "height", _p._getHeight, _p._setHeight);
 };
 
-_tmp.PrototypeLayerGradient = function () {
+cc._tmp.PrototypeLayerGradient = function () {
     var _p = cc.LayerGradient.prototype;
     // Extended properties
     /** @expose */

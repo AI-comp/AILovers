@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -35,7 +36,7 @@ ccui.LoadingBar = ccui.Widget.extend(/** @lends ccui.LoadingBar# */{
     _percent: 100,
     _totalLength: 0,
     _barRenderer: null,
-    _renderBarTexType: null,
+    _renderBarTexType: ccui.Widget.LOCAL_TEXTURE,
     _barRendererTextureSize: null,
     _scale9Enabled: false,
     _prevIgnoreSize: true,
@@ -43,18 +44,19 @@ ccui.LoadingBar = ccui.Widget.extend(/** @lends ccui.LoadingBar# */{
     _textureFile: "",
     _isTextureLoaded: false,
     _className: "LoadingBar",
+
+    /**
+     * allocates and initializes a UILoadingBar.
+     * Constructor of ccui.LoadingBar
+     * @example
+     * // example
+     * var uiLoadingBar = new ccui.LoadingBar;
+     */
     ctor: function () {
-        ccui.Widget.prototype.ctor.call(this);
         this._barType = ccui.LoadingBar.TYPE_LEFT;
-        this._percent = 100;
-        this._totalLength = 0;
-        this._barRenderer = null;
-        this._renderBarTexType = ccui.Widget.LOCAL_TEXTURE;
         this._barRendererTextureSize = cc.size(0, 0);
-        this._scale9Enabled = false;
-        this._prevIgnoreSize = true;
         this._capInsets = cc.rect(0, 0, 0, 0);
-        this._textureFile = "";
+        ccui.Widget.prototype.ctor.call(this);
     },
 
     initRenderer: function () {
@@ -251,9 +253,9 @@ ccui.LoadingBar = ccui.Widget.extend(/** @lends ccui.LoadingBar# */{
         if (this._renderBarTexType == ccui.Widget.PLIST_TEXTURE) {
             var barNode = this._barRenderer;
             if (barNode) {
-                var to = barNode.getTextureRect()._origin;
-                x = to.x;
-                y = to.y;
+                var rect = barNode.getTextureRect();
+                x = rect.x;
+                y = rect.y;
             }
         }
         if (this._scale9Enabled)
@@ -314,6 +316,7 @@ ccui.LoadingBar = ccui.Widget.extend(/** @lends ccui.LoadingBar# */{
                 this._totalLength = this._barRendererTextureSize.width;
                 this._barRenderer.setScale(1.0);
                 this._size.width = this._barRendererTextureSize.width;
+                this._size.height = this._barRendererTextureSize.height;
             }
         }
         else {
@@ -402,11 +405,7 @@ _p = null;
  * var uiLoadingBar = ccui.LoadingBar.create();
  */
 ccui.LoadingBar.create = function () {
-    var uiLoadingBar = new ccui.LoadingBar();
-    if (uiLoadingBar && uiLoadingBar.init()) {
-        return uiLoadingBar;
-    }
-    return null;
+    return new ccui.LoadingBar();
 };
 
 // Constants

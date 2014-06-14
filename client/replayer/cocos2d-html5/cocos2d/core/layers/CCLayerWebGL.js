@@ -1,5 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2014 cocos2d-x.org
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-_tmp.WebGLLayerColor = function () {
+cc._tmp.WebGLLayerColor = function () {
     //cc.LayerColor define start
     var _p = cc.LayerColor.prototype;
     _p._squareVertices = null;
@@ -127,7 +129,7 @@ _tmp.WebGLLayerColor = function () {
     //cc.LayerColor define end
 }
 
-_tmp.WebGLLayerGradient = function () {
+cc._tmp.WebGLLayerGradient = function () {
     //cc.LayerGradient define start
     var _p = cc.LayerGradient.prototype;
     _p.draw = cc.LayerColor.prototype.draw;

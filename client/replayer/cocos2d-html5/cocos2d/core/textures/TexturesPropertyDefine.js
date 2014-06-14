@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-_tmp.PrototypeTexture2D = function () {
+cc._tmp.PrototypeTexture2D = function () {
 
     var _c = cc.Texture2D;
 
@@ -37,7 +37,6 @@ _tmp.PrototypeTexture2D = function () {
      *    By default it is disabled.                                                                                    <br/>
      * </p>
      * @param haveAlphaPremultiplied
-     * @constructor
      */
     _c.PVRImagesHavePremultipliedAlpha = function (haveAlphaPremultiplied) {
         cc.PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
@@ -203,7 +202,7 @@ _tmp.PrototypeTexture2D = function () {
     _c.defaultPixelFormat = _c.PIXEL_FORMAT_DEFAULT;
 };
 
-_tmp.PrototypeTextureAtlas = function () {
+cc._tmp.PrototypeTextureAtlas = function () {
 
     var _p = cc.TextureAtlas.prototype;
 

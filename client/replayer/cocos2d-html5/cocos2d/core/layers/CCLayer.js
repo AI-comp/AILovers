@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -39,7 +39,7 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
     _className: "Layer",
 
     /**
-     * @constructor
+     * Constructor of cc.Layer
      */
     ctor: function () {
         var nodep = cc.Node.prototype;
@@ -91,7 +91,7 @@ cc.LayerRGBA = cc.Layer.extend(/** @lends cc.LayerRGBA# */{
     _className: "LayerRGBA",
 
     /**
-     * @constructor
+     * Constructor of cc.LayerRGBA
      */
     ctor: function () {
         cc.Layer.prototype.ctor.call(this);
@@ -328,8 +328,9 @@ cc.LayerRGBA = cc.Layer.extend(/** @lends cc.LayerRGBA# */{
     }
 });
 
-_tmp.PrototypeLayerRGBA();
-delete _tmp.PrototypeLayerRGBA;
+cc.assert(typeof cc._tmp.PrototypeLayerRGBA === "function", cc._LogInfos.MissingFile, "CCLayerPropertyDefine.js");
+cc._tmp.PrototypeLayerRGBA();
+delete cc._tmp.PrototypeLayerRGBA;
 
 /**
  * <p>
@@ -409,7 +410,7 @@ cc.LayerColor = cc.LayerRGBA.extend(/** @lends cc.LayerColor# */{
 
     _isLighterMode: false,
     /**
-     * @constructor
+     * Constructor of cc.LayerColor
      * @function
      * @param {cc.Color} [color=]
      * @param {Number} [width=]
@@ -534,12 +535,14 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
     //cc.LayerGradient define end
     _p = null;
 } else {
-    _tmp.WebGLLayerColor();
-    delete _tmp.WebGLLayerColor;
+    cc.assert(typeof cc._tmp.WebGLLayerColor === "function", cc._LogInfos.MissingFile, "CCLayerWebGL.js");
+    cc._tmp.WebGLLayerColor();
+    delete cc._tmp.WebGLLayerColor;
 }
 
-_tmp.PrototypeLayerColor();
-delete _tmp.PrototypeLayerColor;
+cc.assert(typeof cc._tmp.PrototypeLayerColor === "function", cc._LogInfos.MissingFile, "CCLayerPropertyDefine.js");
+cc._tmp.PrototypeLayerColor();
+delete cc._tmp.PrototypeLayerColor;
 
 /**
  * <p>
@@ -582,7 +585,7 @@ cc.LayerGradient = cc.LayerColor.extend(/** @lends cc.LayerGradient# */{
     _className: "LayerGradient",
 
     /**
-     * @constructor
+     * Constructor of cc.LayerGradient
      * @param {cc.Color} start starting color
      * @param {cc.Color} end
      * @param {cc.Point|Null} v
@@ -816,11 +819,14 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
     //cc.LayerGradient define end
     _p = null;
 } else {
-    _tmp.WebGLLayerGradient();
-    delete _tmp.WebGLLayerGradient;
+    cc.assert(typeof cc._tmp.WebGLLayerGradient === "function", cc._LogInfos.MissingFile, "CCLayerWebGL.js");
+    cc._tmp.WebGLLayerGradient();
+    delete cc._tmp.WebGLLayerGradient;
 }
-_tmp.PrototypeLayerGradient();
-delete _tmp.PrototypeLayerGradient;
+
+cc.assert(typeof cc._tmp.PrototypeLayerGradient === "function", cc._LogInfos.MissingFile, "CCLayerPropertyDefine.js");
+cc._tmp.PrototypeLayerGradient();
+delete cc._tmp.PrototypeLayerGradient;
 
 /**
  * CCMultipleLayer is a CCLayer with the ability to multiplex it's children.<br/>
@@ -836,7 +842,7 @@ cc.LayerMultiplex = cc.Layer.extend(/** @lends cc.LayerMultiplex# */{
     _className: "LayerMultiplex",
 
     /**
-     * @constructor
+     * Constructor of cc.LayerMultiplex
      * @param {Array} layers an array of cc.Layer
      */
     ctor: function (layers) {

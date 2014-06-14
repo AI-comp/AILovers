@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -62,8 +63,8 @@ ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
 
         this.setScaleX(skinData.scaleX);
         this.setScaleY(skinData.scaleY);
-        this.setRotationX(cc.radiansToDegress(skinData.skewX));
-        this.setRotationY(cc.radiansToDegress(-skinData.skewY));
+        this.setRotationX(cc.radiansToDegrees(skinData.skewX));
+        this.setRotationY(cc.radiansToDegrees(-skinData.skewY));
         this.setPosition(skinData.x, skinData.y);
 
         var localTransform = this.nodeToParentTransform();

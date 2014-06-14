@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -56,8 +56,10 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
 
     /**
      * <p>Creates a cc.TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.<br />
-     * The tile file will be loaded using the TextureMgr. </p>
-     * @constructor
+     * The tile file will be loaded using the TextureMgr. <br/>
+     * Constructor of cc.TileMapAtlas
+     * </p>
+     *
      * @param {String} tile
      * @param {String} mapFile
      * @param {Number} tileWidth

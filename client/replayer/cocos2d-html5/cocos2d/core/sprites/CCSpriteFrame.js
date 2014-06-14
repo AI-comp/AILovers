@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -55,9 +55,10 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
     /**
      * <p>
      *    Create a cc.SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.<br/>
-     *    The originalSize is the size in pixels of the frame before being trimmed.
+     *    The originalSize is the size in pixels of the frame before being trimmed.                         <br/>
+     *    Constructor of cc.SpriteFrame
      * </p>
-     * @constructor
+     *
      * @param {String|cc.Texture2D} filename
      * @param {cc.Rect} rect if parameters' length equal 2, rect in points, else rect in pixels
      * @param {Boolean} rotated
@@ -351,6 +352,20 @@ cc.SpriteFrame = cc.Class.extend(/** @lends cc.SpriteFrame# */{
             this._textureFilename = texture;
         } else if (texture instanceof cc.Texture2D){
             this.setTexture(texture);
+        }
+
+
+        if(texture) {
+            var _x, _y;
+            if(rotated){
+                _x = rect.x + rect.height;
+                _y = rect.y + rect.width;
+            }else{
+                _x = rect.x + rect.width;
+                _y = rect.y + rect.height;
+            }
+            cc.assert(_x <= texture.width, cc._LogInfos.RectWidth, texture.url);
+            cc.assert(_y <= texture.height, cc._LogInfos.RectHeight, texture.url);
         }
 
         this._rectInPixels = rect;

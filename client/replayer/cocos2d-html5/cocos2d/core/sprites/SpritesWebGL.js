@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-_tmp.WebGLSprite = function () {
+cc._tmp.WebGLSprite = function () {
 
 
     var _p = cc.Sprite.prototype;
@@ -47,7 +47,7 @@ _tmp.WebGLSprite = function () {
         this.updateColor();
     };
 
-    _p.ctor = function (fileName, rect) {
+    _p.ctor = function (fileName, rect, rotated) {
         var self = this;
         cc.NodeRGBA.prototype.ctor.call(self);
         self._shouldBeHidden = false;
@@ -62,7 +62,7 @@ _tmp.WebGLSprite = function () {
 
         self._textureLoaded = true;
 
-        self._softInit(fileName, rect);
+        self._softInit(fileName, rect, rotated);
     };
 
     _p.setBlendFunc = function (src, dst) {
@@ -174,6 +174,20 @@ _tmp.WebGLSprite = function () {
         if (!rect) {
             rect = cc.rect(0, 0, texture.width, texture.height);
         }
+
+        if(texture) {
+            var _x, _y;
+            if(rotated){
+                _x = rect.x + rect.height;
+                _y = rect.y + rect.width;
+            }else{
+                _x = rect.x + rect.width;
+                _y = rect.y + rect.height;
+            }
+            cc.assert(_x <= texture.width, cc._LogInfos.RectWidth, texture.url);
+            cc.assert(_y <= texture.height, cc._LogInfos.RectHeight, texture.url);
+        }
+
         _t.texture = texture;
         _t.setTextureRect(rect, rotated);
 

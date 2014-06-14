@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -264,8 +264,8 @@ cc.TMXMapInfo = cc.SAXParser.extend(/** @lends cc.TMXMapInfo# */{
     _currentFirstGID:0,
 
     /**
-     * Creates a TMX Format with a tmx file or content string
-     * @constructor
+     * Creates a TMX Format with a tmx file or content string                           <br/>
+     * Constructor of cc.TMXMapInfo
      * @param {String} tmxFile fileName or content string
      * @param {String} resourcePath  If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
      * @example
@@ -613,8 +613,8 @@ cc.TMXMapInfo = cc.SAXParser.extend(/** @lends cc.TMXMapInfo# */{
                 // PARSE  <tile>
                 var tiles = selTileset.getElementsByTagName('tile');
                 if (tiles) {
-                    for (i = 0; i < tiles.length; i++) {
-                        var t = tiles[i];
+                    for (var tIdx = 0; tIdx < tiles.length; tIdx++) {
+                        var t = tiles[tIdx];
                         this.parentGID = parseInt(tileset.firstGid) + parseInt(t.getAttribute('id') || 0);
                         var tp = t.querySelectorAll("properties > property");
                         if (tp) {

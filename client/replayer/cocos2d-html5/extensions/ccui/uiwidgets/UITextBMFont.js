@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -35,10 +36,16 @@ ccui.TextBMFont = ccui.Widget.extend(/** @lends ccui.TextBMFont# */{
     _fntFileName: "",
     _stringValue: "",
     _className: "TextBMFont",
+
+    /**
+     * allocates and initializes a UILabelBMFont.
+     * Constructor of ccui.TextBMFont
+     * @example
+     * // example
+     * var uiLabelBMFont = new ccui.TextBMFont();
+     */
     ctor: function () {
         ccui.Widget.prototype.ctor.call(this);
-        this._labelBMFontRenderer = null;
-        this._fileHasInit = false;
     },
     initRenderer: function () {
         this._labelBMFontRenderer = cc.LabelBMFont.create();
@@ -58,7 +65,7 @@ ccui.TextBMFont = ccui.Widget.extend(/** @lends ccui.TextBMFont# */{
         this.updateAnchorPoint();
         this.labelBMFontScaleChangedWithSize();
         this._fileHasInit = true;
-        this.setText(this._stringValue);
+        this.setString(this._stringValue);
 
         if (!this._labelBMFontRenderer.textureLoaded()) {
             this._labelBMFontRenderer.addLoadedEventListener(function () {
@@ -69,9 +76,24 @@ ccui.TextBMFont = ccui.Widget.extend(/** @lends ccui.TextBMFont# */{
 
     /**
      * set string value for labelbmfont
+     * @deprecated
      * @param {String} value
      */
     setText: function (value) {
+        cc.log("Please use the setString");
+        if (!value) {
+            return;
+        }
+        this._stringValue = value;
+        this._labelBMFontRenderer.setString(value);
+        this.labelBMFontScaleChangedWithSize();
+    },
+
+    /**
+     * set string value for labelbmfont
+     * @param {String} value
+     */
+    setString: function (value) {
         if (!value) {
             return;
         }
@@ -84,7 +106,7 @@ ccui.TextBMFont = ccui.Widget.extend(/** @lends ccui.TextBMFont# */{
      * get string value for labelbmfont.
      * @returns {String}
      */
-    getStringValue: function () {
+    getString: function () {
         return this._stringValue;
     },
 
@@ -189,7 +211,7 @@ var _p = ccui.TextBMFont.prototype;
 // Extended properties
 /** @expose */
 _p.string;
-cc.defineGetterSetter(_p, "string", _p.getStringValue, _p.setStringValue);
+cc.defineGetterSetter(_p, "string", _p.getString, _p.setStringValue);
 
 _p = null;
 
@@ -202,11 +224,7 @@ _p = null;
  * var uiLabelBMFont = ccui.TextBMFont.create();
  */
 ccui.TextBMFont.create = function () {
-    var uiLabelBMFont = new ccui.TextBMFont();
-    if (uiLabelBMFont && uiLabelBMFont.init()) {
-        return uiLabelBMFont;
-    }
-    return null;
+    return new ccui.TextBMFont();
 };
 
 // Constants

@@ -10,7 +10,7 @@
     <string>ControlPanel.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>480</Width>
+    <Width>200</Width>
     <Height>48</Height>
   </CanvasSize>
   <filePath>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\ControlPanel\ControlPanel.xml.ui</filePath>

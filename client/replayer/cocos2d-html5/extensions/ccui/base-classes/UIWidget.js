@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -46,6 +47,8 @@
  * @property {Number}           actionTag       - The action tag of the widget
  */
 ccui.Widget = ccui.Node.extend(/** @lends ccui.Widget# */{
+
+    RGBAProtocol: true,
     _enabled: true,            ///< Highest control of widget
     _bright: true,             ///< is this widget bright
     _touchEnabled: false,       ///< is this widget touch endabled
@@ -63,7 +66,7 @@ ccui.Widget = ccui.Node.extend(/** @lends ccui.Widget# */{
     _name: "default",
     _widgetType: null,
     _actionTag: 0,
-    _size: null,
+    _size: cc.size(0, 0),
     _customSize: null,
     _layoutParameterDictionary: null,
     _ignoreSize: false,
@@ -84,38 +87,22 @@ ccui.Widget = ccui.Node.extend(/** @lends ccui.Widget# */{
     _flippedY: false,
     ctor: function () {
         cc.Node.prototype.ctor.call(this);
-        this._enabled = true;
-        this._bright = true;
-        this._touchEnabled = false;
-        this._touchPassedEnabled = false;
-        this._focus = false;
         this._brightStyle = ccui.Widget.BRIGHT_STYLE_NONE;
-        this._updateEnabled = false;
         this._touchStartPos = cc.p(0, 0);
         this._touchMovePos = cc.p(0, 0);
         this._touchEndPos = cc.p(0, 0);
-        this._touchEventListener = null;
-        this._touchEventSelector = null;
-        this._name = "default";
         this._widgetType = ccui.Widget.TYPE_WIDGET;
-        this._actionTag = 0;
         this._size = cc.size(0, 0);
         this._customSize = cc.size(0, 0);
         this._layoutParameterDictionary = {};
-        this._ignoreSize = false;
         this._widgetChildren = [];
-        this._affectByClipping = false;
         this._sizeType = ccui.Widget.SIZE_ABSOLUTE;
         this._sizePercent = cc.p(0, 0);
         this.positionType = ccui.Widget.POSITION_ABSOLUTE;
         this._positionPercent = cc.p(0, 0);
-        this._reorderWidgetChildDirty = false;
-        this._hitted = false;
         this._nodes = [];
         this._color = cc.color(255, 255, 255, 255);
-        this._touchListener = null;
-        this._flippedX = false;
-        this._flippedY = false;
+        this.init();
     },
 
     /**
@@ -202,7 +189,7 @@ ccui.Widget = ccui.Node.extend(/** @lends ccui.Widget# */{
         if (__children != null) {
             for (var i = 0; i < __children.length; i++) {
                 var node = __children[i];
-                if (node && node._tag == tag)
+                if (node && node.tag == tag)
                     return node;
             }
         }
@@ -1399,8 +1386,9 @@ ccui.Widget = ccui.Node.extend(/** @lends ccui.Widget# */{
      * @param {Number} opacity
      */
     setOpacity: function (opacity) {
+        if(opacity === this._color.a) return;
         this._color.a = opacity;
-        this.updateTextureOpacity();
+        this.updateTextureOpacity(opacity);
     },
 
     /**
@@ -1415,8 +1403,14 @@ ccui.Widget = ccui.Node.extend(/** @lends ccui.Widget# */{
 
     },
 
-    updateTextureOpacity: function () {
+    updateTextureOpacity: function (opacity) {
+        for(var p in this._children){
+            var item = this._children[p];
+            if(item && item.RGBAProtocol){
+                item.setOpacity(opacity);
+            }
 
+        }
     },
 
 
@@ -1478,6 +1472,9 @@ cc.defineGetterSetter(_p, "name", _p.getName, _p.setName);
 /** @expose */
 _p.actionTag;
 cc.defineGetterSetter(_p, "actionTag", _p.getActionTag, _p.setActionTag);
+/** @expose */
+_p.opacity;
+cc.defineGetterSetter(_p, "opacity", _p.getOpacity, _p.setOpacity);
 
 _p = null;
 
@@ -1490,11 +1487,7 @@ _p = null;
  * var uiWidget = ccui.Widget.create();
  */
 ccui.Widget.create = function () {
-    var widget = new ccui.Widget();
-    if (widget && widget.init()) {
-        return widget;
-    }
-    return null;
+    return new ccui.Widget();
 };
 
 

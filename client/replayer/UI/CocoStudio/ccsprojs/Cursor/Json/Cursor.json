@@ -10,7 +10,9 @@
   "designHeight": 48,
   "designWidth": 48,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "cursor.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",
@@ -76,7 +78,7 @@
       "classname": "Panel",
       "name": "TopPanel",
       "ZOrder": 0,
-      "actiontag": 1,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

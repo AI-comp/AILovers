@@ -1,7 +1,27 @@
-/**
- * Created by small on 14-4-3.
- */
+/****************************************************************************
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 cc._LogInfos = {
     ActionManager_addAction: "cc.ActionManager.addAction(): action must be non-null",
@@ -24,7 +44,7 @@ cc._LogInfos = {
 
     arrayVerifyType: "element type is wrong!",
 
-    Scheduler_scheduleCallbackForTarget: "CCSheduler#scheduleCallback. Callback already scheduled. Updating interval from:%d to %d",
+    Scheduler_scheduleCallbackForTarget: "CCSheduler#scheduleCallback. Callback already scheduled. Updating interval from:%s to %s",
     Scheduler_scheduleCallbackForTarget_2: "cc.scheduler.scheduleCallbackForTarget(): callback_fn should be non-null.",
     Scheduler_scheduleCallbackForTarget_3: "cc.scheduler.scheduleCallbackForTarget(): target should be non-null.",
     Scheduler_pauseTarget: "cc.Scheduler.pauseTarget():target should be non-null",
@@ -53,8 +73,9 @@ cc._LogInfos = {
     Node_schedule_2: "interval must be positive",
     Node_initWithTexture: "cocos2d: Could not initialize cc.AtlasNode. Invalid Texture.",
 
-    AtlasNode_updateAtlasValues: "Shall be overridden in subclasses",
+    AtlasNode_updateAtlasValues: "cc.AtlasNode.updateAtlasValues(): Shall be overridden in subclasses",
     AtlasNode_initWithTileFile: "",
+    AtlasNode__initWithTexture: "cocos2d: Could not initialize cc.AtlasNode. Invalid Texture.",
 
     _EventListenerKeyboard_checkAvailable: "cc._EventListenerKeyboard.checkAvailable(): Invalid EventListenerKeyboard!",
     _EventListenerTouchOneByOne_checkAvailable: "cc._EventListenerTouchOneByOne.checkAvailable(): Invalid EventListenerTouchOneByOne!",
@@ -188,8 +209,15 @@ cc._LogInfos = {
     Texture2D_bitsPerPixelForFormat: "bitsPerPixelForFormat: %s, cannot give useful result, it's a illegal pixel format",
     Texture2D__initPremultipliedATextureWithImage: "cocos2d: cc.Texture2D: Using RGB565 texture since image has no alpha",
     Texture2D_addImage_2: "cc.Texture.addImage(): path should be non-null",
-    Texture2D_initWithData: "NSInternalInconsistencyException"
+    Texture2D_initWithData: "NSInternalInconsistencyException",
 
+    MissingFile: "Missing file: %s",
+    radiansToDegress: "cc.radiansToDegress() should be called cc.radiansToDegrees()",
+    RectWidth: "Rect width exceeds maximum margin: %s",
+    RectHeight: "Rect height exceeds maximum margin: %s",
+
+    EventManager__updateListeners: "If program goes here, there should be event in dispatch.",
+    EventManager__updateListeners_2: "_inDispatch should be 1 here."
 };
 
 //+++++++++++++++++++++++++something about log start++++++++++++++++++++++++++++
@@ -238,12 +266,27 @@ cc._logToWebPage = function (msg) {
 
 //to make sure the cc.log, cc.warn, cc.error and cc.assert would not throw error before init by debugger mode.
 if (console.log) {
-    cc.log = Function.prototype.bind.call(console.log, console);
+    cc.log = function(msg){
+        for (var i = 1; i < arguments.length; i++) {
+            msg = msg.replace("%s", arguments[i]);
+        }
+        console.log(msg);
+    };
     cc.warn = console.warn ?
-        Function.prototype.bind.call(console.warn, console) :
+        function(msg){
+            for (var i = 1; i < arguments.length; i++) {
+                msg = msg.replace("%s", arguments[i]);
+            }
+            console.warn(msg);
+        } :
         cc.log;
     cc.error = console.error ?
-        Function.prototype.bind.call(console.error, console) :
+        function(msg){
+            for (var i = 1; i < arguments.length; i++) {
+                msg = msg.replace("%s", arguments[i]);
+            }
+            console.error(msg);
+        } :
         cc.log;
     cc.assert = function (cond, msg) {
         if (!cond && msg) {

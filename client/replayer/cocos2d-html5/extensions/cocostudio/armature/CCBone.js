@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -241,6 +242,10 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * Rewrite visit ,when node draw, g_NumberOfDraws is changeless
      */
     visit: function (ctx) {
+        // quick return if not visible
+        if (!this._visible)
+            return;
+
         var node = this.getDisplayManager().getDisplayRenderNode();
         if (node) {
             node.visit(ctx);

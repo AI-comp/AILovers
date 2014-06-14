@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -56,11 +56,15 @@ _p.setAccelerometerInterval = function(interval){
 };
 
 _p._registerKeyboardEvent = function(){
-    cc._addEventListener(document, "keydown", function (e) {
+    cc._addEventListener(cc._canvas, "keydown", function (e) {
         cc.eventManager.dispatchEvent(new cc.EventKeyboard(e.keyCode, true));
+        e.stopPropagation();
+        e.preventDefault();
     });
-    cc._addEventListener(document, "keyup", function (e) {
+    cc._addEventListener(cc._canvas, "keyup", function (e) {
         cc.eventManager.dispatchEvent(new cc.EventKeyboard(e.keyCode, false));
+        e.stopPropagation();
+        e.preventDefault();
     });
 };
 

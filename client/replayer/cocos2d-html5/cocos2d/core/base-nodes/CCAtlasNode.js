@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -65,7 +65,7 @@ cc.AtlasNode = cc.NodeRGBA.extend(/** @lends cc.AtlasNode# */{
 
     /**
      * Creates a cc.AtlasNode with an Atlas file the width and height of each item and the quantity of items to render
-     * @constructor
+     * Constructor of cc.AtlasNode
      * @param {String} tile
      * @param {Number} tileWidth
      * @param {Number} tileHeight
@@ -86,7 +86,7 @@ cc.AtlasNode = cc.NodeRGBA.extend(/** @lends cc.AtlasNode# */{
      * Shall be overridden in subclasses
      */
     updateAtlasValues: function () {
-        cc.log("cc.AtlasNode.updateAtlasValues(): Shall be overridden in subclasses");
+        cc.log(cc._LogInfos.AtlasNode_updateAtlasValues);
     },
 
     /** cc.AtlasNode - RGBA protocol
@@ -198,7 +198,7 @@ cc.AtlasNode = cc.NodeRGBA.extend(/** @lends cc.AtlasNode# */{
         this._opacityModifyRGB = true;
         this._originalTexture = texture;
         if (!this._originalTexture) {
-            cc.log("cocos2d: Could not initialize cc.AtlasNode. Invalid Texture.");
+            cc.log(cc._LogInfos.AtlasNode__initWithTexture);
             return false;
         }
         this._textureForCanvas = this._originalTexture;
@@ -223,7 +223,7 @@ cc.AtlasNode = cc.NodeRGBA.extend(/** @lends cc.AtlasNode# */{
         this.textureAtlas.initWithTexture(texture, itemsToRender);
 
         if (!this.textureAtlas) {
-            cc.log("cocos2d: Could not initialize cc.AtlasNode. Invalid Texture.");
+            cc.log(cc._LogInfos.AtlasNode__initWithTexture);
             return false;
         }
 

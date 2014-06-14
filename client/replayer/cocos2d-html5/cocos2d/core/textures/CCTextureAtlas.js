@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -59,7 +59,7 @@ cc.TextureAtlas = cc.Class.extend(/** @lends cc.TextureAtlas# */{
     /**
      * <p>Creates a TextureAtlas with an filename and with an initial capacity for Quads. <br />
      * The TextureAtlas capacity can be increased in runtime. </p>
-     * @constructor
+     * Constructor of cc.TextureAtlas
      * @param {String|cc.Texture2D} fileName
      * @param {Number} capacity
      * @example
@@ -648,9 +648,11 @@ cc.TextureAtlas.create = function (fileName, capacity) {
 };
 
 if (cc._renderType === cc._RENDER_TYPE_WEBGL) {
-    _tmp.WebGLTextureAtlas();
-    delete _tmp.WebGLTextureAtlas;
+    cc.assert(typeof cc._tmp.WebGLTextureAtlas === "function", cc._LogInfos.MissingFile, "TexturesWebGL.js");
+    cc._tmp.WebGLTextureAtlas();
+    delete cc._tmp.WebGLTextureAtlas;
 }
 
-_tmp.PrototypeTextureAtlas();
-delete _tmp.PrototypeTextureAtlas;
+cc.assert(typeof cc._tmp.PrototypeTextureAtlas === "function", cc._LogInfos.MissingFile, "TexturesPropertyDefine.js");
+cc._tmp.PrototypeTextureAtlas();
+delete cc._tmp.PrototypeTextureAtlas;

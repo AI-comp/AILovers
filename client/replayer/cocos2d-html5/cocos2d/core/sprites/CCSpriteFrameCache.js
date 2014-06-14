@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -191,8 +191,12 @@ cc.spriteFrameCache = /** @lends cc.spriteFrameCache# */{
      * cc.spriteFrameCache.addSpriteFrames(s_grossiniJson);
      */
     addSpriteFrames: function (url, texture) {
-
         cc.assert(url, cc._LogInfos.spriteFrameCache_addSpriteFrames_2);
+
+        //Is it a SpriteFrame plist?
+        var dict = this._frameConfigCache[url] || cc.loader.getRes(url);
+        if(!dict || !dict["frames"])
+            return;
 
         var self = this;
         var frameConfig = self._frameConfigCache[url] || self._getFrameConfig(url);
@@ -226,6 +230,7 @@ cc.spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                         spAliases[alias] = key;
                     }
                 }
+
                 if (cc._renderType === cc._RENDER_TYPE_CANVAS && spriteFrame.isRotated()) {
                     //clip to canvas
                     var locTexture = spriteFrame.getTexture();
@@ -241,6 +246,7 @@ cc.spriteFrameCache = /** @lends cc.spriteFrameCache# */{
                         spriteFrame.setRect(cc.rect(0, 0, rect.width, rect.height));
                     }
                 }
+
                 spriteFrames[key] = spriteFrame;
             }
         }

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -266,23 +267,16 @@ ccui.TextField = ccui.Widget.extend(/** @lends ccui.TextField# */{
     _insertTextSelector: null,
     _deleteBackwardSelector: null,
     _passwordStyleText: "",
+
+    /**
+     * allocates and initializes a UITextField.
+     * Constructor of ccui.TextField
+     * @example
+     * // example
+     * var uiTextField = new ccui.TextField();
+     */
     ctor: function () {
         ccui.Widget.prototype.ctor.call(this);
-        this._textFieldRender = null;
-        this._touchWidth = 0;
-        this._touchHeight = 0;
-        this._useTouchArea = false;
-
-        this._textFieldEventListener = null;
-        this._textFieldEventSelector = null;
-        this._attachWithIMEListener = null;
-        this._detachWithIMEListener = null;
-        this._insertTextListener = null;
-        this._deleteBackwardListener = null;
-        this._attachWithIMESelector = null;
-        this._detachWithIMESelector = null;
-        this._insertTextSelector = null;
-        this._deleteBackwardSelector = null;
     },
 
     onEnter: function () {
@@ -316,9 +310,34 @@ ccui.TextField = ccui.Widget.extend(/** @lends ccui.TextField# */{
 
     /**
      *  Changes the string value of textField.
+     * @deprecated
      * @param {String} text
      */
     setText: function (text) {
+        cc.log("Please use the setString");
+        if (!text) {
+            return;
+        }
+        text = String(text);
+        if (this.isMaxLengthEnabled()) {
+            text = text.substr(0, this.getMaxLength());
+        }
+        if (this.isPasswordEnabled()) {
+            this._textFieldRender.setPasswordText(text);
+            this._textFieldRender.insertText(text, text.length);
+        }
+        else {
+            this._textFieldRender.setString(text);
+        }
+        this._textFieldRender.setString(text);
+        this.textfieldRendererScaleChangedWithSize();
+    },
+
+    /**
+     *  Changes the string value of textField.
+     * @param {String} text
+     */
+    setString: function (text) {
         if (!text) {
             return;
         }
@@ -404,9 +423,19 @@ ccui.TextField = ccui.Widget.extend(/** @lends ccui.TextField# */{
 
     /**
      * get textField string value
+     * @deprecated
      * @returns {String}
      */
     getStringValue: function () {
+        cc.log("Please use the getString");
+        return this._textFieldRender.getString();
+    },
+
+    /**
+     * get textField string value
+     * @returns {String}
+     */
+    getString: function () {
         return this._textFieldRender.getString();
     },
 
@@ -712,8 +741,8 @@ ccui.TextField = ccui.Widget.extend(/** @lends ccui.TextField# */{
     },
 
     copySpecialProperties: function (textField) {
-        this.setText(textField._textFieldRender.getString());
-        this.setPlaceHolder(textField.getStringValue());
+        this.setString(textField._textFieldRender.getString());
+        this.setPlaceHolder(textField.getString());
         this.setFontSize(textField._textFieldRender.getFontSize());
         this.setFontName(textField._textFieldRender.getFontName());
         this.setMaxLengthEnabled(textField.isMaxLengthEnabled());
@@ -732,7 +761,7 @@ var _p = ccui.TextField.prototype;
 // Extended properties
 /** @expose */
 _p.string;
-cc.defineGetterSetter(_p, "string", _p.getStringValue, _p.setText);
+cc.defineGetterSetter(_p, "string", _p.getString, _p.setText);
 /** @expose */
 _p.placeHolder;
 cc.defineGetterSetter(_p, "placeHolder", _p.getPlaceHolder, _p.setPlaceHolder);
@@ -766,11 +795,7 @@ _p = null;
  * var uiTextField = ccui.TextField.create();
  */
 ccui.TextField.create = function () {
-    var uiTextField = new ccui.TextField();
-    if (uiTextField && uiTextField.init()) {
-        return uiTextField;
-    }
-    return null;
+    return new ccui.TextField();
 };
 
 // Constants

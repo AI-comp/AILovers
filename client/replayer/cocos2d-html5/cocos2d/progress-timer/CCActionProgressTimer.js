@@ -1,5 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  Copyright (C) 2010      Lam Pham
 
  http://www.cocos2d-x.org
@@ -34,7 +36,7 @@ cc.ProgressTo = cc.ActionInterval.extend(/** @lends cc.ProgressTo# */{
 
 	/**
 	 * Creates a ProgressTo action with a duration and a percent
-	 * @constructor
+	 * Constructor of cc.ProgressTo
 	 * @param {Number} duration duration in seconds
 	 * @param {Number} percent
 	 * @example
@@ -117,7 +119,7 @@ cc.ProgressFromTo = cc.ActionInterval.extend(/** @lends cc.ProgressFromTo# */{
 
 	/**
 	 * Creates and initializes the action with a duration, a "from" percentage and a "to" percentage
-	 * @constructor
+	 * Constructor of cc.ProgressFromTo
 	 * @param {Number} duration duration in seconds
 	 * @param {Number} fromPercentage
 	 * @param {Number} toPercentage

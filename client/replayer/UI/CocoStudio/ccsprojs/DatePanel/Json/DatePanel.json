@@ -10,7 +10,9 @@
   "designHeight": 340,
   "designWidth": 480,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "dummyFace.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",
@@ -73,7 +75,7 @@
           "capInsetsWidth": 1,
           "capInsetsX": 0,
           "capInsetsY": 0,
-          "clipAble": false,
+          "clipAble": true,
           "colorType": 1,
           "layoutType": 0,
           "vectorX": 0,

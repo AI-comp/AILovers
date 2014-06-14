@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -50,7 +50,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
     getLocation:function () {
         //TODO
         //return cc.director.convertToGL(this._point);
-        return this._point;
+        return {x: this._point.x, y: this._point.y};
     },
 
 	/**
@@ -76,7 +76,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
     getPreviousLocation:function () {
         //TODO
         //return cc.director.convertToGL(this._prevPoint);
-        return this._prevPoint;
+        return {x: this._prevPoint.x, y: this._prevPoint.y};
     },
 
     /**
@@ -86,7 +86,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
     getStartLocation: function() {
         //TODO
         //return cc.director.convertToGL(this._startPoint);
-        return this._startPoint;
+        return {x: this._startPoint.x, y: this._startPoint.y};
     },
 
     /**
@@ -102,7 +102,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
      * @return {cc.Point}
      */
     getLocationInView: function() {
-        return this._point;
+        return {x: this._point.x, y: this._point.y};
     },
 
     /**
@@ -110,7 +110,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
      * @return {cc.Point}
      */
     getPreviousLocationInView: function(){
-        return this._prevPoint;
+        return {x: this._prevPoint.x, y: this._prevPoint.y};
     },
 
     /**
@@ -118,7 +118,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
      * @return {cc.Point}
      */
     getStartLocationInView: function(){
-        return this._startPoint;
+        return {x: this._startPoint.x, y: this._startPoint.y};
     },
 
     /**

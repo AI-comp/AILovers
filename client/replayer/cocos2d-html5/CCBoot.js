@@ -1,7 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,7 +24,7 @@
  ****************************************************************************/
 
 var cc = cc || {};
-var _tmp = _tmp || {};
+cc._tmp = cc._tmp || {};
 cc._LogInfos = {};
 
 /** @expose */
@@ -543,9 +542,6 @@ cc.loader = {
      * @param {!string} url
      * @param {object} [option]
      * @param {function} cb
-     * @param {string} url
-     * @param {object} [option]
-     * @param {function} [cb]
      * @returns {Image}
      */
     loadImg: function (url, option, cb) {
@@ -1275,7 +1271,7 @@ cc._setup = function (el, width, height) {
         width = width || element.clientWidth;
         height = height || element.clientHeight;
         localContainer = cc.container = element;
-        localCanvas = cc._canvas = cc.newElement("CANVAS");
+        localCanvas = cc._canvas = cc.$(cc.newElement("CANVAS"));
         element.appendChild(localCanvas);
     }
 
@@ -1498,6 +1494,7 @@ cc.game = {
                 _run();
             }, false);
     },
+
     /**
      * Init config.
      * @param cb
@@ -1518,14 +1515,34 @@ cc.game = {
         if (document["ccConfig"]) {
             self.config = _init(document["ccConfig"]);
         } else {
+
             try {
-                var txt = cc.loader._loadTxtSync("project.json");
+
+                var cocos_script = document.getElementsByTagName('script');
+                for(var i=0;i<cocos_script.length;i++){
+                    var _t = cocos_script[i].getAttribute('cocos');
+                    if(_t == '' || _t){break;}
+                }
+                var _src, txt, _resPath;
+                if(i < cocos_script.length){
+                    _src = cocos_script[i].src;
+                    if(_src){
+                        _resPath = /(.*)\//.exec(_src)[0];
+                        cc.loader.resPath = _resPath;
+                        _src = cc.path.join(_resPath, 'project.json');
+                    }
+                    txt = cc.loader._loadTxtSync(_src);
+                }
+                if(!txt){
+                    txt = cc.loader._loadTxtSync("project.json");
+                }
                 var data = JSON.parse(txt);
                 self.config = _init(data || {});
             } catch (e) {
                 cc.log("Failed to read or parse project.json");
                 self.config = _init({});
             }
+
         }
         //init debug move to CCDebugger
         cc._initSys(self.config, CONFIG_KEY);

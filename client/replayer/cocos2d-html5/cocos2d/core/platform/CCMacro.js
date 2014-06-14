@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -42,6 +42,12 @@ cc.PI = Math.PI;
  * @type Number
  */
 cc.FLT_MAX = parseFloat('3.402823466e+38F');
+
+/**
+ * @constant
+ * @type Number
+ */
+cc.FLT_MIN = parseFloat("1.175494351e-38F");
 
 /**
  * @constant
@@ -140,7 +146,11 @@ cc.degreesToRadians = function (angle) {
  * @return {Number}
  * @function
  */
+cc.radiansToDegrees = function (angle) {
+    return angle * cc.DEG;
+};
 cc.radiansToDegress = function (angle) {
+    cc.log(cc._LogInfos.radiansToDegress);
     return angle * cc.DEG;
 };
 

@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -182,6 +182,11 @@ cc.LabelAtlas = cc.AtlasNode.extend(/** @lends cc.LabelAtlas# */{
         }
     },
 
+    _addChildForCanvas: function(child, zOrder, tag){
+        child._lateChild = true;
+        cc.NodeRGBA.prototype.addChild.call(this, child, zOrder, tag);
+    },
+
     /**
      * @function
      * Atlas generation
@@ -210,7 +215,7 @@ cc.LabelAtlas = cc.AtlasNode.extend(/** @lends cc.LabelAtlas# */{
                 } else
                     fontChar.initWithTexture(texture, rect);
 
-                this.addChild(fontChar, 0, i);
+                cc.NodeRGBA.prototype.addChild.call(this, fontChar, 0, i);
             } else {
                 if (c == 32) {
                     fontChar.init();
@@ -319,7 +324,7 @@ cc.LabelAtlas = cc.AtlasNode.extend(/** @lends cc.LabelAtlas# */{
             len = locChildren.length;
             for (var i = 0; i < len; i++) {
                 var node = locChildren[i];
-                if (node)
+                if (node && !node._lateChild)
                     node.visible = false;
             }
         }
@@ -370,6 +375,7 @@ if (cc._renderType === cc._RENDER_TYPE_WEBGL) {
     _p.updateAtlasValues = _p._updateAtlasValuesForCanvas;
     _p.setString = _p._setStringForCanvas;
     _p.setOpacity = _p._setOpacityForCanvas;
+    _p.addChild = _p._addChildForCanvas;
 }
 
 // Override properties

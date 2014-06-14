@@ -1,8 +1,8 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2009      On-Core
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2009      On-Core
 
  http://www.cocos2d-x.org
 
@@ -45,7 +45,7 @@ cc.GridBase = cc.Class.extend(/** @lends cc.GridBase# */{
 
     /**
      * create one cc.GridBase Object
-     * @constructor
+     * Constructor of cc.GridBase
      * @param {cc.Size} gridSize
      * @param {cc.Texture2D} [texture=]
      * @param {Boolean} [flipped=]
@@ -299,7 +299,7 @@ cc.Grid3D = cc.GridBase.extend(/** @lends cc.Grid3D# */{
 
     /**
      * create one Grid3D object
-     * @constructor
+     * Constructor of cc.Grid3D
      * @param {cc.Size} gridSize
      * @param {cc.Texture2D} [texture=]
      * @param {Boolean} [flipped=]
@@ -508,7 +508,7 @@ cc.TiledGrid3D = cc.GridBase.extend(/** @lends cc.TiledGrid3D# */{
 
     /**
      * create one TiledGrid3D object
-     * @constructor
+     * Constructor of cc.TiledGrid3D
      * @param {cc.Size} gridSize
      * @param {cc.Texture2D} [texture=]
      * @param {Boolean} [flipped=]

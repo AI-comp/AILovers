@@ -1,4 +1,8 @@
-/** Copyright (c) 2012 Scott Lembcke and Howling Moon Software
+/**
+ * Copyright (c) 2012 Scott Lembcke and Howling Moon Software
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011-2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +43,7 @@
         _rotation:1,
         /**
          * Create a PhysicsSprite with filename and rect
-         * @constructor
+         * Constructor of cc.PhysicsSprite for Box2d
          * @param {String|cc.Texture2D|cc.SpriteFrame} fileName
          * @param {cc.Rect} rect
          * @example
@@ -111,7 +115,7 @@
             this.setNodeDirty();
         },
         getRotation:function () {
-            return (this._ignoreBodyRotation ? cc.radiansToDegress(this._rotationRadians) : cc.radiansToDegress(this._body.GetAngle()));
+            return (this._ignoreBodyRotation ? cc.radiansToDegrees(this._rotationRadians) : cc.radiansToDegrees(this._body.GetAngle()));
         },
         setRotation:function (r) {
             if (this._ignoreBodyRotation) {
@@ -154,7 +158,7 @@
 
         /**
          * Create a PhysicsSprite with filename and rect
-         * @constructor
+         * Constructor of cc.PhysicsSprite for chipmunk
          * @param {String|cc.Texture2D|cc.SpriteFrame} fileName
          * @param {cc.Rect} rect
          * @example
@@ -247,7 +251,7 @@
             }
         },
         getRotation:function () {
-            return this._ignoreBodyRotation ? cc.radiansToDegress(this._rotationRadiansX) : -cc.radiansToDegress(this._body.a);
+            return this._ignoreBodyRotation ? cc.radiansToDegrees(this._rotationRadiansX) : -cc.radiansToDegrees(this._body.a);
         },
         setRotation:function (r) {
             if (this._ignoreBodyRotation) {
@@ -259,7 +263,7 @@
         },
         _syncRotation:function () {
             if (this._rotationRadiansX != -this._body.a) {
-                cc.Sprite.prototype.setRotation.call(this, -cc.radiansToDegress(this._body.a));
+                cc.Sprite.prototype.setRotation.call(this, -cc.radiansToDegrees(this._body.a));
             }
         },
         nodeToParentTransform:function () {
@@ -362,7 +366,6 @@
 
     /**
      * Create a PhysicsSprite with filename and rect
-     * @constructor
      * @param {String|cc.Texture2D|cc.SpriteFrame} fileName
      * @param {cc.Rect} rect
      * @return {cc.PhysicsSprite}

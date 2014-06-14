@@ -51,7 +51,6 @@ var DateScene = ReplayerScene.extend({
             var datePanel = this.getDatePanel(playerIndex);
             this.showFaceImage(datePanel, playerIndex);
             this.cursors.push(this.createCursor(datePanel));
-            datePanel.getChildByName('Screen').setClippingEnabled(true);
         }, this);
     },
 

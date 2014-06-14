@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -36,7 +36,7 @@ cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
     this.b = b || 0;
-    this.a = a || 0;
+    this.a = a;
 };
 
 /**
@@ -335,10 +335,12 @@ cc.FontDefinition = function () {
 };
 
 if (cc._renderType === cc._RENDER_TYPE_WEBGL) {
-    _tmp.WebGLColor();
-    delete _tmp.WebGLColor;
+    cc.assert(typeof cc._tmp.WebGLColor === "function", cc._LogInfos.MissingFile, "CCTypesWebGL.js");
+    cc._tmp.WebGLColor();
+    delete cc._tmp.WebGLColor;
 }
 
-_tmp.PrototypeColor();
-delete _tmp.PrototypeColor;
+cc.assert(typeof cc._tmp.PrototypeColor === "function", cc._LogInfos.MissingFile, "CCTypesPropertyDefine.js");
+cc._tmp.PrototypeColor();
+delete cc._tmp.PrototypeColor;
 

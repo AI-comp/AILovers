@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -209,7 +209,6 @@ cc.cutRotateImageToCanvas = function (texture, rect) {
     var nCanvas = cc.newElement("canvas");
     nCanvas.width = rect.width;
     nCanvas.height = rect.height;
-
     var ctx = nCanvas.getContext("2d");
     ctx.translate(nCanvas.width / 2, nCanvas.height / 2);
     ctx.rotate(-1.5707963267948966);
@@ -425,7 +424,9 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
             this._textureLoaded = false;
             spriteFrame.addLoadedEventListener(this._spriteFrameLoadedCallback, this);
         }
-        var ret = this.initWithTexture(spriteFrame.getTexture(), spriteFrame.getRect());
+
+        var rotated = cc._renderType === cc._RENDER_TYPE_CANVAS ? false : spriteFrame._rotated;
+        var ret = this.initWithTexture(spriteFrame.getTexture(), spriteFrame.getRect(), rotated);
         this.setSpriteFrame(spriteFrame);
 
         return ret;
@@ -478,27 +479,36 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 
     sortAllChildren:function () {
         if (this._reorderChildDirty) {
-            var j, tempItem, locChildren = this._children, tempChild;
-            for (var i = 1; i < locChildren.length; i++) {
-                tempItem = locChildren[i];
+            var _children = this._children;
+
+            // insertion sort
+            var len = _children.length, i, j, tmp;
+            for(i=1; i<len; i++){
+                tmp = _children[i];
                 j = i - 1;
-                tempChild =  locChildren[j];
 
                 //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-                while (j >= 0 && ( tempItem._localZOrder < tempChild._localZOrder ||
-                    ( tempItem._localZOrder == tempChild._localZOrder && tempItem.arrivalOrder < tempChild.arrivalOrder ))) {
-                    locChildren[j + 1] = tempChild;
-                    j = j - 1;
-                    tempChild =  locChildren[j];
+                while(j >= 0){
+                    if(tmp._localZOrder < _children[j]._localZOrder){
+                        _children[j+1] = _children[j];
+                    }else if(tmp._localZOrder === _children[j]._localZOrder && tmp.arrivalOrder < _children[j].arrivalOrder){
+                        _children[j+1] = _children[j];
+                    }else{
+                        break;
+                    }
+                    j--;
                 }
-                locChildren[j + 1] = tempItem;
+                _children[j+1] = tmp;
             }
 
             if (this._batchNode) {
-                this._arrayMakeObjectsPerformSelector(locChildren, cc.Node.StateCallbackType.sortAllChildren);
+                this._arrayMakeObjectsPerformSelector(_children, cc.Node.StateCallbackType.sortAllChildren);
             }
+
+            //don't need to check children recursively, that's done in visit of each child
             this._reorderChildDirty = false;
         }
+
     },
 
     /**
@@ -637,7 +647,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
      * Also, flipping the texture doesn't alter the anchorPoint.                                                    <br/>
      * If you want to flip the anchorPoint too, and/or to flip the children too use:                                <br/>
      *      sprite->setScaleX(sprite->getScaleX() * -1);  <p/>
-     * @return {Boolean} true if the sprite is flipped horizaontally, false otherwise.
+     * @return {Boolean} true if the sprite is flipped horizontally, false otherwise.
      */
     isFlippedX:function () {
         return this._flippedX;
@@ -651,7 +661,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
      *      Also, flipping the texture doesn't alter the anchorPoint.                                               <br/>
      *      If you want to flip the anchorPoint too, and/or to flip the children too use:                           <br/>
      *         sprite->setScaleY(sprite->getScaleY() * -1); <p/>
-     * @return {Boolean} true if the sprite is flipped vertically, flase otherwise.
+     * @return {Boolean} true if the sprite is flipped vertically, false otherwise.
      */
     isFlippedY:function () {
         return this._flippedY;
@@ -741,10 +751,11 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
      * @function
      * @param {String|cc.SpriteFrame|cc.SpriteBatchNode|HTMLImageElement|cc.Texture2D} fileName sprite construct parameter
      * @param {cc.Rect} rect  Only the contents inside rect of pszFileName's texture will be applied for this sprite.
+     * @param {Boolean} [rotated] Whether or not the texture rectangle is rotated.
      */
     ctor: null,
 
-	_softInit: function (fileName, rect) {
+	_softInit: function (fileName, rect, rotated) {
 		if (fileName === undefined)
 			cc.Sprite.prototype.init.call(this);
 		else if (typeof(fileName) === "string") {
@@ -761,7 +772,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 		else if (typeof(fileName) === "object") {
 			if (fileName instanceof cc.Texture2D) {
 				// Init  with texture and rect
-				this.initWithTexture(fileName, rect);
+				this.initWithTexture(fileName, rect, rotated);
 			} else if (fileName instanceof cc.SpriteFrame) {
 				// Init with a sprite frame
 				this.initWithSpriteFrame(fileName);
@@ -820,7 +831,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
         var texture = cc.textureCache.textureForKey(filename);
         if (!texture) {
             texture = cc.textureCache.addImage(filename);
-            return this.initWithTexture(texture, rect);
+            return this.initWithTexture(texture, rect || cc.rect(0, 0, 0, 0));
         } else {
             if (!rect) {
                 var size = texture.getContentSize();
@@ -1115,6 +1126,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
  * @constructs
  * @param {String|cc.SpriteFrame|HTMLImageElement|cc.Texture2D} fileName  The string which indicates a path to image file, e.g., "scene1/monster.png".
  * @param {cc.Rect} rect  Only the contents inside rect of pszFileName's texture will be applied for this sprite.
+ * @param {Boolean} [rotated] Whether or not the texture rectangle is rotated.
  * @return {cc.Sprite} A valid sprite object
  * @example
  *
@@ -1136,8 +1148,8 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
  * var sprite2 = cc.Sprite.create(texture, cc.rect(0,0,480,320));
  *
  */
-cc.Sprite.create = function (fileName, rect) {
-    return new cc.Sprite(fileName, rect);
+cc.Sprite.create = function (fileName, rect, rotated) {
+    return new cc.Sprite(fileName, rect, rotated);
 };
 
 
@@ -1150,7 +1162,6 @@ cc.Sprite.INDEX_NOT_INITIALIZED = -1;
 
 
 if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
-
     var _p = cc.Sprite.prototype;
 
     _p._spriteFrameLoadedCallback = function(spriteFrame){
@@ -1176,7 +1187,7 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
         this._setNodeDirtyForCache();
     };
 
-    _p.ctor = function (fileName, rect) {
+    _p.ctor = function (fileName, rect, rotated) {
         var self = this;
         cc.NodeRGBA.prototype.ctor.call(self);
         self._shouldBeHidden = false;
@@ -1190,7 +1201,7 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
         self._textureRect_Canvas = {x: 0, y: 0, width: 0, height:0, validRect: false};
         self._drawSize_Canvas = cc.size(0, 0);
 
-        self._softInit(fileName, rect);
+        self._softInit(fileName, rect, rotated);
     };
 
     _p.setBlendFunc = function (src, dst) {
@@ -1240,17 +1251,25 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
 
     _p.initWithTexture = function (texture, rect, rotated) {
         var _t = this;
-        var argnum = arguments.length;
-
-        cc.assert(argnum != 0, cc._LogInfos.CCSpriteBatchNode_initWithTexture);
+        cc.assert(arguments.length != 0, cc._LogInfos.CCSpriteBatchNode_initWithTexture);
 
         rotated = rotated || false;
+
+        if (rotated && texture.isLoaded()) {
+            var tempElement = texture.getHtmlElementObj();
+            tempElement = cc.cutRotateImageToCanvas(tempElement, rect);
+            var tempTexture = new cc.Texture2D();
+            tempTexture.initWithElement(tempElement);
+            tempTexture.handleLoadedTexture();
+            texture = tempTexture;
+
+            _t._rect = cc.rect(0, 0, rect.width, rect.height);
+        }
 
         if (!cc.NodeRGBA.prototype.init.call(_t))
             return false;
 
         _t._batchNode = null;
-
         _t._recursiveDirty = false;
         _t.dirty = false;
         _t._opacityModifyRGB = true;
@@ -1273,7 +1292,7 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
         _t._textureLoaded = locTextureLoaded;
 
         if (!locTextureLoaded) {
-            _t._rectRotated = rotated || false;
+            _t._rectRotated = rotated;
             if (rect) {
                 _t._rect.x = rect.x;
                 _t._rect.y = rect.y;
@@ -1287,8 +1306,13 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
         if (!rect) {
             rect = cc.rect(0, 0, texture.width, texture.height);
         }
-        _t._originalTexture = texture;
 
+        if(texture) {
+            var _x = rect.x + rect.width, _y = rect.y + rect.height;
+            cc.assert(_x <= texture.width, cc._LogInfos.RectWidth, texture.url);
+            cc.assert(_y <= texture.height, cc._LogInfos.RectHeight, texture.url);
+        }
+        _t._originalTexture = texture;
         _t.texture = texture;
         _t.setTextureRect(rect, rotated);
 
@@ -1402,7 +1426,7 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
     _p.setColor = function (color3) {
         var _t = this;
         var curColor = _t.color;
-        if ((curColor.r === color3.r) && (curColor.g === color3.g) && (curColor.b === color3.b) && (curColor.a === color3.a))
+        if ((curColor.r === color3.r) && (curColor.g === color3.g) && (curColor.b === color3.b))
             return;
 
         cc.NodeRGBA.prototype.setColor.call(_t, color3);
@@ -1592,9 +1616,12 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
 
     delete _p;
 } else {
-    _tmp.WebGLSprite();
-    delete _tmp.WebGLSprite;
+    cc.assert(typeof cc._tmp.WebGLSprite === "function", cc._LogInfos.MissingFile, "SpritesWebGL.js");
+    cc._tmp.WebGLSprite();
+    delete cc._tmp.WebGLSprite;
 }
-_tmp.PrototypeSprite();
-delete _tmp.PrototypeSprite;
+
+cc.assert(typeof cc._tmp.PrototypeSprite === "function", cc._LogInfos.MissingFile, "SpritesPropertyDefine.js");
+cc._tmp.PrototypeSprite();
+delete cc._tmp.PrototypeSprite;
 

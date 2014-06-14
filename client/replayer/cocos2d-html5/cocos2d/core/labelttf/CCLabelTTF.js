@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -89,7 +89,7 @@ cc.LabelTTF = cc.Sprite.extend(/** @lends cc.LabelTTF# */{
 
     /**
      * creates a cc.LabelTTF from a font name, alignment, dimension and font size
-     * @constructor
+     * Constructor of cc.LabelTTF
      * @param {String} text
      * @param {String|cc.FontDefinition} [fontName="Arial"]
      * @param {Number} [fontSize=16]
@@ -1120,13 +1120,14 @@ if (cc._renderType === cc._RENDER_TYPE_CANVAS) {
     _p = null;
 
 } else {
-    _tmp.WebGLLabelTTF();
-    delete _tmp.WebGLLabelTTF;
+    cc.assert(typeof cc._tmp.WebGLLabelTTF === "function", cc._LogInfos.MissingFile, "LabelTTFWebGL.js");
+    cc._tmp.WebGLLabelTTF();
+    delete cc._tmp.WebGLLabelTTF;
 }
 
-
-_tmp.PrototypeLabelTTF();
-delete _tmp.PrototypeLabelTTF;
+cc.assert(typeof cc._tmp.PrototypeLabelTTF === "function", cc._LogInfos.MissingFile, "LabelTTFPropertyDefine.js");
+cc._tmp.PrototypeLabelTTF();
+delete cc._tmp.PrototypeLabelTTF;
 
 cc.LabelTTF._textAlign = ["left", "center", "right"];
 

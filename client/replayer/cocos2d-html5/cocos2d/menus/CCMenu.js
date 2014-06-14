@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -66,7 +66,6 @@ cc.Menu = cc.LayerRGBA.extend(/** @lends cc.Menu# */{
 
     /**
      * Constructor of cc.Menu
-     * @constructor
      * @function
      * @param {...cc.MenuItem|null} menuItems
      *

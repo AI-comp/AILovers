@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -109,7 +109,7 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
 
 	/**
 	 * creates a cc.OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX
-	 * @constructor
+	 * Constructor of cc.OrbitCamera
 	 * @param {Number} t time
 	 * @param {Number} radius
 	 * @param {Number} deltaRadius
@@ -188,10 +188,10 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
             _t._radius = retValue.newRadius;
 
         if (isNaN(_t._angleZ))
-            _t._angleZ = cc.radiansToDegress(retValue.zenith);
+            _t._angleZ = cc.radiansToDegrees(retValue.zenith);
 
         if (isNaN(_t._angleX))
-            _t._angleX = cc.radiansToDegress(retValue.azimuth);
+            _t._angleX = cc.radiansToDegrees(retValue.azimuth);
 
         _t._radZ = cc.degreesToRadians(_t._angleZ);
         _t._radX = cc.degreesToRadians(_t._angleX);
@@ -204,6 +204,7 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
     },
 
     update:function (dt) {
+        dt = this._computeEaseTime(dt);
         var r = (this._radius + this._deltaRadius * dt) * cc.Camera.getZEye();
         var za = this._radZ + this._radDeltaZ * dt;
         var xa = this._radX + this._radDeltaX * dt;

@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -101,8 +101,8 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
     _className:"TextFieldTTF",
 
     /**
-     *  creates a cc.TextFieldTTF from a fontName, alignment, dimension and font size
-     * @constructor
+     *  creates a cc.TextFieldTTF from a fontName, alignment, dimension and font size   <br/>
+     * Constructor of cc.TextFieldTTF
      * @param {String} placeholder
      * @param {cc.Size} dimensions
      * @param {Number} alignment

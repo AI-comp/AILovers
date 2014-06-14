@@ -1,7 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -34,7 +34,7 @@ cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
 
 	/**
 	 * Creates a grid action with duration and grid size
-	 * @constructor
+	 * Constructor of cc.GridAction
 	 * @param {Number} duration
 	 * @param {cc.Size} gridSize
 	 */
@@ -253,7 +253,7 @@ cc.ReuseGrid = cc.ActionInstant.extend(/** @lends cc.ReuseGrid# */{
 
 	/**
 	 * creates an action with the number of times that the current grid will be reused
-	 * @constructor
+	 * Constructor of cc.ReuseGrid
 	 * @param {Number} times
 	 */
 	ctor: function(times) {
