@@ -69,11 +69,11 @@ cc.Grabber = cc.Class.extend({
 
         // BUG #631: To fix #631, uncomment the lines with #631
         // Warning: But it CCGrabber won't work with 2 effects at the same time
-        //  glClearColor(0.0f,0.0f,0.0f,1.0f);    // #631
+        locGL.clearColor(0, 0, 0, 1);   // #631
 
         locGL.clear(locGL.COLOR_BUFFER_BIT | locGL.DEPTH_BUFFER_BIT);
 
-        //  glColorMask(true, true, true, false);    // #631
+        locGL.colorMask(true, true, true, false);   // #631
     },
 
     afterRender:function (texture) {
