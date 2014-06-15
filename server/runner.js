@@ -34,11 +34,11 @@ function AI(command, parameters, workingDir, index, addLog) {
 
 AI.prototype.setTimer = function (timeLimit) {
     var self = this;
+    self.clearTimer();
     self.timeout = setTimeout(function () {
         self.addLog('AI' + self.index + '>>' + 'Killing due to TLE');
         self.available = false;
         self.process.kill('SIGINT');
-        self.onExit();
     }, timeLimit);
 };
 
