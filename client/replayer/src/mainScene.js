@@ -124,7 +124,7 @@ var MainScene = ReplayerScene.extend({
             return;
         }
 
-        var game = new Game(this.game.seed);
+        var game = new Game(this.game.replay.seed);
         game.initialize();
         while (game.turn < turn) {
             game.processTurn(this.getCurrentCommands(game));
