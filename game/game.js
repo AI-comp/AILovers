@@ -6,8 +6,9 @@
     Game = exports.Game = (function () {
         function Game(seed) {
             this.heroines = [];
-            this.turn = 1;
-            this.totalTurns = 10;
+            this.initialTurn = 1;
+            this.lastTurn = 10;
+            this.turn = this.initialTurn;
             this.mt = new MersenneTwister(seed);
             this.replay = {
                 seed: seed,
@@ -68,17 +69,17 @@
         };
 
         Game.prototype.isInitialState = function () {
-            return this.turn == 1;
+            return this.turn == this.initialTurn;
         };
 
         Game.prototype.isFinished = function () {
-            return this.turn > this.totalTurns;
+            return this.turn > this.lastTurn;
         };
 
         Game.prototype.getInitialInformation = function () {
             var lines = [];
 
-            lines.push([this.totalTurns, this.numPlayers, this.heroines.length].join(' '));
+            lines.push([this.lastTurn - this.initialTurn + 1, this.numPlayers, this.heroines.length].join(' '));
             lines.push(_.map(this.heroines, function (heroine) {
                 return heroine.enthusiasm;
             }).join(' '));

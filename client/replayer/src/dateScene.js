@@ -1,6 +1,7 @@
 var DateScene = ReplayerScene.extend({
-    ctor: function () {
+    ctor: function (game) {
         this._super();
+        this.game = game;
 
         this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.dateScene);
         this.addChild(this.sceneNode);
@@ -26,8 +27,8 @@ var DateScene = ReplayerScene.extend({
     },
 
     transitToMainScene: function () {
-        this.game.processTurn(this.getCurrentCommands());
-        var transition = cc.TransitionFadeTR.create(0.5, new MainScene());
+        this.game.processTurn(this.getCurrentCommands(this.game));
+        var transition = cc.TransitionFadeTR.create(0.5, new MainScene(this.game));
         cc.director.runScene(transition);
     },
 
@@ -60,7 +61,7 @@ var DateScene = ReplayerScene.extend({
         var targetPanel = this.getTargetPanel(datePanel);
 
         _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
-            var targetHeroine = this.getCommand(playerIndex, commandIndex);
+            var targetHeroine = this.getCommand(this.game, playerIndex, commandIndex);
             targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.faces[targetHeroine]);
         }, this);
     },
@@ -90,7 +91,7 @@ var DateScene = ReplayerScene.extend({
 
     showNextScreenImage: function (datePanel, playerIndex) {
         var screen = datePanel.getChildByName('Screen');
-        var targetHeroine = this.getCommand(playerIndex, this.cursorPosition);
+        var targetHeroine = this.getCommand(this.game, playerIndex, this.cursorPosition);
 
         var nextScreenImage = ccui.ImageView.create();
         nextScreenImage.loadTexture(res.image.dates[targetHeroine]);
