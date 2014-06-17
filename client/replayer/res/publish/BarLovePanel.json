@@ -11,9 +11,7 @@
   "designWidth": 172,
   "textures": [],
   "texturesPng": [
-    "black.png",
-    "emptyHeart.png",
-    "GUI/loadingbar.png"
+    "dummyBar.png"
   ],
   "version": "1.4.0.1",
   "widgetTree": {
@@ -27,8 +25,62 @@
         "options": {
           "__type": "LoadingBarSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "LoadingBar",
-          "name": "LoveBar",
+          "name": "RealLoveBar",
           "ZOrder": 0,
+          "actiontag": 3,
+          "anchorPointX": 0.5,
+          "anchorPointY": 0.5,
+          "classType": "CocoStudio.EngineAdapterWrap.CSLoadingBar",
+          "colorB": 255,
+          "colorG": 255,
+          "colorR": 255,
+          "customProperty": "",
+          "flipX": false,
+          "flipY": false,
+          "height": 24,
+          "ignoreSize": false,
+          "layoutParameter": null,
+          "opacity": 255,
+          "positionPercentX": 0.5,
+          "positionPercentY": 0.5,
+          "positionType": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "sizePercentX": 1,
+          "sizePercentY": 0.6,
+          "sizeType": 0,
+          "tag": 178,
+          "touchAble": false,
+          "useMergedTexture": false,
+          "visible": true,
+          "width": 172,
+          "x": 86,
+          "y": 20,
+          "capInsetsHeight": 1,
+          "capInsetsWidth": 1,
+          "capInsetsX": 0,
+          "capInsetsY": 0,
+          "direction": 0,
+          "percent": 0,
+          "scale9Enable": false,
+          "texture": null,
+          "textureData": {
+            "path": "dummyBar.png",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      },
+      {
+        "classname": "LoadingBar",
+        "name": null,
+        "children": [],
+        "options": {
+          "__type": "LoadingBarSurrogate:#EditorCommon.JsonModel.Component.GUI",
+          "classname": "LoadingBar",
+          "name": "RevealedLoveBar",
+          "ZOrder": 1,
           "actiontag": 2,
           "anchorPointX": 0.5,
           "anchorPointY": 0.5,
@@ -68,7 +120,7 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "GUI/loadingbar.png",
+            "path": "dummyBar.png",
             "plistFile": "",
             "resourceType": 0
           }

@@ -42,6 +42,8 @@ function addNumberedResources(directory, count, extension) {
 
 res.image.heroines = addNumberedResources('heroine', 8, 'png');
 res.image.hearts = addNumberedResources('heart', 4, 'png');
+res.image.revealedBars = addNumberedResources('bar/revealed', 4, 'png');
+res.image.realBars = addNumberedResources('bar/real', 4, 'png');
 res.image.dates = addNumberedResources('date', 8, 'png');
 res.image.faces = addNumberedResources('face', 8, 'png');
 res.image.playerBackgrounds = addNumberedResources('playerBackground', 4, 'png');
