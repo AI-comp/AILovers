@@ -179,6 +179,13 @@
             return this.replay;
         };
 
+        Game.prototype.getMaxLove = function () {
+            var allLove = _.flatten(_.map(this.heroines, function (heroine) {
+                return heroine.realLove;
+            }));
+            return _.max(allLove);
+        };
+
         return Game;
     })();
 

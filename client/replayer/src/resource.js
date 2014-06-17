@@ -13,6 +13,8 @@ var res = {
     },
     image: {
         enthusiasm: 'res/enthusiasm.png',
+        measure15: 'res/measure15.png',
+        measure45: 'res/measure45.png',
     },
 };
 

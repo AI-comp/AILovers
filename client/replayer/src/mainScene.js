@@ -49,7 +49,7 @@ var MainScene = ReplayerScene.extend({
                         var lovePanel = new HeartLovePanel(playerIndex);
                         break;
                     case MainScene.BAR_LOVE_PANEL_MODE:
-                        var lovePanel = new BarLovePanel(playerIndex);
+                        var lovePanel = new BarLovePanel(playerIndex, this.game.getMaxLove());
                         break;
                 }
                 loveArea.addChild(lovePanel);
