@@ -37,7 +37,6 @@ AI.prototype.setTimer = function (timeLimit) {
     self.clearTimer();
     self.timeout = setTimeout(function () {
         self.addLog('AI' + self.index + '>>' + 'Killing due to TLE');
-        self.available = false;
         self.process.kill('SIGINT');
     }, timeLimit);
 };
