@@ -1,1 +1,1 @@
-node server\standalone_on_cui.js %*
+node server\standalone.js %*

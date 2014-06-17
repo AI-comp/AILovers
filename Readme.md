@@ -14,18 +14,10 @@ There are two ways to play the game.
 
 ## How to Play the Game on Your Machine
 
-1. Open shell in the AILovers directory
-2. Run the following commands:
-
-        npm install -g bower
-        npm install -g grunt-cli
-        npm install
-        bower install
-
-3. Execute `npm start`.
-4. Access `localhost:8000` in your browser.
-5. Specify commands to run AIs.
-6. Click "Run Game".
+1. Run `install.bat`.
+2. Execute `execute_on_browser.bat`.
+3. Specify commands to run AIs.
+4. Click "Run Game".
 
 # For Contributors
 Here are some basic instructions on how to run the server.
