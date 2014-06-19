@@ -185,6 +185,8 @@ function beginTurn() {
 
 function finish() {
     addLog.call(this, 'Game finished');
+
+    unpauseAIs.call(this);
     _.each(getAvailableAIs.call(this), function (ai) {
         var terminationText = this.game.getTerminationText();
         if (terminationText) {
