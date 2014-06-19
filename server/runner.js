@@ -50,14 +50,12 @@ AI.prototype.clearTimer = function () {
 AI.prototype.pause = function () {
     if (this.pauseCommand) {
         exec(this.pauseCommand);
-        console.warn('Pausing AI ' + this.index);
     }
 };
 
 AI.prototype.unpause = function () {
     if (this.unpauseCommand) {
         exec(this.unpauseCommand);
-        console.warn('Unpausing AI ' + this.index);
     }
 };
 
@@ -193,7 +191,6 @@ function beginTurn() {
 
 function finish() {
     addLog.call(this, 'Game finished');
-    console.warn("END");
 
     unpauseAIs.call(this);
     _.each(getAvailableAIs.call(this), function (ai) {
