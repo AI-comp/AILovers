@@ -22,7 +22,7 @@ console.warn('Working Dirs: ' + JSON.stringify(workingDirs));
 console.warn('Pause Commands: ' + JSON.stringify(pauseCommands));
 console.warn('Unpause Commands: ' + JSON.stringify(unpauseCommands));
 
-var runner = new Runner(aiCommands, workingDirs);
+var runner = new Runner(aiCommands, workingDirs, pauseCommands, unpauseCommands);
 runner.runGame(function () {
     console.log(JSON.stringify(runner.gameResult));
 });
