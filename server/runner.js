@@ -52,14 +52,14 @@ AI.prototype.clearTimer = function () {
 AI.prototype.pause = function () {
     if (this.pauseCommand) {
         exec(this.pauseCommand);
-        console.info("Pausing AI " + this.index);
+        console.warn('Pausing AI ' + this.index);
     }
 };
 
 AI.prototype.unpause = function () {
     if (this.unpauseCommand) {
         exec(this.unpauseCommand);
-        console.info("Unpausing AI " + this.index);
+        console.warn('Unpausing AI ' + this.index);
     }
 };
 
