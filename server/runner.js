@@ -29,8 +29,6 @@ function AI(executionCommand, parameters, workingDir, pauseCommand, unpauseComma
 
     this.process.on('close', function (code) {
         self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
-        self.available = false;
-        self.clearTimer();
         self.onExit();
     });
 }
@@ -111,7 +109,11 @@ Runner.prototype.runGame = function (done) {
             }
         };
         ai.onExit = function () {
-            onReadyForBeginning.call(self);
+            if (ai.available && !ai.ready) {
+                onReadyForBeginning.call(self);
+            }
+            ai.available = false;
+            ai.clearTimer();
         }
         ai.setTimer(5000);
     });
@@ -126,11 +128,16 @@ function onReadyForBeginning() {
                     ai.commands = data.toString().trim().split(' ');
                     ai.ready = true;
                     ai.clearTimer();
+                    ai.pause();
                     onReady.call(self, ai);
                 }
             };
             ai.onExit = function () {
-                onReady.call(self, ai);
+                if (ai.available && !ai.ready) {
+                    onReady.call(self, ai);
+                }
+                ai.available = false;
+                ai.clearTimer();
             };
         }, this);
 
@@ -150,7 +157,7 @@ function addLog(logMessage, aiIndex) {
     this.gameResult.log.push({ target: aiIndex, message: logMessage.trim() });
 }
 
-function onReady(currentAI) {
+function onReady() {
     if (isEveryoneReady.call(this, this.ais)) {
         var commands = _.map(this.ais, function (ai) {
             return ai.available ? ai.commands : [];
@@ -166,13 +173,14 @@ function onReady(currentAI) {
             beginTurn.call(this);
         }
     } else {
-        processNextAI.call(this, currentAI);
+        processNextAI.call(this);
     }
 }
 
 function beginTurn() {
-    var availableAIs = getAvailableAIs.call(this);
     addLog.call(this, 'Starting a new turn');
+
+    var availableAIs = getAvailableAIs.call(this);
     if (_.isEmpty(availableAIs)) {
         onReady.call(this);
     } else {
@@ -185,6 +193,7 @@ function beginTurn() {
 
 function finish() {
     addLog.call(this, 'Game finished');
+    console.warn("END");
 
     unpauseAIs.call(this);
     _.each(getAvailableAIs.call(this), function (ai) {
@@ -192,6 +201,7 @@ function finish() {
         if (terminationText) {
             ai.process.stdin.write(terminationText);
         }
+        ai.onStdout = function () { };
         ai.onExit = function () { };
         ai.setTimer(1000);
     }, this);
@@ -226,11 +236,7 @@ function unpauseAIs() {
     }, this);
 }
 
-function processNextAI(currentAI) {
-    if (currentAI) {
-        currentAI.pause();
-    }
-
+function processNextAI() {
     var nextAI = _.first(getUnreadyAIs.call(this));
 
     addLog.call(this, 'AI' + nextAI.index + '>>' + 'Writing to stdin, waiting for stdout');
