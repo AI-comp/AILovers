@@ -1,4 +1,4 @@
-# AI Lovers - CEDEC 2014 AI Challenge
+# AI Lovers - CEDEC AI Challenge 2014
 
 ## ゲームの概要
 
