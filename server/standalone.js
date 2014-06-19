@@ -19,6 +19,8 @@ unpauseCommands = fixArgument(unpauseCommands, '', numAIs);
 
 console.warn('AI Commands: ' + JSON.stringify(aiCommands));
 console.warn('Working Dirs: ' + JSON.stringify(workingDirs));
+console.warn('Pause Commands: ' + JSON.stringify(pauseCommands));
+console.warn('Unpause Commands: ' + JSON.stringify(unpauseCommands));
 
 var runner = new Runner(aiCommands, workingDirs);
 runner.runGame(function () {
@@ -26,8 +28,9 @@ runner.runGame(function () {
 });
 
 function fixArgument(argument, defaultValue, numAIs) {
-    if (!_.isArray(argument)) {
-        fixedArgument = argument ? [argument] : [];
+    var fixedArgument = argument || [];
+    if (!_.isArray(fixedArgument)) {
+        fixedArgument = [fixedArgument];
     }
     while (fixedArgument.length < numAIs) {
         fixedArgument.push(defaultValue);
