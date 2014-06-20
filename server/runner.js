@@ -3,8 +3,7 @@ var _ = require('underscore'),
     exec = require('child_process').exec,
     Game = require('../game/game.js').Game;
 
-function AI(executionCommand, parameters, workingDir, pauseCommand, unpauseCommand, index, addLog) {
-    this.process = spawn(executionCommand, parameters, { cwd: workingDir });
+function AI(executionCommand, parameters, wholeExecutionCommand, workingDir, pauseCommand, unpauseCommand, index, addLog) {
     this.pauseCommand = pauseCommand;
     this.unpauseCommand = unpauseCommand;
     this.index = index;
@@ -15,6 +14,8 @@ function AI(executionCommand, parameters, workingDir, pauseCommand, unpauseComma
     this.timeout = null;
     this.onStdout = function (data) { };
     this.onExit = function () { };
+
+    this.process = spawn(executionCommand, parameters, { cwd: workingDir });
 
     var self = this;
 
@@ -30,6 +31,12 @@ function AI(executionCommand, parameters, workingDir, pauseCommand, unpauseComma
     this.process.on('close', function (code) {
         self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
         self.onExit();
+    });
+
+    this.process.on('error', function (error) {
+        console.error(error);
+        self.addLog('AI' + self.index + '>>' + 'Failed to run "' + wholeExecutionCommand + '"', self.index);
+        this.available = false;
     });
 }
 
@@ -89,16 +96,16 @@ Runner.prototype.runGame = function (done) {
     };
 
     this.ais = [];
-    for (var i = 0; i < this.game.getNumPlayers() ; i++) {
+    _(this.game.getNumPlayers()).times(function (i) {
         var commandAndParameters = this.executionCommands[i].split(' ');
         var command = _.first(commandAndParameters);
         var parameters = _.rest(commandAndParameters);
-        this.ais.push(new AI(command, parameters, this.workingDirs[i], this.pauseCommands[i], this.unpauseCommands[i], i, function (message, aiIndex) {
+        this.ais.push(new AI(command, parameters, this.executionCommands[i], this.workingDirs[i], this.pauseCommands[i], this.unpauseCommands[i], i, function (message, aiIndex) {
             addLog.call(self, message, aiIndex);
         }));
-    }
+    }, this);
 
-    _.each(this.ais, function (ai) {
+    _.each(getAvailableAIs.call(this), function (ai) {
         ai.onStdout = function (data) {
             if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
                 ai.ready = true;
