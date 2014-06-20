@@ -107,11 +107,11 @@ Runner.prototype.runGame = function (done) {
             }
         };
         ai.onExit = function () {
+            ai.clearTimer();
             if (ai.available && !ai.ready) {
+                ai.available = false;
                 onReadyForBeginning.call(self);
             }
-            ai.available = false;
-            ai.clearTimer();
         }
         ai.setTimer(5000);
     });
@@ -131,11 +131,11 @@ function onReadyForBeginning() {
                 }
             };
             ai.onExit = function () {
+                ai.clearTimer();
                 if (ai.available && !ai.ready) {
+                    ai.available = false;
                     onReady.call(self, ai);
                 }
-                ai.available = false;
-                ai.clearTimer();
             };
         }, this);
 
