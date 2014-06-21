@@ -133,7 +133,6 @@ function onReadyForBeginning() {
                     ai.commands = data.toString().trim().split(' ');
                     ai.ready = true;
                     ai.clearTimer();
-                    ai.pause();
                     onReady.call(self, ai);
                 }
             };
@@ -162,7 +161,9 @@ function addLog(logMessage, aiIndex) {
     this.gameResult.log.push({ target: aiIndex, message: logMessage.trim() });
 }
 
-function onReady() {
+function onReady(currentAI) {
+    currentAI.pause();
+
     if (isEveryoneReady.call(this, this.ais)) {
         var commands = _.map(this.ais, function (ai) {
             return ai.available ? ai.commands : [];
@@ -229,13 +230,13 @@ function getUnreadyAIs() {
 }
 
 function pauseAIs() {
-    _.each(getAvailableAIs.call(this), function (ai) {
+    _.each(this.ais, function (ai) {
         ai.pause();
     }, this);
 }
 
 function unpauseAIs() {
-    _.each(getAvailableAIs.call(this), function (ai) {
+    _.each(this.ais, function (ai) {
         ai.unpause();
     }, this);
 }
