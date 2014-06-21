@@ -66,6 +66,14 @@ AI.prototype.unpause = function () {
     }
 };
 
+AI.prototype.write = function (message) {
+    try {
+        this.process.stdin.write(message);
+    } catch (error) {
+        // we'll receive a 'close' message soon
+    }
+};
+
 function Runner(executionCommands, workingDirs, pauseCommands, unpauseCommands) {
     this.executionCommands = executionCommands;
     var defaultArray = _.map(executionCommands, function () {
@@ -204,7 +212,7 @@ function finish() {
     _.each(getAvailableAIs.call(this), function (ai) {
         var terminationText = this.game.getTerminationText();
         if (terminationText) {
-            ai.process.stdin.write(terminationText);
+            ai.write(terminationText);
         }
         ai.onStdout = function () { };
         ai.onExit = function () { };
@@ -247,11 +255,11 @@ function processNextAI() {
     addLog.call(this, 'AI' + nextAI.index + '>>' + 'Writing to stdin, waiting for stdout');
     if (this.game.isInitialState()) {
         var initialInformation = this.game.getInitialInformation();
-        nextAI.process.stdin.write(initialInformation);
+        nextAI.write(initialInformation);
         addLog.call(this, initialInformation);
     }
     var turnInformation = this.game.getTurnInformation(nextAI.index);
-    nextAI.process.stdin.write(turnInformation);
+    nextAI.write(turnInformation);
     addLog.call(this, turnInformation);
 
     nextAI.unpause();
