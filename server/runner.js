@@ -170,7 +170,9 @@ function addLog(logMessage, aiIndex) {
 }
 
 function onReady(currentAI) {
-    currentAI.pause();
+    if (currentAI) {
+        currentAI.pause();
+    }
 
     if (isEveryoneReady.call(this, this.ais)) {
         var commands = _.map(this.ais, function (ai) {
