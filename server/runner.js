@@ -12,8 +12,7 @@ function AI(executionCommand, parameters, wholeExecutionCommand, workingDir, pau
     this.ready = false;
     this.available = true;
     this.timeout = null;
-    this.onStdout = function (data) { };
-    this.onExit = function () { };
+    this.clearEventHandlers();
 
     this.process = spawn(executionCommand, parameters, { cwd: workingDir });
 
@@ -30,13 +29,15 @@ function AI(executionCommand, parameters, wholeExecutionCommand, workingDir, pau
 
     this.process.on('close', function (code) {
         self.addLog('AI' + self.index + '>>' + 'Child process exited with code ' + code);
+        self.clearTimer();
+        self.available = false;
         self.onExit();
     });
 
     this.process.on('error', function (error) {
         console.error(error);
         self.addLog('AI' + self.index + '>>' + 'Failed to run "' + wholeExecutionCommand + '"', self.index);
-        this.available = false;
+        self.available = false;
     });
 }
 
@@ -65,6 +66,11 @@ AI.prototype.unpause = function () {
         exec(this.unpauseCommand);
     }
 };
+
+AI.prototype.clearEventHandlers = function () {
+    this.onStdout = function (data) { };
+    this.onExit = function () { };
+}
 
 AI.prototype.write = function (message) {
     try {
@@ -115,18 +121,14 @@ Runner.prototype.runGame = function (done) {
 
     _.each(getAvailableAIs.call(this), function (ai) {
         ai.onStdout = function (data) {
-            if (data.toString().trim().toLowerCase() == 'ready' && !ai.ready) {
+            if (data.toString().trim().toLowerCase() == 'ready') {
                 ai.ready = true;
                 ai.clearTimer();
                 onReadyForBeginning.call(self);
             }
         };
         ai.onExit = function () {
-            ai.clearTimer();
-            if (ai.available && !ai.ready) {
-                ai.available = false;
-                onReadyForBeginning.call(self);
-            }
+            onReadyForBeginning.call(self);
         }
         ai.setTimer(5000);
     });
@@ -135,22 +137,7 @@ Runner.prototype.runGame = function (done) {
 function onReadyForBeginning() {
     if (isEveryoneReady.call(this, this.ais)) {
         _.each(this.ais, function (ai) {
-            var self = this;
-            ai.onStdout = function (data) {
-                if (ai.available && !ai.ready) {
-                    ai.commands = data.toString().trim().split(' ');
-                    ai.ready = true;
-                    ai.clearTimer();
-                    onReady.call(self, ai);
-                }
-            };
-            ai.onExit = function () {
-                ai.clearTimer();
-                if (ai.available && !ai.ready) {
-                    ai.available = false;
-                    onReady.call(self, ai);
-                }
-            };
+            ai.clearEventHandlers();
         }, this);
 
         pauseAIs.call(this);
@@ -171,6 +158,7 @@ function addLog(logMessage, aiIndex) {
 
 function onReady(currentAI) {
     if (currentAI) {
+        currentAI.clearEventHandlers();
         currentAI.pause();
     }
 
@@ -212,12 +200,11 @@ function finish() {
 
     unpauseAIs.call(this);
     _.each(getAvailableAIs.call(this), function (ai) {
+        ai.clearEventHandlers();
         var terminationText = this.game.getTerminationText();
         if (terminationText) {
             ai.write(terminationText);
         }
-        ai.onStdout = function () { };
-        ai.onExit = function () { };
         ai.setTimer(1000);
     }, this);
 
@@ -252,20 +239,31 @@ function unpauseAIs() {
 }
 
 function processNextAI() {
-    var nextAI = _.first(getUnreadyAIs.call(this));
+    var ai = _.first(getUnreadyAIs.call(this));
+    var self = this;
 
-    addLog.call(this, 'AI' + nextAI.index + '>>' + 'Writing to stdin, waiting for stdout');
+    ai.onStdout = function (data) {
+        ai.commands = data.toString().trim().split(' ');
+        ai.ready = true;
+        ai.clearTimer();
+        onReady.call(self, ai);
+    };
+    ai.onExit = function () {
+        onReady.call(self, ai);
+    };
+
+    addLog.call(this, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
     if (this.game.isInitialState()) {
         var initialInformation = this.game.getInitialInformation();
-        nextAI.write(initialInformation);
+        ai.write(initialInformation);
         addLog.call(this, initialInformation);
     }
-    var turnInformation = this.game.getTurnInformation(nextAI.index);
-    nextAI.write(turnInformation);
+    var turnInformation = this.game.getTurnInformation(ai.index);
+    ai.write(turnInformation);
     addLog.call(this, turnInformation);
 
-    nextAI.unpause();
-    nextAI.setTimer(1000);
+    ai.unpause();
+    ai.setTimer(1000);
 }
 
 exports.Runner = Runner;
