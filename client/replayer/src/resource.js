@@ -10,6 +10,9 @@ var res = {
         mainScene: 'res/MainScene.json',
         dateScene: 'res/DateScene.json',
         cursor: 'res/Cursor.json',
+        resultScene: 'res/ResultScene.json',
+        playerGrid: 'res/publish/PlayerGrid.json',
+        resultPanel: 'res/publish/ResultPanel.json',
     },
     image: {
         enthusiasm: 'res/enthusiasm.png',
@@ -29,6 +32,9 @@ var g_resources = [
     res.json.mainScene,
     res.json.dateScene,
     res.json.cursor,
+    res.json.resultScene,
+    res.json.playerGrid,
+    res.json.resultPanel,
     res.image.enthusiasm,
 ];
 

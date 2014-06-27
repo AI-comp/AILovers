@@ -1,4 +1,4 @@
-var MainScene = ReplayerScene.extend({
+var MainScene = GameScene.extend({
     ctor: function (game) {
         this._super();
         this.game = game;
@@ -17,65 +17,9 @@ var MainScene = ReplayerScene.extend({
         return true;
     },
 
-    setupHeroinePanels: function () {
-        _(this.game.getNumHeroines()).times(function (heroineIndex) {
-            var heroine = this.game.heroines[heroineIndex];
-            var heroinePanel = this.getHeroinePanel(heroineIndex);
-            heroinePanel.setBackGroundImage(res.image.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
-
-            var enthusiasmPanel = ccs.uiReader.widgetFromJsonFile(res.json.enthusiasmPanel);
-            heroinePanel.getChildByName('EnthusiasmArea').addChild(enthusiasmPanel);
-            _(heroine.enthusiasm).times(function (enthusiasmIndex) {
-                var enthusiasmImage = enthusiasmPanel.getChildByName('Enthusiasm' + (enthusiasmIndex + 1));
-                enthusiasmImage.loadTexture(res.image.enthusiasm);
-            }, this);
-        }, this);
-
+    setLovePanelMode: function (mode) {
+        GameScene.prototype.lovePanelMode = mode;
         this.setupLovePanels();
-    },
-
-    setupLovePanels: function () {
-        _(this.game.getNumHeroines()).times(function (heroineIndex) {
-            var heroine = this.game.heroines[heroineIndex];
-            var heroinePanel = this.getHeroinePanel(heroineIndex);
-
-            _(this.game.getNumPlayers()).times(function (playerIndex) {
-                var loveArea = heroinePanel.getChildByName('LoveArea' + playerIndex);
-                loveArea.removeAllChildren(true);
-
-                switch (this.lovePanelMode) {
-                    case MainScene.HEART_LOVE_PANEL_MODE:
-                    default:
-                        var lovePanel = new HeartLovePanel(playerIndex);
-                        break;
-                    case MainScene.BAR_LOVE_PANEL_MODE:
-                        var lovePanel = new BarLovePanel(playerIndex, this.game.getMaxLove());
-                        break;
-                }
-                loveArea.addChild(lovePanel);
-                lovePanel.setLove(heroine.revealedLove[playerIndex], heroine.realLove[playerIndex]);
-            }, this);
-        }, this);
-    },
-
-    setupPlayerPanels: function () {
-        _(this.game.getNumPlayers()).times(function (playerIndex) {
-            var playerPanel = this.getPlayerPanel(playerIndex);
-            playerPanel.setBackGroundImage(res.image.playerBackgrounds[playerIndex], ccui.Widget.LOCAL_TEXTURE);
-        }, this);
-    },
-
-    getHeroinePanel: function (heroineIndex) {
-        return this.getPanel(heroineIndex);
-    },
-
-    getPlayerPanel: function (playerIndex) {
-        return this.getPanel(10 + playerIndex);
-    },
-
-    getPanel: function (tag) {
-        var panelNode = this.sceneNode.getChildByTag(tag);
-        return panelNode.getChildByTag(0);
     },
 
     setupControlPanel: function () {
@@ -95,8 +39,8 @@ var MainScene = ReplayerScene.extend({
         this.addTouchEventListenerToButton(nextButton, _.partial(this.transitToSpecificTurn, this.game.turn + 1));
         this.addTouchEventListenerToButton(firstButton, _.partial(this.transitToSpecificTurn, this.game.initialTurn));
         this.addTouchEventListenerToButton(lastButton, _.partial(this.transitToSpecificTurn, this.game.lastTurn + 1));
-        this.addTouchEventListenerToButton(heartButton, _.partial(this.setLovePanelMode, MainScene.HEART_LOVE_PANEL_MODE));
-        this.addTouchEventListenerToButton(barButton, _.partial(this.setLovePanelMode, MainScene.BAR_LOVE_PANEL_MODE));
+        this.addTouchEventListenerToButton(heartButton, _.partial(this.setLovePanelMode, GameScene.HEART_LOVE_PANEL_MODE));
+        this.addTouchEventListenerToButton(barButton, _.partial(this.setLovePanelMode, GameScene.BAR_LOVE_PANEL_MODE));
 
         if (this.game.turn <= this.game.initialTurn) {
             previousButton.setBright(false);
@@ -140,30 +84,12 @@ var MainScene = ReplayerScene.extend({
             game.processTurn(this.getCurrentCommands(game));
         }
 
-        var transition = cc.TransitionFade.create(0.5, new MainScene(game));
+        if (turn > this.game.lastTurn) {
+            var transition = cc.TransitionFade.create(0.5, new ResultScene(game));
+        } else {
+            var transition = cc.TransitionFade.create(0.5, new MainScene(game));
+        }
         cc.director.runScene(transition);
     },
 
-    setLovePanelMode: function (mode) {
-        MainScene.prototype.lovePanelMode = mode;
-        this.setupLovePanels();
-    },
-
-    showResults: function () {
-        var resultLabel = cc.LabelTTF.create('', 'Arial', 18);
-        var lines = [];
-        lines.push('Winner: ' + this.game.getWinner());
-        _.each(this.game.getRanking(), function (player) {
-            lines.push('Player ' + player.index + ': ' + player.getPopularity() + ' popularity');
-        });
-        resultLabel.setString(lines.join('\n'));
-        resultLabel.setFontFillColor(new cc.Color(0, 0, 0));
-        this.sceneNode.addChild(resultLabel, 5);
-        var size = cc.director.getWinSize();
-        resultLabel.setPosition(size.width / 2, size.height / 2);
-    },
 });
-
-MainScene.HEART_LOVE_PANEL_MODE = 0;
-MainScene.BAR_LOVE_PANEL_MODE = 1;
-MainScene.prototype.lovePanelMode = MainScene.HEART_LOVE_PANEL_MODE;

@@ -16,6 +16,8 @@
     "jsList" : [
         "src/resource.js",
         "src/replayerScene.js",
+        "src/gameScene.js",
+        "src/resultScene.js",
         "src/mainScene.js",
         "src/dateScene.js",
         "src/lovePanel.js",
