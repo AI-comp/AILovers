@@ -6,7 +6,6 @@ Web Sites
 - http://cedec.cesa.or.jp/2014/ (TBD)
 
 # For Participants
-The list of languages available on contest server is **[here](https://github.com/AI-comp/ai-comp.github.com/blob/master/doc/available_languages.md).**
 There are two ways to play the game.
 
 - Play online. Go to [the contest server](arena.ai-comp.net) and submit your AI.
