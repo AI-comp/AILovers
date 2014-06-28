@@ -41,4 +41,4 @@ AI Lovers
 
 1. `execute_on_cui.bat` or `execute_on_cui.sh` を実行
 2. `execute_on_cui.bat -a "python ai1.py" -a "python ai2.py"` を実行  
-1つ目のAIは `python ai1.py`、2つ目のAIは `python ai1.py`、3つ目と4つ目のAIはデフォルト（`python ai/ai.py`）
+1つ目のAIは `python ai1.py`、2つ目のAIは `python ai1.py`、3つ目と4つ目のAIはデフォルト（`python ai/ai.py`）が実行される
