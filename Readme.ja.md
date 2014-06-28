@@ -23,7 +23,8 @@ AI Lovers
 
 1. [nodebrew](https://github.com/hokaccha/nodebrew) および nodejs をインストール
     1. `curl -L git.io/nodebrew | perl - setup`
-    2. bashを使っている人は `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .bashrc` で、zshを使っている人は `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .zshrc`
+    2. bashを使っている人は `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .bashrc`  
+       zshを使っている人は `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .zshrc`
     3. bashを使っている人は `source ~/.bashrc` で、zshを使っている人は `source ~/.zshrc`
     4. nodebrew install stable
     5. nodebrew use stable
