@@ -33,3 +33,6 @@ node_modules
 __pycache__
 *.pyc
 *.swp
+
+# Mac
+.DS_Store
