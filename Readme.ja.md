@@ -22,7 +22,7 @@ AI Lovers
 ## Mac OS / Linux
 
 1. [nodebrew](https://github.com/hokaccha/nodebrew) および nodejs をインストール
-    1. curl -L git.io/nodebrew | perl - setup
+    1. `curl -L git.io/nodebrew | perl - setup`
     2. `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .bashrc` or `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .zshrc`
     3. `source ~/.bashrc` or `source ~/.zshrc`
     4. nodebrew install stable
