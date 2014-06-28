@@ -27,8 +27,8 @@ AI Lovers
        zshを使っている人は `echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" >> .zshrc`
     3. bashを使っている人は `source ~/.bashrc`  
        zshを使っている人は `source ~/.zshrc`
-    4. nodebrew install stable
-    5. nodebrew use stable
+    4. `nodebrew install stable`
+    5. `nodebrew use stable`
 2. `install.sh` を実行
 
 ## ローカル環境での実行方法 via ブラウザ
