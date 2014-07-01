@@ -10,4 +10,9 @@ cc.game.onStart = function () {
         cc.director.runScene(new MainScene(game));
     }, this);
 };
+
 cc.game.run();
+
+if (!cc._supportRender) {
+    $('#gameArea').html('Please enable WebGL in your browser. For more infomation, visit <a href="http://get.webgl.org/" target="_blank">http://get.webgl.org/</a>.');
+}
