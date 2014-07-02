@@ -11,6 +11,7 @@ var MainScene = GameScene.extend({
 
     setupPlayerPanels: function () {
         this._super();
+
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var playerPanel = this.getPlayerPanel(playerIndex);
             playerPanel.setBackGroundImageScale9Enabled(true);

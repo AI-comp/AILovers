@@ -25,6 +25,7 @@ var GameScene = ReplayerScene.extend({
     },
 
     setupPlayerPanels: function () {
+        // TODO: set icons and names
     },
 
     setupHeroinePanels: function () {

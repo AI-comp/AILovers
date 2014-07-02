@@ -11,8 +11,8 @@
     <string>PlayerResultPanel.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>200</Width>
-    <Height>150</Height>
+    <Width>600</Width>
+    <Height>120</Height>
   </CanvasSize>
   <filePath>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\PlayerPanel.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
