@@ -23,7 +23,9 @@ var ResultScene = InformationScene.extend({
         _.each(rankedPlayers, function (player) {
             var playerPanel = this.getPlayerPanel(player.index);
             var popularityBarName = (player.getPopularity() >= 0 ? 'PositivePopularityBar' : 'NegativePopularityBar');
-            playerPanel.getChildByName(popularityBarName).setPercent(Math.abs(player.getPopularity()) / maxPopularity * 100);
+            var popularityBar = playerPanel.getChildByName(popularityBarName);
+            popularityBar.loadTexture(res.image.revealedBars[player.index], ccui.Widget.LOCAL_TEXTURE);
+            popularityBar.setPercent(Math.abs(player.getPopularity()) / maxPopularity * 100);
         }, this);
     },
 });
