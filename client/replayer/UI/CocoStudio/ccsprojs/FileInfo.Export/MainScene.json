@@ -21,6 +21,8 @@
   "publish/control/bar.png",
   "publish/control/bar_pressed.png",
   "background.png",
+  "publish/GUI/loadingbar.png",
+  "publish/dummyBar.png",
   "publish\\MainScene.json",
   "publish/HeroinePanel.json",
   "publish/PlayerPanel.json",

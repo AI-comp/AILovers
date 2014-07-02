@@ -20,5 +20,5 @@
   <imageFileList />
   <imagePngList />
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>PlayerPanel.json</CurrentUIJson>
+  <CurrentUIJson>PlayerGrid.json</CurrentUIJson>
 </UIProject>

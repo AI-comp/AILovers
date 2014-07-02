@@ -22,7 +22,9 @@
   "publish/control/bar_pressed.png",
   "background.png",
   "publish/GUI/loadingbar.png",
+  "publish/dummyBar.png",
   "publish\\ResultScene.json",
   "publish/HeroinePanel.json",
-  "publish/ResultPanel.json"
+  "publish/ResultPanel.json",
+  "publish/ControlPanel.json"
 ]
