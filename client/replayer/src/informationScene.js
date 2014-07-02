@@ -2,13 +2,19 @@ var InformationScene = ReplayerScene.extend({
     ctor: function (game) {
         this._super();
         this.game = game;
-        return true;
-    },
 
-    setupPanels: function () {
+        this.sceneNode = this.createSceneNode();
+        this.addChild(this.sceneNode);
+
         this.setupHeroinePanels();
         this.setupPlayerPanels();
         this.setupControlPanel();
+
+        return true;
+    },
+
+    createSceneNode: function () {
+        // Override me
     },
 
     getHeroinePanel: function (heroineIndex) {

@@ -1,12 +1,11 @@
 var ResultScene = InformationScene.extend({
     ctor: function (game) {
         this._super(game);
-
-        this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.resultScene);
-        this.addChild(this.sceneNode);
-        this.setupPanels();
-
         return true;
+    },
+
+    createSceneNode: function () {
+        return ccs.sceneReader.createNodeWithSceneFile(res.json.resultScene);
     },
 
     getLovePanelMode: function () {

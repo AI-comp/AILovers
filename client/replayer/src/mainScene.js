@@ -1,12 +1,11 @@
 var MainScene = InformationScene.extend({
     ctor: function (game) {
         this._super(game);
-
-        this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.mainScene);
-        this.addChild(this.sceneNode);
-        this.setupPanels();
-
         return true;
+    },
+
+    createSceneNode: function () {
+        return ccs.sceneReader.createNodeWithSceneFile(res.json.mainScene);
     },
 
     setupPlayerPanels: function () {
