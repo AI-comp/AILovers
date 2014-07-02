@@ -1,4 +1,4 @@
-var ResultScene = GameScene.extend({
+var ResultScene = InformationScene.extend({
     ctor: function (game) {
         this._super(game);
 
@@ -10,7 +10,7 @@ var ResultScene = GameScene.extend({
     },
 
     getLovePanelMode: function () {
-        return GameScene.BAR_LOVE_PANEL_MODE;
+        return InformationScene.BAR_LOVE_PANEL_MODE;
     },
 
     setupPlayerPanels: function () {

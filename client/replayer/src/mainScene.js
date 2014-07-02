@@ -1,4 +1,4 @@
-var MainScene = GameScene.extend({
+var MainScene = InformationScene.extend({
     ctor: function (game) {
         this._super(game);
 
