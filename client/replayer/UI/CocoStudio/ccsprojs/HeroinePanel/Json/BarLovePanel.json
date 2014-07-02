@@ -10,10 +10,8 @@
   "designHeight": 40,
   "designWidth": 172,
   "textures": [],
-  "texturesPng": [
-    "dummyBar.png"
-  ],
-  "version": "1.4.0.1",
+  "texturesPng": [],
+  "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
     "name": null,

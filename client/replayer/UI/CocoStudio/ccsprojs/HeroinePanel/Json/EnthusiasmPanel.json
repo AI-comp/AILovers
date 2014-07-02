@@ -11,7 +11,7 @@
   "designWidth": 172,
   "textures": [],
   "texturesPng": [],
-  "version": "1.4.0.1",
+  "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
     "name": null,
@@ -346,7 +346,7 @@
       "classname": "Panel",
       "name": "EnthusiasmPanel",
       "ZOrder": 0,
-      "actiontag": 1,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

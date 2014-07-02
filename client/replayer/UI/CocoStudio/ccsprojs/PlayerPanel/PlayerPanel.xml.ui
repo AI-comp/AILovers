@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ProjectDir>C:\Users\hugh\github\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel</ProjectDir>
-  <Version>1.4.0.1</Version>
-  <Resources>C:\Users\hugh\github\AILovers\client\replayer\UI\CocoStudio\assets</Resources>
+  <ProjectDir>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel</ProjectDir>
+  <Version>1.5.0.0</Version>
+  <Resources>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\assets</Resources>
   <Name>PlayerPanel</Name>
   <JsonFileName>PlayerPanel.json</JsonFileName>
-  <JsonFolder>C:\Users\hugh\github\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\Json</JsonFolder>
+  <JsonFolder>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\Json</JsonFolder>
   <JsonList>
     <string>PlayerGrid.json</string>
     <string>PlayerPanel.json</string>
@@ -14,7 +14,7 @@
     <Width>200</Width>
     <Height>150</Height>
   </CanvasSize>
-  <filePath>C:\Users\hugh\github\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\PlayerPanel.xml.ui</filePath>
+  <filePath>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\PlayerPanel.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
