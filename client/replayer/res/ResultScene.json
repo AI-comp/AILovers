@@ -21,36 +21,8 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 1.63409423828125,
-      "y": 520.4127197265625,
-      "zorder": 2,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "publish/HeroinePanel.json",
-            "plistFile": "",
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "HeroinePanel2",
-      "canedit": true,
-      "objecttag": 2,
-      "rotation": 0,
-      "scalex": 0.64,
-      "scaley": 0.64,
-      "visible": 1,
-      "x": 256.90249633789062,
-      "y": 520.278564453125,
+      "x": 0,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -77,8 +49,36 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 129.68295288085938,
-      "y": 520.4127197265625,
+      "x": 128,
+      "y": 520,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/HeroinePanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "HeroinePanel2",
+      "canedit": true,
+      "objecttag": 2,
+      "rotation": 0,
+      "scalex": 0.64,
+      "scaley": 0.64,
+      "visible": 1,
+      "x": 256,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -105,8 +105,8 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 384.70736694335938,
-      "y": 520.6810302734375,
+      "x": 384,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -133,8 +133,8 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 512.829345703125,
-      "y": 520.7073974609375,
+      "x": 512,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -161,8 +161,8 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 640.24395751953125,
-      "y": 521.128173828125,
+      "x": 640,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -189,8 +189,8 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 768.8232421875,
-      "y": 520.7562255859375,
+      "x": 768,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -217,8 +217,8 @@
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 897.817138671875,
-      "y": 520.7135009765625,
+      "x": 896,
+      "y": 520,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -238,7 +238,147 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "",
+      "name": "PlayerPanel0",
+      "canedit": true,
+      "objecttag": 10,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 212,
+      "y": 380,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/PlayerResultPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "PlayerPanel1",
+      "canedit": true,
+      "objecttag": 11,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 212,
+      "y": 260,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/PlayerResultPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "PlayerPanel2",
+      "canedit": true,
+      "objecttag": 12,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 212,
+      "y": 140,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/PlayerResultPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "PlayerPanel3",
+      "canedit": true,
+      "objecttag": 13,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 212,
+      "y": 20,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/PlayerResultPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "ControlPanel",
+      "canedit": true,
+      "objecttag": 100,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 824,
+      "y": 0,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/ControlPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "Background",
       "canedit": true,
       "objecttag": 10017,
       "rotation": 0,
@@ -246,7 +386,7 @@
       "scaley": 1,
       "visible": 1,
       "x": 512,
-      "y": 382,
+      "y": 384,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -257,118 +397,6 @@
           "file": null,
           "fileData": {
             "path": "background.png",
-            "plistFile": "",
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "PlayerResult0",
-      "canedit": true,
-      "objecttag": 10,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 257.83331298828125,
-      "y": 364.33331298828125,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "publish/ResultPanel.json",
-            "plistFile": "",
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "PlayerResult1",
-      "canedit": true,
-      "objecttag": 11,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 258.49993896484375,
-      "y": 272.66668701171875,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "publish/ResultPanel.json",
-            "plistFile": "",
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "PlayerResult2",
-      "canedit": true,
-      "objecttag": 12,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 258.1666259765625,
-      "y": 177.66665649414063,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "publish/ResultPanel.json",
-            "plistFile": "",
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "PlayerResult3",
-      "canedit": true,
-      "objecttag": 13,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 258.1666259765625,
-      "y": 84.333320617675781,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "publish/ResultPanel.json",
             "plistFile": "",
             "resourceType": 0
           }

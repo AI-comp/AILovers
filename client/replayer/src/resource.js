@@ -1,5 +1,8 @@
 var res = {
     json: {
+        mainScene: 'res/MainScene.json',
+        dateScene: 'res/DateScene.json',
+        resultScene: 'res/ResultScene.json',
         heroinePanel: 'res/publish/HeroinePanel.json',
         datePanel: 'res/publish/DatePanel.json',
         playerPanel: 'res/publish/PlayerPanel.json',
@@ -7,12 +10,8 @@ var res = {
         heartLovePanel: 'res/publish/HeartLovePanel.json',
         barLovePanel: 'res/publish/BarLovePanel.json',
         enthusiasmPanel: 'res/publish/EnthusiasmPanel.json',
-        mainScene: 'res/MainScene.json',
-        dateScene: 'res/DateScene.json',
+        playerResultPanel: 'res/publish/PlayerResultPanel.json',
         cursor: 'res/Cursor.json',
-        resultScene: 'res/ResultScene.json',
-        playerGrid: 'res/publish/PlayerGrid.json',
-        resultPanel: 'res/publish/ResultPanel.json',
     },
     image: {
         enthusiasm: 'res/enthusiasm.png',
@@ -22,6 +21,9 @@ var res = {
 };
 
 var g_resources = [
+    res.json.mainScene,
+    res.json.dateScene,
+    res.json.resultScene,
     res.json.heroinePanel,
     res.json.datePanel,
     res.json.playerPanel,
@@ -29,12 +31,9 @@ var g_resources = [
     res.json.heartLovePanel,
     res.json.barLovePanel,
     res.json.enthusiasmPanel,
-    res.json.mainScene,
-    res.json.dateScene,
+    res.json.playerResultPanel,
     res.json.cursor,
-    res.json.resultScene,
-    res.json.playerGrid,
-    res.json.resultPanel,
+
     res.image.enthusiasm,
 ];
 

@@ -1,12 +1,11 @@
 var ResultScene = GameScene.extend({
     ctor: function (game) {
-        this._super();
-        this.game = game;
+        this._super(game);
+
         this.sceneNode = ccs.sceneReader.createNodeWithSceneFile(res.json.resultScene);
         this.addChild(this.sceneNode);
+        this.setupPanels();
 
-        this.setupHeroinePanels();
-        //this.setupPlayerPanels(true);
         //this.showResults();
 
         return true;
@@ -26,6 +25,9 @@ var ResultScene = GameScene.extend({
         resultLabel.setPosition(size.width / 2, size.height / 2);
         var transition = cc.TransitionFade.create(0.5, new ResultScene(this.game));
         cc.director.runScene(transition);
-        
+    },
+
+    getLovePanelMode: function () {
+        return GameScene.BAR_LOVE_PANEL_MODE;
     },
 });

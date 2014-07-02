@@ -21,10 +21,9 @@
   "publish/control/bar.png",
   "publish/control/bar_pressed.png",
   "background.png",
-  "publish/GUI/loadingbar.png",
   "publish/dummyBar.png",
   "publish\\ResultScene.json",
   "publish/HeroinePanel.json",
-  "publish/ResultPanel.json",
+  "publish/PlayerResultPanel.json",
   "publish/ControlPanel.json"
 ]

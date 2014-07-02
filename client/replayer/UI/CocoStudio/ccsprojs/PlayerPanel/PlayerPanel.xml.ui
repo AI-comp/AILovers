@@ -7,8 +7,8 @@
   <JsonFileName>PlayerPanel.json</JsonFileName>
   <JsonFolder>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\Json</JsonFolder>
   <JsonList>
-    <string>PlayerGrid.json</string>
     <string>PlayerPanel.json</string>
+    <string>PlayerResultPanel.json</string>
   </JsonList>
   <CanvasSize>
     <Width>200</Width>
@@ -18,7 +18,10 @@
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
-  <imagePngList />
+  <imagePngList>
+    <string>dummyPlayerIcon.png</string>
+    <string>dummyBar.png</string>
+  </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>PlayerGrid.json</CurrentUIJson>
+  <CurrentUIJson>PlayerResultPanel.json</CurrentUIJson>
 </UIProject>

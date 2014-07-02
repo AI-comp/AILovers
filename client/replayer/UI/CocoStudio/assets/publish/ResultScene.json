@@ -42,14 +42,14 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "HeroinePanel2",
+      "name": "HeroinePanel1",
       "canedit": true,
-      "objecttag": 2,
+      "objecttag": 1,
       "rotation": 0,
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 256,
+      "x": 128,
       "y": 520,
       "zorder": 2,
       "gameobjects": [],
@@ -70,14 +70,14 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "HeroinePanel1",
+      "name": "HeroinePanel2",
       "canedit": true,
-      "objecttag": 1,
+      "objecttag": 2,
       "rotation": 0,
       "scalex": 0.64,
       "scaley": 0.64,
       "visible": 1,
-      "x": 128,
+      "x": 256,
       "y": 520,
       "zorder": 2,
       "gameobjects": [],
@@ -238,15 +238,15 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "PlayerResult0",
+      "name": "PlayerPanel0",
       "canedit": true,
       "objecttag": 10,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 256,
-      "y": 370,
+      "x": 212,
+      "y": 380,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -256,7 +256,7 @@
           "name": "GUIComponent",
           "file": null,
           "fileData": {
-            "path": "publish/ResultPanel.json",
+            "path": "publish/PlayerResultPanel.json",
             "plistFile": "",
             "resourceType": 0
           }
@@ -266,15 +266,15 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "PlayerResult1",
+      "name": "PlayerPanel1",
       "canedit": true,
       "objecttag": 11,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 256,
-      "y": 270,
+      "x": 212,
+      "y": 260,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -284,7 +284,7 @@
           "name": "GUIComponent",
           "file": null,
           "fileData": {
-            "path": "publish/ResultPanel.json",
+            "path": "publish/PlayerResultPanel.json",
             "plistFile": "",
             "resourceType": 0
           }
@@ -294,15 +294,15 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "PlayerResult2",
+      "name": "PlayerPanel2",
       "canedit": true,
       "objecttag": 12,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 256,
-      "y": 170,
+      "x": 212,
+      "y": 140,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -312,7 +312,7 @@
           "name": "GUIComponent",
           "file": null,
           "fileData": {
-            "path": "publish/ResultPanel.json",
+            "path": "publish/PlayerResultPanel.json",
             "plistFile": "",
             "resourceType": 0
           }
@@ -322,15 +322,15 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "PlayerResult3",
+      "name": "PlayerPanel3",
       "canedit": true,
       "objecttag": 13,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 256,
-      "y": 70,
+      "x": 212,
+      "y": 20,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -340,7 +340,35 @@
           "name": "GUIComponent",
           "file": null,
           "fileData": {
-            "path": "publish/ResultPanel.json",
+            "path": "publish/PlayerResultPanel.json",
+            "plistFile": "",
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "ControlPanel",
+      "canedit": true,
+      "objecttag": 100,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 824,
+      "y": 0,
+      "zorder": 2,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "publish/ControlPanel.json",
             "plistFile": "",
             "resourceType": 0
           }
@@ -358,7 +386,7 @@
       "scaley": 1,
       "visible": 1,
       "x": 512,
-      "y": 382,
+      "y": 384,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -369,34 +397,6 @@
           "file": null,
           "fileData": {
             "path": "background.png",
-            "plistFile": "",
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": null,
-      "canedit": true,
-      "objecttag": 10084,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 824,
-      "y": 0,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "publish/ControlPanel.json",
             "plistFile": "",
             "resourceType": 0
           }
