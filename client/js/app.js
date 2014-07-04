@@ -28,6 +28,13 @@ $(function () {
     }
 
     function loadReplayer(replay) {
-        $('#replayer').attr('src', '/replayer/?replay=' + JSON.stringify(replay));
+        var replayerFrame = $('#replayer');
+        if (replayerFrame.attr('src')) {
+            var window = replayerFrame.get(0).contentWindow;
+            window.replay = replay;
+            window.runGame();
+        } else {
+            replayerFrame.attr('src', '/replayer/?replay=' + JSON.stringify(replay));
+        }
     }
 });
