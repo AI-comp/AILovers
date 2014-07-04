@@ -142,11 +142,11 @@ var InformationScene = ReplayerScene.extend({
         }
 
         if (turn > this.game.lastTurn) {
-            var transition = cc.TransitionFade.create(0.5, new ResultScene(game));
+            var nextScene = new ResultScene(game);
         } else {
-            var transition = cc.TransitionFade.create(0.5, new MainScene(game));
+            var nextScene = new MainScene(game);
         }
-        cc.director.runScene(transition);
+        cc.director.runScene(nextScene);
     },
 
     setLovePanelMode: function (mode) {
