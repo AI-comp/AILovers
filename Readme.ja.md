@@ -2,7 +2,7 @@
 
 公式サイト
 - http://www.ai-comp.net/cedec2014/
-- http://cedec.cesa.or.jp/2014/ (TBD)
+- http://cedec.cesa.or.jp/2014/session/ENG/13108.html
 
 # 参加者の皆さんへ
 
