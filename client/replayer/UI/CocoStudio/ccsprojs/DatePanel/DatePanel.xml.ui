@@ -19,7 +19,9 @@
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
-  <imagePngList />
+  <imagePngList>
+    <string>dummyFace.png</string>
+  </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>DatePanel.json</CurrentUIJson>
+  <CurrentUIJson>Cursor.json</CurrentUIJson>
 </UIProject>

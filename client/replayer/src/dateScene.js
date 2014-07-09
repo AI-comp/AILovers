@@ -96,7 +96,7 @@ var DateScene = ReplayerScene.extend({
         var nextScreen = ccs.uiReader.widgetFromJsonFile(res.json.dateScreen);
         nextScreen.getChildByName('BackgroundImage').loadTexture(res.image.date.backgrounds[targetHeroine]);
         nextScreen.getChildByName('HeroineImage').loadTexture(res.image.date.heroines[targetHeroine]);
-        nextScreen.setPosition(new cc.Point(screen.width, 0));
+        nextScreen.setPosition(new cc.Point(0, -screen.height));
         screenArea.addChild(nextScreen);
 
         var moveTo = cc.MoveTo.create(DateScene.SLIDE_DURATION, new cc.Point(0, 0));
@@ -109,7 +109,7 @@ var DateScene = ReplayerScene.extend({
 
         if (this.cursorPosition == 0) {
             var targetHeroinePosition = targetHeroineImage.getPosition();
-            this.cursors[playerIndex].setPosition(targetHeroinePosition.x - targetHeroineImage.getSize().width, targetHeroinePosition.y);
+            this.cursors[playerIndex].setPosition(targetHeroinePosition.x, targetHeroinePosition.y + targetHeroineImage.getSize().height);
             this.cursors[playerIndex].setVisible(true);
         }
 
