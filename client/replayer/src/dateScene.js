@@ -107,7 +107,12 @@ var DateScene = ReplayerScene.extend({
         var targetPanel = this.getTargetPanel(datePanel);
         var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
 
-        this.cursors[playerIndex].setVisible(true);
+        if (this.cursorPosition == 0) {
+            var targetHeroinePosition = targetHeroineImage.getPosition();
+            this.cursors[playerIndex].setPosition(targetHeroinePosition.x - targetHeroineImage.getSize().width, targetHeroinePosition.y);
+            this.cursors[playerIndex].setVisible(true);
+        }
+
         var moveTo = cc.MoveTo.create(DateScene.SLIDE_DURATION, targetHeroineImage.getPosition());
         this.cursors[playerIndex].runAction(cc.EaseOut.create(moveTo, DateScene.SLIDE_EASEOUT_RATE));
     },

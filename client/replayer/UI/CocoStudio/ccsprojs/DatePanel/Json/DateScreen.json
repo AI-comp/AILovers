@@ -10,9 +10,7 @@
   "designHeight": 384,
   "designWidth": 512,
   "textures": [],
-  "texturesPng": [
-    "dummyFace.png"
-  ],
+  "texturesPng": [],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -132,7 +130,7 @@
       "classname": "Panel",
       "name": "DateScreen",
       "ZOrder": 0,
-      "actiontag": 10990381,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",
