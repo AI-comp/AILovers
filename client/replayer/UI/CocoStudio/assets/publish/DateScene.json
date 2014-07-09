@@ -21,8 +21,8 @@
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 20,
-      "y": 404,
+      "x": 0,
+      "y": 384,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -49,8 +49,8 @@
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 524,
-      "y": 404,
+      "x": 512,
+      "y": 384,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -77,8 +77,8 @@
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 20,
-      "y": 30,
+      "x": 0,
+      "y": 0,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -105,8 +105,8 @@
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 524,
-      "y": 30,
+      "x": 512,
+      "y": 0,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -157,7 +157,7 @@
     "_width": 1024
   },
   "Triggers": null,
-  "Version": "1.4.0.1",
+  "Version": "1.5.0.0",
   "components": [
     {
       "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",

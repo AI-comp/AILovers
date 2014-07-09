@@ -48,3 +48,7 @@ Finally the server can be started by running this command:
 ```
 npm start
 ```
+
+# License
+
+See [NOTICE](NOTICE).

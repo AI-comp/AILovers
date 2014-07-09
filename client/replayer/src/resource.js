@@ -11,12 +11,17 @@ var res = {
         barLovePanel: 'res/publish/BarLovePanel.json',
         enthusiasmPanel: 'res/publish/EnthusiasmPanel.json',
         playerResultPanel: 'res/publish/PlayerResultPanel.json',
-        cursor: 'res/Cursor.json',
+        cursor: 'res/publish/Cursor.json',
+        dateScreen: 'res/publish/DateScreen.json',
     },
     image: {
-        enthusiasm: 'res/enthusiasm.png',
-        measure15: 'res/measure15.png',
-        measure45: 'res/measure45.png',
+        info: {
+            enthusiasm: 'res/info/enthusiasm.png',
+            measure15: 'res/info/measure15.png',
+            measure45: 'res/info/measure45.png',
+        },
+        date: {
+        },
     },
 };
 
@@ -33,8 +38,9 @@ var g_resources = [
     res.json.enthusiasmPanel,
     res.json.playerResultPanel,
     res.json.cursor,
+    res.json.dateScreen,
 
-    res.image.enthusiasm,
+    res.image.info.enthusiasm,
 ];
 
 function addNumberedResources(directory, count, extension) {
@@ -47,10 +53,11 @@ function addNumberedResources(directory, count, extension) {
     return resources;
 }
 
-res.image.heroines = addNumberedResources('heroine', 8, 'png');
-res.image.hearts = addNumberedResources('heart', 4, 'png');
-res.image.revealedBars = addNumberedResources('bar/revealed', 4, 'png');
-res.image.realBars = addNumberedResources('bar/real', 4, 'png');
-res.image.dates = addNumberedResources('date', 8, 'png');
-res.image.faces = addNumberedResources('face', 8, 'png');
-res.image.playerBackgrounds = addNumberedResources('playerBackground', 4, 'png');
+res.image.info.heroines = addNumberedResources('info/heroine', 8, 'png');
+res.image.info.hearts = addNumberedResources('info/heart', 4, 'png');
+res.image.info.revealedBars = addNumberedResources('info/bar/revealed', 4, 'png');
+res.image.info.realBars = addNumberedResources('info/bar/real', 4, 'png');
+res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground', 4, 'png');
+res.image.date.heroines = addNumberedResources('date/heroine', 8, 'png');
+res.image.date.backgrounds = addNumberedResources('date/background', 8, 'png');
+res.image.date.faces = addNumberedResources('date/face', 8, 'png');

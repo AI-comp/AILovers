@@ -14,7 +14,7 @@ var MainScene = InformationScene.extend({
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var playerPanel = this.getPlayerPanel(playerIndex);
             playerPanel.setBackGroundImageScale9Enabled(true);
-            playerPanel.setBackGroundImage(res.image.playerBackgrounds[playerIndex], ccui.Widget.LOCAL_TEXTURE);
+            playerPanel.setBackGroundImage(res.image.info.playerBackgrounds[playerIndex], ccui.Widget.LOCAL_TEXTURE);
         }, this);
     },
 });

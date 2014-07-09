@@ -14,7 +14,7 @@ var DateScene = ReplayerScene.extend({
     onEnterTransitionDidFinish: function () {
         this._super();
 
-        this.schedule(this.switchToNextDate, 0.5, cc.REPEAT_FOREVER);
+        this.schedule(this.switchToNextDate, DateScene.INTERVAL_BETWEEN_DATES, cc.REPEAT_FOREVER);
     },
 
     onExitTransitionDidStart: function () {
@@ -22,7 +22,7 @@ var DateScene = ReplayerScene.extend({
 
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
-            datePanel.getChildByName('Screen').setClippingEnabled(false);
+            datePanel.getChildByName('ScreenArea').setClippingEnabled(false);
         }, this);
     },
 
@@ -62,7 +62,7 @@ var DateScene = ReplayerScene.extend({
 
         _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
             var targetHeroine = this.getCommand(this.game, playerIndex, commandIndex);
-            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.faces[targetHeroine]);
+            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.date.faces[targetHeroine]);
         }, this);
     },
 
@@ -90,16 +90,17 @@ var DateScene = ReplayerScene.extend({
     },
 
     showNextScreenImage: function (datePanel, playerIndex) {
-        var screen = datePanel.getChildByName('Screen');
+        var screenArea = datePanel.getChildByName('ScreenArea');
         var targetHeroine = this.getCommand(this.game, playerIndex, this.cursorPosition);
 
-        var nextScreenImage = ccui.ImageView.create();
-        nextScreenImage.loadTexture(res.image.dates[targetHeroine]);
-        nextScreenImage.setAnchorPoint(new cc.Point(0, 0));
-        nextScreenImage.setPosition(new cc.Point(screen.width, 0));
-        screen.addChild(nextScreenImage);
-        var moveTo = cc.MoveTo.create(0.15, new cc.Point(0, 0));
-        nextScreenImage.runAction(cc.EaseOut.create(moveTo, 2));
+        var nextScreen = ccs.uiReader.widgetFromJsonFile(res.json.dateScreen);
+        nextScreen.getChildByName('BackgroundImage').loadTexture(res.image.date.backgrounds[targetHeroine]);
+        nextScreen.getChildByName('HeroineImage').loadTexture(res.image.date.heroines[targetHeroine]);
+        nextScreen.setPosition(new cc.Point(screen.width, 0));
+        screenArea.addChild(nextScreen);
+
+        var moveTo = cc.MoveTo.create(DateScene.SLIDE_DURATION, new cc.Point(0, 0));
+        nextScreen.runAction(cc.EaseOut.create(moveTo, DateScene.SLIDE_EASEOUT_RATE));
     },
 
     moveCursorToNextTarget: function (datePanel, playerIndex) {
@@ -107,7 +108,11 @@ var DateScene = ReplayerScene.extend({
         var targetHeroineImage = targetPanel.getChildByName('Heroine' + this.cursorPosition);
 
         this.cursors[playerIndex].setVisible(true);
-        var moveTo = cc.MoveTo.create(0.15, targetHeroineImage.getPosition());
-        this.cursors[playerIndex].runAction(cc.EaseOut.create(moveTo, 2));
+        var moveTo = cc.MoveTo.create(DateScene.SLIDE_DURATION, targetHeroineImage.getPosition());
+        this.cursors[playerIndex].runAction(cc.EaseOut.create(moveTo, DateScene.SLIDE_EASEOUT_RATE));
     },
 });
+
+DateScene.INTERVAL_BETWEEN_DATES = 1;
+DateScene.SLIDE_DURATION = 0.3;
+DateScene.SLIDE_EASEOUT_RATE = 3;

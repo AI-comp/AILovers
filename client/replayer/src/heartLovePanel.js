@@ -1,7 +1,7 @@
 var HeartLovePanel = LovePanel.extend({
     ctor: function (playerIndex) {
         this._super(res.json.heartLovePanel);
-        this.heartResource = res.image.hearts[playerIndex];
+        this.heartResource = res.image.info.hearts[playerIndex];
     },
 
     setLove: function (revealedLove, realLove) {

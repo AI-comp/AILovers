@@ -5,7 +5,11 @@
     <GuidesList />
   </GuidesProject>
   <GuidesProject>
-    <Project>DatePanel_2</Project>
+    <Project>Cursor</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>DateScreen</Project>
     <GuidesList />
   </GuidesProject>
 </ArrayOfGuidesProject>
