@@ -65,7 +65,7 @@ var DateScene = ReplayerScene.extend({
 
         _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
             var targetHeroine = this.getCommand(this.game, playerIndex, commandIndex);
-            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.date.faces[targetHeroine]);
+            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.date.targets[targetHeroine]);
         }, this);
     },
 

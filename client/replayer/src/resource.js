@@ -58,5 +58,5 @@ res.image.info.enthusiasms = addNumberedResources('info/enthusiasm', _.range(3, 
 res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground', _.range(4), 'png');
 res.image.date.heroines = addNumberedResources('date/heroine', _.range(8), 'png');
 res.image.date.backgrounds = addNumberedResources('date/background', _.range(8), 'png');
-res.image.date.faces = addNumberedResources('date/face', _.range(8), 'png');
+res.image.date.targets = addNumberedResources('date/target', _.range(8), 'png');
 res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', _.range(4), 'png');
