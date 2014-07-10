@@ -31,4 +31,12 @@ var ReplayerScene = cc.Scene.extend({
     getHeroineId: function (index) {
         return this.heroineIds[index];
     },
+
+    getNextInformationScene: function (game) {
+        if (game.isFinished()) {
+            return new ResultScene(game);
+        } else {
+            return new MainScene(game);
+        }
+    },
 });

@@ -28,9 +28,9 @@ var DateScene = ReplayerScene.extend({
         }, this);
     },
 
-    transitToMainScene: function () {
+    transitToInformationScene: function () {
         this.game.processTurn(this.getCurrentCommands(this.game));
-        var transition = cc.TransitionFadeTR.create(0.5, new MainScene(this.game));
+        var transition = cc.TransitionFadeTR.create(0.5, this.getNextInformationScene(this.game));
         cc.director.runScene(transition);
     },
 
@@ -83,7 +83,7 @@ var DateScene = ReplayerScene.extend({
         this.cursorPosition++;
         if (this.cursorPosition == this.game.getNumRequiredCommands()) {
             this.unscheduleAllCallbacks();
-            this.transitToMainScene();
+            this.transitToInformationScene();
         } else {
             _(this.game.getNumPlayers()).times(function (playerIndex) {
                 var datePanel = this.getDatePanel(playerIndex);

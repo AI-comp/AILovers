@@ -139,12 +139,7 @@ var InformationScene = ReplayerScene.extend({
             game.processTurn(this.getCurrentCommands(game));
         }
 
-        if (turn > this.game.lastTurn) {
-            var nextScene = new ResultScene(game);
-        } else {
-            var nextScene = new MainScene(game);
-        }
-        cc.director.runScene(nextScene);
+        cc.director.runScene(this.getNextInformationScene(game));
     },
 
     setLovePanelMode: function (mode) {
