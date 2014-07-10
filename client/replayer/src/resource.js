@@ -50,6 +50,7 @@ function addNumberedResources(directory, range, extension) {
 }
 
 res.image.info.heroines = addNumberedResources('info/heroine', _.range(8), 'png');
+res.image.info.heroineBackgrounds = addNumberedResources('info/heroineBackground', _.range(8), 'png');
 res.image.info.hearts = addNumberedResources('info/heart', _.range(4), 'png');
 res.image.info.revealedBars = addNumberedResources('info/bar/revealed', _.range(4), 'png');
 res.image.info.realBars = addNumberedResources('info/bar/real', _.range(4), 'png');

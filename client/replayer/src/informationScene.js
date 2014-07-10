@@ -38,8 +38,8 @@ var InformationScene = ReplayerScene.extend({
         _(this.game.getNumHeroines()).times(function (heroineIndex) {
             var heroine = this.game.heroines[heroineIndex];
             var heroinePanel = this.getHeroinePanel(heroineIndex);
-            heroinePanel.setBackGroundImage(res.image.info.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
-
+            heroinePanel.setBackGroundImage(res.image.info.heroineBackgrounds[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
+            heroinePanel.getChildByName('HeroineImage').loadTexture(res.image.info.heroines[heroineIndex]);
             heroinePanel.getChildByName('EnthusiasmImage').loadTexture(res.image.info.enthusiasms[heroine.enthusiasm]);
         }, this);
 
