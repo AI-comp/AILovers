@@ -40,12 +40,7 @@ var InformationScene = ReplayerScene.extend({
             var heroinePanel = this.getHeroinePanel(heroineIndex);
             heroinePanel.setBackGroundImage(res.image.info.heroines[heroineIndex], ccui.Widget.LOCAL_TEXTURE);
 
-            var enthusiasmPanel = ccs.uiReader.widgetFromJsonFile(res.json.enthusiasmPanel);
-            heroinePanel.getChildByName('EnthusiasmArea').addChild(enthusiasmPanel);
-            _(heroine.enthusiasm).times(function (enthusiasmIndex) {
-                var enthusiasmImage = enthusiasmPanel.getChildByName('Enthusiasm' + (enthusiasmIndex + 1));
-                enthusiasmImage.loadTexture(res.image.info.enthusiasm);
-            }, this);
+            heroinePanel.getChildByName('EnthusiasmImage').loadTexture(res.image.info.enthusiasms[heroine.enthusiasm]);
         }, this);
 
         this.setupLovePanels();
