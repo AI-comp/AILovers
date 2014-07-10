@@ -20,6 +20,7 @@
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
   <imagePngList>
+    <string>dummyHeroine.png</string>
     <string>black.png</string>
     <string>dummyEnthusiasm.png</string>
   </imagePngList>

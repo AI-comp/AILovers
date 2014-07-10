@@ -11,6 +11,7 @@
   "designWidth": 200,
   "textures": [],
   "texturesPng": [
+    "dummyHeroine.png",
     "black.png",
     "dummyEnthusiasm.png"
   ],
