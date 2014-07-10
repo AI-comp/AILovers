@@ -52,15 +52,16 @@ var DateScene = ReplayerScene.extend({
         this.cursorPosition = -1;
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
-            this.showFaceImage(datePanel, playerIndex);
+            this.setupTargetPanels(datePanel, playerIndex);
             this.cursors.push(this.createCursor(datePanel));
         }, this);
     },
 
-    showFaceImage: function (datePanel, playerIndex) {
+    setupTargetPanels: function (datePanel, playerIndex) {
         datePanel.getChildByName('WeekdayTargetPanel').setVisible(this.game.isWeekday());
         datePanel.getChildByName('HolidayTargetPanel').setVisible(!this.game.isWeekday());
         var targetPanel = this.getTargetPanel(datePanel);
+        targetPanel.setBackGroundImage(res.image.date.targetBackgrounds[playerIndex]);
 
         _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
             var targetHeroine = this.getCommand(this.game, playerIndex, commandIndex);

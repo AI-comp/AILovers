@@ -59,3 +59,4 @@ res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground',
 res.image.date.heroines = addNumberedResources('date/heroine', _.range(8), 'png');
 res.image.date.backgrounds = addNumberedResources('date/background', _.range(8), 'png');
 res.image.date.faces = addNumberedResources('date/face', _.range(8), 'png');
+res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', _.range(4), 'png');

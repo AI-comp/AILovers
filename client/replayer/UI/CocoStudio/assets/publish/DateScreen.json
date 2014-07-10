@@ -11,6 +11,8 @@
   "designWidth": 512,
   "textures": [],
   "texturesPng": [
+    "dummyPlayerIcon.png",
+    "dummyFace.png",
     "dummyFace.png"
   ],
   "version": "1.5.0.0",

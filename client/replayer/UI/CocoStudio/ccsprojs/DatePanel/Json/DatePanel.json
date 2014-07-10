@@ -10,7 +10,10 @@
   "designHeight": 384,
   "designWidth": 512,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "dummyPlayerIcon.png",
+    "dummyFace.png"
+  ],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -59,10 +62,10 @@
           "backGroundImage": null,
           "backGroundImageData": null,
           "backGroundScale9Enable": false,
-          "bgColorB": 255,
-          "bgColorG": 200,
+          "bgColorB": 0,
+          "bgColorG": 0,
           "bgColorOpacity": 100,
-          "bgColorR": 150,
+          "bgColorR": 0,
           "bgEndColorB": 255,
           "bgEndColorG": 200,
           "bgEndColorR": 150,
@@ -548,7 +551,7 @@
           "capInsetsX": 0,
           "capInsetsY": 0,
           "clipAble": true,
-          "colorType": 1,
+          "colorType": 0,
           "layoutType": 3,
           "vectorX": 0,
           "vectorY": -0.5
@@ -755,7 +758,7 @@
           "capInsetsX": 0,
           "capInsetsY": 0,
           "clipAble": true,
-          "colorType": 1,
+          "colorType": 0,
           "layoutType": 3,
           "vectorX": 0,
           "vectorY": -0.5
@@ -816,7 +819,7 @@
       "capInsetsX": 0,
       "capInsetsY": 0,
       "clipAble": false,
-      "colorType": 1,
+      "colorType": 0,
       "layoutType": 0,
       "vectorX": 0,
       "vectorY": -0.5
