@@ -3,6 +3,24 @@ var runGame = function () {
     game.initialize();
     ReplayerScene.prototype.commands = replay.commands;
 
+    ReplayerScene.prototype.heroineIds = [];
+    var mt = new MersenneTwister(replay.seed);
+    var numHeroines = game.getNumHeroines();
+    var remainingHeroineIds = _.range(_.size(res.image.info.heroines));
+    _(numHeroines).times(function (i) {
+        var heroineId = remainingHeroineIds[Math.floor(mt.random() * _.size(remainingHeroineIds))];
+        remainingHeroineIds = _.without(remainingHeroineIds, heroineId);
+        ReplayerScene.prototype.heroineIds.push(heroineId);
+    }, this);
+
+    ReplayerScene.prototype.backgroundIds = _.map(_.range(game.getNumTurns()), function (i) {
+        return _.map(_.range(game.getNumPlayers()), function (j) {
+            return _.map(_.range(game.getNumRequiredCommands()), function (k) {
+                return Math.floor(mt.random() * _.size(res.image.date.backgrounds));
+            }, this);
+        }, this);
+    }, this);
+
     var transition = cc.TransitionFade.create(0.5, new MainScene(game));
     cc.director.runScene(transition);
 };

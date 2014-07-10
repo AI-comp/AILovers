@@ -1,7 +1,7 @@
 (function () {
 
-    var MersenneTwister = require('./mersenne-twister').MersenneTwister,
-        _ = require('underscore');
+    var _ = require('underscore');
+    MersenneTwister = require('./mersenne-twister').MersenneTwister;
 
     Game = exports.Game = (function () {
         function Game(seed) {
@@ -43,6 +43,10 @@
 
         Game.prototype.getNumPlayers = function () {
             return this.numPlayers;
+        };
+
+        Game.prototype.getNumTurns = function () {
+            return this.lastTurn - this.initialTurn + 1;
         };
 
         Game.prototype.processTurn = function (commands) {

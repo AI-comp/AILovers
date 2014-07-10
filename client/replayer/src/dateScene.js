@@ -65,7 +65,8 @@ var DateScene = ReplayerScene.extend({
 
         _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
             var targetHeroine = this.getCommand(this.game, playerIndex, commandIndex);
-            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(res.image.date.targets[targetHeroine]);
+            var targetHeroineImage = res.image.date.targets[this.getHeroineId(targetHeroine)];
+            targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(targetHeroineImage);
         }, this);
     },
 
@@ -97,8 +98,9 @@ var DateScene = ReplayerScene.extend({
         var targetHeroine = this.getCommand(this.game, playerIndex, this.cursorPosition);
 
         var nextScreen = ccs.uiReader.widgetFromJsonFile(res.json.dateScreen);
-        nextScreen.getChildByName('BackgroundImage').loadTexture(res.image.date.backgrounds[targetHeroine]);
-        nextScreen.getChildByName('HeroineImage').loadTexture(res.image.date.heroines[targetHeroine]);
+        nextScreen.getChildByName('BackgroundImage').loadTexture(this.getBackgroundImage(this.game, playerIndex, this.cursorPosition));
+        var heroineImage = res.image.date.heroines[this.getHeroineId(targetHeroine)];
+        nextScreen.getChildByName('HeroineImage').loadTexture(heroineImage);
         nextScreen.setPosition(new cc.Point(0, -screen.height));
         screenArea.addChild(nextScreen);
 

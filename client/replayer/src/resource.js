@@ -49,14 +49,20 @@ function addNumberedResources(directory, range, extension) {
     return resources;
 }
 
-res.image.info.heroines = addNumberedResources('info/heroine', _.range(8), 'png');
-res.image.info.heroineBackgrounds = addNumberedResources('info/heroineBackground', _.range(8), 'png');
-res.image.info.hearts = addNumberedResources('info/heart', _.range(4), 'png');
-res.image.info.revealedBars = addNumberedResources('info/bar/revealed', _.range(4), 'png');
-res.image.info.realBars = addNumberedResources('info/bar/real', _.range(4), 'png');
-res.image.info.enthusiasms = addNumberedResources('info/enthusiasm', _.range(3, 6 + 1), 'png');
-res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground', _.range(4), 'png');
-res.image.date.heroines = addNumberedResources('date/heroine', _.range(8), 'png');
-res.image.date.backgrounds = addNumberedResources('date/background', _.range(8), 'png');
-res.image.date.targets = addNumberedResources('date/target', _.range(8), 'png');
-res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', _.range(4), 'png');
+(function () {
+    var playerRange = _.range(4),
+        heroineRange = _.range(9),
+        backgroundRange = _.range(10);
+
+    res.image.info.heroines = addNumberedResources('info/heroine', heroineRange, 'png');
+    res.image.info.heroineBackgrounds = addNumberedResources('info/heroineBackground', heroineRange, 'png');
+    res.image.info.hearts = addNumberedResources('info/heart', playerRange, 'png');
+    res.image.info.revealedBars = addNumberedResources('info/bar/revealed', playerRange, 'png');
+    res.image.info.realBars = addNumberedResources('info/bar/real', playerRange, 'png');
+    res.image.info.enthusiasms = addNumberedResources('info/enthusiasm', _.range(3, 6 + 1), 'png');
+    res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground', playerRange, 'png');
+    res.image.date.heroines = addNumberedResources('date/heroine', heroineRange, 'png');
+    res.image.date.backgrounds = addNumberedResources('date/background', backgroundRange, 'png');
+    res.image.date.targets = addNumberedResources('date/target', heroineRange, 'png');
+    res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', playerRange, 'png');
+})();
