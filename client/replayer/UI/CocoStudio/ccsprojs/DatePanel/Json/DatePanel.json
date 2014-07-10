@@ -10,10 +10,7 @@
   "designHeight": 384,
   "designWidth": 512,
   "textures": [],
-  "texturesPng": [
-    "dummyPlayerIcon.png",
-    "dummyFace.png"
-  ],
+  "texturesPng": [],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -550,7 +547,7 @@
           "capInsetsWidth": 1,
           "capInsetsX": 0,
           "capInsetsY": 0,
-          "clipAble": false,
+          "clipAble": true,
           "colorType": 1,
           "layoutType": 3,
           "vectorX": 0,
@@ -757,7 +754,7 @@
           "capInsetsWidth": 1,
           "capInsetsX": 0,
           "capInsetsY": 0,
-          "clipAble": false,
+          "clipAble": true,
           "colorType": 1,
           "layoutType": 3,
           "vectorX": 0,

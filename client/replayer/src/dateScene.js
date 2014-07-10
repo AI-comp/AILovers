@@ -22,7 +22,9 @@ var DateScene = ReplayerScene.extend({
 
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
-            datePanel.getChildByName('ScreenArea').setClippingEnabled(false);
+            _.each(['ScreenArea', 'WeekdayTargetPanel', 'HolidayTargetPanel'], function (panelName) {
+                datePanel.getChildByName(panelName).setClippingEnabled(false);
+            }, this);
         }, this);
     },
 
