@@ -6,6 +6,7 @@ import java.io.InputStreamReader
 import java.io.FileInputStream
 
 object SampleAI {
+
 	var allTurn = 0
 	var numPlayer = 0
 	var numHeroine = 0
@@ -17,9 +18,7 @@ object SampleAI {
 	var real = List.empty[Int]
 	var dated = List.empty[Boolean]
 
-	def main(args: Array[String]) : Unit = {
-		//	Console.setIn(new FileInputStream("testdata"))
-			
+	def main(args: Array[String]): Unit = {
 		println("READY")
 
 		var buf = Console.readLine.split(" ")
@@ -70,20 +69,20 @@ object SampleAI {
 		strategy.clear
 		val num = if (day == 'W') 5 else 2
 		for (i <- 0 until num)
-			strategy += Random.nextInt(10)
-	}
-}
-	
-class Heroine(p: Int){
-	val property = p
-	var values = List.empty[Int]
-	
-	def updateValues(vs: List[Int]): Unit = {
-		values = vs
+			strategy += Random.nextInt(numHeroine)
 	}
 	
-	def revealSelf(): Unit = {
-		values.foreach(v => print(v + " "))
-		println("")
+	class Heroine(p: Int){
+		val property = p
+		var values = List.empty[Int]
+		
+		def updateValues(vs: List[Int]): Unit = {
+			values = vs
+		}
+		
+		def revealSelf(): Unit = {
+			values.foreach(v => print(v + " "))
+			println("")
+		}
 	}
 }
