@@ -26,6 +26,13 @@ var ResultScene = InformationScene.extend({
             var popularityBar = playerPanel.getChildByName(popularityBarName);
             popularityBar.loadTexture(res.image.info.revealedBars[player.index]);
             popularityBar.setPercent(Math.abs(player.getPopularity()) / maxPopularity * 100);
+
+            if (this.game.getWinner() == player.index) {
+                var winImage = playerPanel.getChildByName("WinnerImage");
+                winImage.setVisible(true);
+                var pulseSequence = new cc.Sequence(new Array(new cc.FadeTo(0.6, 100), new cc.FadeOut(0.6, 255)));
+                winImage.runAction(new cc.RepeatForever(pulseSequence));
+            }
         }, this);
     },
 });
