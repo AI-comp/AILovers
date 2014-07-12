@@ -39,8 +39,8 @@
 ### ローカル環境での実行方法 via CUI
 
 1. `execute_on_cui.bat` or `execute_on_cui.sh` を実行
-2. `execute_on_cui.bat -a "python ai1.py" -a "python ai2.py"` を実行  
-1つ目のAIは `python ai1.py`、2つ目のAIは `python ai1.py`、3つ目と4つ目のAIはデフォルト（`python ai/ai.py`）が実行される
+2. `execute_on_cui.bat -a "1つ目のAIの実行コマンド" -a "2つ目のAIの実行コマンド"` (or `execute_on_cui.sh ...`) を実行。
+1つ目と2つ目のAIには指定した実行コマンドが使用され、3つ目と4つ目のAIにはデフォルトのコマンド（`node SampleAI/JavaScript/SampleAI.js`）が使用される
 
 # ライセンス
 
