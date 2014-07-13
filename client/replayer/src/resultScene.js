@@ -1,4 +1,8 @@
 var ResultScene = InformationScene.extend({
+
+    barArrays: new Array(new Array(), new Array()),
+    showPositive: 0,
+
     ctor: function (game) {
         this._super(game);
         return true;
@@ -27,45 +31,60 @@ var ResultScene = InformationScene.extend({
         var minusPercent = Math.abs(minusPopularity) / maxPopularity * 100;
 
         _.each(rankedPlayers, function (player) {
+            var isPositive = player.getPopularity() >= 0;
             var playerPanel = this.getPlayerPanel(player.index);
-            var popularityBarName = (player.getPopularity() >= 0 ? 'PositivePopularityBar' : 'NegativePopularityBar');
+            var popularityBarName = (isPositive ? 'PositivePopularityBar' : 'NegativePopularityBar');
             var popularityBar = playerPanel.getChildByName(popularityBarName);
             popularityBar.loadTexture(res.image.info.revealedBars[player.index]);
 
             var percent = Math.abs(player.getPopularity()) / maxPopularity * 100;
             popularityBar.setPercent(0);
-            // popularityBar.setPercent(percent % ResultScene.INTERVAL_PERCENT);
+            popularityBar.setTag(percent);  // store taget percent at the tag.
 
-            popularityBar.setTag(percent);
-            // popularityBar.prototype.isWinner = this.game.getWinner() == player.index;
+            this.barArrays[isPositive ? 1:0].push(popularityBar);
 
-            var repeatCount = percent / ResultScene.INTERVAL_PERCENT;
-            var delay = player.getPopularity() <= 0 ? 0 : minusPercent / ResultScene.INTERVAL_PERCENT * ResultScene.INTERVAL * 2
-            popularityBar.schedule(this.intervalPercent, ResultScene.INTERVAL, repeatCount, delay);
-
-            if (this.game.getWinner() === player.index) {
-                var winImage = playerPanel.getChildByName("WinnerImage");
-                winImage.scheduleOnce(this.delayShowWinner, 
-                    repeatCount * ResultScene.INTERVAL * 2 + delay);
-            }
         }, this);
+
+        this.showPositive = 0;
+        this.schedule(this.intervalPercentInTurn, ResultScene.INTERVAL, cc.REPEAT_FOREVER, 0);
     },
 
-    intervalPercent: function(delta) {
-        // cc.log(delta);
-        var newPercent = this.getPercent() + ResultScene.INTERVAL_PERCENT;
-        newPercent = (newPercent <= this.getTag()) ? newPercent : this.getTag();
-        this.setPercent(newPercent);
+    intervalPercentInTurn: function(delta) {
+        if (this.barArrays[this.showPositive].length <= 0) {
+            if (this.showPositive == 1) {
+                this.unschedule(this.intervalPercentInTurn);
+                this.showWinner();
+            } else {
+                this.showPositive = 1;
+            }
+        }
+
+        for (var i = 0; i < this.barArrays[this.showPositive].length; i++) {
+            var bar = this.barArrays[this.showPositive][i];
+            var newPercent = bar.getPercent() + ResultScene.INTERVAL_PERCENT;
+            newPercent = (newPercent <= bar.getTag()) ? newPercent : bar.getTag();
+            bar.setPercent(newPercent);
+
+            if (newPercent == bar.getTag()) {
+                this.barArrays[this.showPositive].splice(i--, 1);
+            }
+        };
     },
 
-    delayShowWinner: function() {
-        this.setVisible(true);
-        var pulseSequence = new cc.Sequence(new Array(new cc.FadeTo(ResultScene.INTERVAL_PULSE, 100),
-            new cc.FadeOut(ResultScene.INTERVAL_PULSE, 255)));
-        this.runAction(new cc.RepeatForever(pulseSequence));
+    showWinner: function() {
+        var winner = this.game.getWinner();
+        if (winner !== "" && winner >= 0 && winner < 4) {
+            var winnerPanel = this.getPlayerPanel(winner);
+
+            var winImage = winnerPanel.getChildByName("WinnerImage");
+            winImage.setVisible(true);
+            var pulseSequence = new cc.Sequence(new Array(new cc.FadeTo(ResultScene.INTERVAL_PULSE, 100),
+                new cc.FadeOut(ResultScene.INTERVAL_PULSE, 255)));
+            winImage.runAction(new cc.RepeatForever(pulseSequence));
+        }
     },
 });
 
-ResultScene.INTERVAL = 0.01
-ResultScene.INTERVAL_PERCENT = 1
-ResultScene.INTERVAL_PULSE = 0.6
+ResultScene.INTERVAL = 0.03;
+ResultScene.INTERVAL_PERCENT = 3;
+ResultScene.INTERVAL_PULSE = 0.6;
