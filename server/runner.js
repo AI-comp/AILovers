@@ -135,7 +135,7 @@ Runner.prototype.runGame = function (done) {
 };
 
 function onReadyForBeginning() {
-    if (isEveryoneReady.call(this, this.ais)) {
+    if (isEveryoneReady.call(this)) {
         _.each(this.ais, function (ai) {
             ai.clearEventHandlers();
         }, this);
@@ -145,7 +145,7 @@ function onReadyForBeginning() {
     }
 }
 
-function isEveryoneReady(ais) {
+function isEveryoneReady() {
     return _.isEmpty(getUnreadyAIs.call(this));
 }
 
@@ -162,7 +162,7 @@ function onReady(currentAI) {
         currentAI.pause();
     }
 
-    if (isEveryoneReady.call(this, this.ais)) {
+    if (isEveryoneReady.call(this)) {
         var commands = _.map(this.ais, function (ai) {
             return ai.available ? ai.commands : [];
         });
