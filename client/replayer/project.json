@@ -22,6 +22,7 @@
         "src/dateScene.js",
         "src/lovePanel.js",
         "src/heartLovePanel.js",
-        "src/barLovePanel.js"
+        "src/barLovePanel.js",
+		"src/popularityBarManager.js"
     ]
 }
