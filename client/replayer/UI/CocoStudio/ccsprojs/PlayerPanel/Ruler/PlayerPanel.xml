@@ -8,4 +8,12 @@
     <Project>PlayerResultPanel</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>MeasureLine1</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>MeasureLine5</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

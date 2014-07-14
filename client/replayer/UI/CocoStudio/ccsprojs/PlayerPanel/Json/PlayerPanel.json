@@ -12,7 +12,9 @@
   "textures": [],
   "texturesPng": [
     "dummyPlayerIcon.png",
-    "dummyBar.png"
+    "dummyPlayerIcon.png",
+    "dummyBar.png",
+    "winner.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -102,8 +104,8 @@
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.24,
-          "sizePercentY": 0.13333334,
+          "sizePercentX": 0.38,
+          "sizePercentY": 0.22,
           "sizeType": 0,
           "tag": 25,
           "touchAble": false,

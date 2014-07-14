@@ -12,6 +12,8 @@ var res = {
         playerResultPanel: 'res/publish/PlayerResultPanel.json',
         cursor: 'res/publish/Cursor.json',
         dateScreen: 'res/publish/DateScreen.json',
+        measureLine1: 'res/publish/measureLine1.json',
+        measureLine5: 'res/publish/measureLine5.json',
     },
     image: {
         info: {
@@ -36,6 +38,8 @@ var g_resources = [
     res.json.playerResultPanel,
     res.json.cursor,
     res.json.dateScreen,
+    res.json.measureLine1,
+    res.json.measureLine5,
 ];
 
 function addNumberedResources(directory, range, extension) {

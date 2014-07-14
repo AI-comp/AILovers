@@ -190,6 +190,12 @@
             return _.max(allLove);
         };
 
+        Game.prototype.getLargestPopularity = function () {
+            return _.max(_.map(this.getRanking(), function (player) {
+                return Math.abs(player.getPopularity());
+            }, this));
+        };
+
         return Game;
     })();
 

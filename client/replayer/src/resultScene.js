@@ -14,18 +14,19 @@ var ResultScene = InformationScene.extend({
         return InformationScene.BAR_LOVE_PANEL_MODE;
     },
 
+    getPopularityBar: function (playerPanel, popularity) {
+        var popularityBarName = (popularity >= 0 ? 'PositivePopularityBar' : 'NegativePopularityBar');
+        return playerPanel.getChildByName(popularityBarName);
+    },
+
     setupPlayerPanels: function () {
         this._super();
 
-        var rankedPlayers = this.game.getRanking();
-        var largestPopularity = _.max(_.map(rankedPlayers, function (player) {
-            return Math.abs(player.getPopularity());
-        }, this));
+        var largestPopularity = this.game.getLargestPopularity();
 
-        _.each(rankedPlayers, function (player) {
+        _.each(this.game.getRanking(), function (player) {
             var playerPanel = this.getPlayerPanel(player.index);
-            var popularityBarName = (player.getPopularity() >= 0 ? 'PositivePopularityBar' : 'NegativePopularityBar');
-            var popularityBar = playerPanel.getChildByName(popularityBarName);
+            var popularityBar = this.getPopularityBar(playerPanel, player.getPopularity());
             popularityBar.loadTexture(res.image.info.revealedBars[player.index]);
             popularityBar.setPercent(0);
 
@@ -52,6 +53,7 @@ var ResultScene = InformationScene.extend({
         } else {
             this.unschedule(this.updatePopularityBars);
             this.showWinner();
+            this.showMeasure();
             return;
         }
 
@@ -72,6 +74,26 @@ var ResultScene = InformationScene.extend({
             ));
             winnerImage.runAction(new cc.RepeatForever(pulseSequence));
         }
+    },
+
+    showMeasure: function () {
+        var largestPopularity = this.game.getLargestPopularity();
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var playerPanel = this.getPlayerPanel(playerIndex);
+            _.each([-1, 1], function (direction) {
+                var popularityBar = this.getPopularityBar(playerPanel, direction);
+                var width = popularityBar.getSize().width;
+                var left = popularityBar.getLeftInParent();
+                var right = left + width;
+                var start = direction == -1 ? right : left;
+                _.each(_.range(1, largestPopularity + 1), function (popularity) {
+                    var measureLine = ccs.uiReader.widgetFromJsonFile(res.json['measureLine' + (popularity % 5 == 0 ? '5' : '1')]);
+                    playerPanel.addChild(measureLine);
+                    var distanceFromStart = width * (popularity / largestPopularity);
+                    measureLine.setPositionX(start + direction * distanceFromStart - measureLine.getSize().width / 2);
+                }, this);
+            }, this);
+        }, this);
     },
 });
 
