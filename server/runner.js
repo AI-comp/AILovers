@@ -164,7 +164,7 @@ function onReady(currentAI) {
 
     if (isEveryoneReady.call(this)) {
         var commands = _.map(this.ais, function (ai) {
-            return ai.available ? ai.commands : [];
+            return ai.commands;
         });
         this.game.processTurn(commands);
         addLog.call(this, 'Turn finished. Game status:');
@@ -190,6 +190,7 @@ function beginTurn() {
     } else {
         _.each(availableAIs, function (ai) {
             ai.ready = false;
+            ai.commands = [];
         }, this);
         processNextAI.call(this);
     }
