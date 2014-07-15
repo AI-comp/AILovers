@@ -14,7 +14,7 @@ var DateScene = ReplayerScene.extend({
     onEnterTransitionDidFinish: function () {
         this._super();
 
-        this.schedule(this.switchToNextDate, DateScene.INTERVAL_BETWEEN_DATES, cc.REPEAT_FOREVER);
+        this.schedule(this.switchToNextDate, DateScene.INTERVAL_BETWEEN_DATES, cc.REPEAT_FOREVER, DateScene.INTERVAL_BETWEEN_DATES / 2);
     },
 
     onExitTransitionDidStart: function () {
