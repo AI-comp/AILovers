@@ -6,6 +6,10 @@ var ResultScene = InformationScene.extend({
         return true;
     },
 
+    onEnterTransitionDidFinish: function () {
+        this.schedule(this.updatePopularityBars, ResultScene.INTERVAL, cc.REPEAT_FOREVER, 0);
+    },
+
     createSceneNode: function () {
         return ccs.sceneReader.createNodeWithSceneFile(res.json.resultScene);
     },
@@ -33,8 +37,6 @@ var ResultScene = InformationScene.extend({
             var popularityBarManager = new PopularityBarManager(popularityBar, player.getPopularity(), largestPopularity);
             this.popularityBarManagers.push(popularityBarManager);
         }, this);
-
-        this.schedule(this.updatePopularityBars, ResultScene.INTERVAL, cc.REPEAT_FOREVER, 0);
     },
 
     updatePopularityBars: function () {
