@@ -11,9 +11,7 @@
   "designWidth": 172,
   "textures": [],
   "texturesPng": [
-    "dummy.png",
-    "emptyHeart.png",
-    "GUI/loadingbar.png"
+    "dummy.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -68,9 +66,9 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/loadingbar.png",
+            "path": "dummy.png",
             "plistFile": "",
-            "resourceType": 2
+            "resourceType": 0
           }
         }
       },
@@ -122,9 +120,9 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/loadingbar.png",
+            "path": "dummy.png",
             "plistFile": "",
-            "resourceType": 2
+            "resourceType": 0
           }
         }
       }

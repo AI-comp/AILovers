@@ -21,8 +21,6 @@
   <imageFileList />
   <imagePngList>
     <string>dummy.png</string>
-    <string>emptyHeart.png</string>
-    <string>GUI/loadingbar.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>BarLovePanel.json</CurrentUIJson>

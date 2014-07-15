@@ -65,7 +65,10 @@ var ResultScene = InformationScene.extend({
 
     showWinner: function () {
         var winner = this.game.getWinner();
-        if (winner !== '') {
+        if (winner === '') {
+            var drawImage = this.sceneNode.getChildByTag(200);
+            drawImage.setVisible(true);
+        } else {
             var winnerPanel = this.getPlayerPanel(winner);
             var winnerImage = winnerPanel.getChildByName('WinnerImage');
             winnerImage.setVisible(true);
