@@ -21,9 +21,9 @@ var ResultScene = InformationScene.extend({
 
     setupPlayerPanels: function () {
         this._super();
+        this.showMeasure();
 
         var largestPopularity = this.game.getLargestPopularity();
-
         _.each(this.game.getRanking(), function (player) {
             var playerPanel = this.getPlayerPanel(player.index);
             var popularityBar = this.getPopularityBar(playerPanel, player.getPopularity());
@@ -53,7 +53,6 @@ var ResultScene = InformationScene.extend({
         } else {
             this.unschedule(this.updatePopularityBars);
             this.showWinner();
-            this.showMeasure();
             return;
         }
 
@@ -86,7 +85,7 @@ var ResultScene = InformationScene.extend({
                 var left = popularityBar.getLeftInParent();
                 var right = left + width;
                 var start = direction == -1 ? right : left;
-                _.each(_.range(1, largestPopularity + 1), function (popularity) {
+                _.each(_.range(1, Math.floor(largestPopularity) + 1), function (popularity) {
                     var measureLine = ccs.uiReader.widgetFromJsonFile(res.json['measureLine' + (popularity % 5 == 0 ? '5' : '1')]);
                     playerPanel.addChild(measureLine);
                     var distanceFromStart = width * (popularity / largestPopularity);

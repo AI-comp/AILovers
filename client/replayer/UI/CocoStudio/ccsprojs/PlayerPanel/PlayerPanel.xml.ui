@@ -13,14 +13,19 @@
     <string>MeasureLine5.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>600</Width>
+    <Width>3</Width>
     <Height>120</Height>
   </CanvasSize>
   <filePath>C:\Users\Seiji\Repositories\AILovers\client\replayer\UI\CocoStudio\ccsprojs\PlayerPanel\PlayerPanel.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
-  <imagePngList />
+  <imagePngList>
+    <string>dummyPlayerIcon.png</string>
+    <string>dummyPlayerIcon.png</string>
+    <string>dummyBar.png</string>
+    <string>winner.png</string>
+  </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>MeasureLine5.json</CurrentUIJson>
 </UIProject>
