@@ -10,7 +10,11 @@
   "designHeight": 40,
   "designWidth": 172,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "dummy.png",
+    "emptyHeart.png",
+    "GUI/loadingbar.png"
+  ],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -64,9 +68,9 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "dummyBar.png",
+            "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/loadingbar.png",
             "plistFile": "",
-            "resourceType": 0
+            "resourceType": 2
           }
         }
       },
@@ -118,9 +122,9 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "dummyBar.png",
+            "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/loadingbar.png",
             "plistFile": "",
-            "resourceType": 0
+            "resourceType": 2
           }
         }
       }

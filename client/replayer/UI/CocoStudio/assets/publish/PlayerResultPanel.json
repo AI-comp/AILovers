@@ -12,8 +12,7 @@
   "textures": [],
   "texturesPng": [
     "dummyPlayerIcon.png",
-    "dummyPlayerIcon.png",
-    "dummyBar.png",
+    "dummy.png",
     "winner.png"
   ],
   "version": "1.5.0.0",
@@ -173,7 +172,7 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "dummyBar.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           }
@@ -227,7 +226,7 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "dummyBar.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           }

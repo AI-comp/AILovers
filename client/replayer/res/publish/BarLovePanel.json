@@ -11,9 +11,11 @@
   "designWidth": 172,
   "textures": [],
   "texturesPng": [
-    "dummyBar.png"
+    "dummy.png",
+    "emptyHeart.png",
+    "GUI/loadingbar.png"
   ],
-  "version": "1.4.0.1",
+  "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
     "name": null,
@@ -66,7 +68,7 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "dummyBar.png",
+            "path": "GUI/loadingbar.png",
             "plistFile": "",
             "resourceType": 0
           }
@@ -120,7 +122,7 @@
           "scale9Enable": false,
           "texture": null,
           "textureData": {
-            "path": "dummyBar.png",
+            "path": "GUI/loadingbar.png",
             "plistFile": "",
             "resourceType": 0
           }

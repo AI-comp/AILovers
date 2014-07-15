@@ -11,8 +11,7 @@
   "designWidth": 200,
   "textures": [],
   "texturesPng": [
-    "dummyHeroine.png",
-    "dummyEnthusiasm.png"
+    "dummy.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -39,7 +38,7 @@
           "flipX": false,
           "flipY": false,
           "height": 384,
-          "ignoreSize": true,
+          "ignoreSize": false,
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.5,
@@ -64,7 +63,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyHeroine.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },
@@ -413,7 +412,7 @@
           "flipX": false,
           "flipY": false,
           "height": 58,
-          "ignoreSize": true,
+          "ignoreSize": false,
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.125,
@@ -438,7 +437,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyEnthusiasm.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },

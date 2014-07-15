@@ -1,5 +1,6 @@
 [
-  "publish/dummyFace.png",
+  "publish/dummyPlayerIcon.png",
+  "publish/dummy.png",
   "background.png",
   "publish\\DateScene.json",
   "publish/DatePanel.json"

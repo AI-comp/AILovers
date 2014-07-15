@@ -12,8 +12,8 @@
   "textures": [],
   "texturesPng": [
     "dummyPlayerIcon.png",
-    "dummyFace.png",
-    "dummyFace.png"
+    "dummy.png",
+    "dummy.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -65,7 +65,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyFace.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },
@@ -119,7 +119,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyFace.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },

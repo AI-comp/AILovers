@@ -10,10 +10,7 @@
   "designHeight": 384,
   "designWidth": 512,
   "textures": [],
-  "texturesPng": [
-    "dummyPlayerIcon.png",
-    "dummyFace.png"
-  ],
+  "texturesPng": [],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -203,7 +200,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
@@ -274,7 +271,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
@@ -345,7 +342,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
@@ -416,7 +413,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
@@ -487,7 +484,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
@@ -623,7 +620,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
@@ -694,7 +691,7 @@
               "capInsetsY": 0,
               "fileName": null,
               "fileNameData": {
-                "path": "dummyFace.png",
+                "path": "dummy.png",
                 "plistFile": "",
                 "resourceType": 0
               },
