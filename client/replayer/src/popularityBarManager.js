@@ -6,7 +6,11 @@ var PopularityBarManager = cc.Class.extend({
     },
 
     getTargetPercent: function () {
-        return Math.abs(this.popularity) / this.largestPopularity * 100;
+        if (this.largestPopularity > 0) {
+            return Math.abs(this.popularity) / this.largestPopularity * 100;
+        } else {
+            return 0;
+        }
     },
 
     isFinished: function () {
