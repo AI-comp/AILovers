@@ -12,8 +12,8 @@ var res = {
         playerResultPanel: 'res/publish/PlayerResultPanel.json',
         cursor: 'res/publish/Cursor.json',
         dateScreen: 'res/publish/DateScreen.json',
-        measureLine1: 'res/publish/measureLine1.json',
-        measureLine5: 'res/publish/measureLine5.json',
+        measureLine1: 'res/publish/MeasureLine1.json',
+        measureLine5: 'res/publish/MeasureLine5.json',
     },
     image: {
         info: {
