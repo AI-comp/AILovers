@@ -10,10 +10,7 @@
   "designHeight": 40,
   "designWidth": 172,
   "textures": [],
-  "texturesPng": [
-    "black.png",
-    "dummyEnthusiasm.png"
-  ],
+  "texturesPng": [],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
