@@ -29,7 +29,7 @@ require('./routes.js')(app);
 // Start HTTP server
 app.set('port', process.env.PORT || 8000);
 var httpServer = http.createServer(app);
-httpServer.listen(app.get('port'), function(){
+httpServer.listen(app.get('port'), 'localhost', function(){
     console.log("Express server listening on port " + app.get('port'));
 });
 
