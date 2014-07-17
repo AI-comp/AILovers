@@ -10,7 +10,9 @@
   "designHeight": 384,
   "designWidth": 512,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "dummy.png"
+  ],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -125,7 +127,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyPlayerIcon.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },

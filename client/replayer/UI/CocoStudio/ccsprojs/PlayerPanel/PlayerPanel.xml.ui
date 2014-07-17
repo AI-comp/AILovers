@@ -21,7 +21,7 @@
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
   <imagePngList>
-    <string>dummyPlayerIcon.png</string>
+    <string>dummy.png</string>
     <string>dummy.png</string>
     <string>winner.png</string>
   </imagePngList>

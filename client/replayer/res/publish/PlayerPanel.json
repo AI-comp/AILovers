@@ -11,7 +11,7 @@
   "designWidth": 200,
   "textures": [],
   "texturesPng": [
-    "dummyPlayerIcon.png"
+    "dummy.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -38,7 +38,7 @@
           "flipX": false,
           "flipY": false,
           "height": 80,
-          "ignoreSize": true,
+          "ignoreSize": false,
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.275,
@@ -63,7 +63,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyPlayerIcon.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },

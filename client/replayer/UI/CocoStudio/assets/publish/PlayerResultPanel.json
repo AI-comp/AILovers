@@ -11,7 +11,7 @@
   "designWidth": 600,
   "textures": [],
   "texturesPng": [
-    "dummyPlayerIcon.png",
+    "dummy.png",
     "dummy.png",
     "winner.png"
   ],
@@ -40,7 +40,7 @@
           "flipX": false,
           "flipY": false,
           "height": 80,
-          "ignoreSize": true,
+          "ignoreSize": false,
           "layoutParameter": null,
           "opacity": 255,
           "positionPercentX": 0.5,
@@ -65,7 +65,7 @@
           "capInsetsY": 0,
           "fileName": null,
           "fileNameData": {
-            "path": "dummyPlayerIcon.png",
+            "path": "dummy.png",
             "plistFile": "",
             "resourceType": 0
           },

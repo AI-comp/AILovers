@@ -1,7 +1,6 @@
 [
-  "publish/dummyPlayerIcon.png",
   "publish/dummy.png",
-  "background.png",
+  "publish/winner.png",
   "publish/control/proceed.png",
   "publish/control/proceed_pressed.png",
   "publish/control/proceed_disabled.png",
@@ -23,6 +22,8 @@
   "publish/control/bar.png",
   "publish/control/bar_pressed.png",
   "publish/control/bar_disabled.png",
+  "background.png",
+  "draw.png",
   "publish\\MainScene.json",
   "publish/HeroinePanel.json",
   "publish/PlayerPanel.json",

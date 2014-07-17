@@ -31,7 +31,19 @@ var InformationScene = ReplayerScene.extend({
     },
 
     setupPlayerPanels: function () {
-        // TODO: set icons and names
+        _(this.game.getNumPlayers()).times(function (playerIndex) {
+            var playerPanel = this.getPlayerPanel(playerIndex);
+            playerPanel.getChildByName('Icon').loadTexture(res.image.info.playerIcons[playerIndex]);
+            playerPanel.getChildByName('Name').setString(this.getPlayerName(playerIndex));
+        }, this);
+    },
+
+    getPlayerName: function (playerIndex) {
+        if (typeof (playerNames) == 'undefined') {
+            return 'Player ' + playerIndex;
+        } else {
+            return playerNames[playerIndex];
+        }
     },
 
     setupHeroinePanels: function () {

@@ -69,4 +69,16 @@ function addNumberedResources(directory, range, extension) {
     res.image.date.backgrounds = addNumberedResources('date/background', backgroundRange, 'png');
     res.image.date.targets = addNumberedResources('date/target', heroineRange, 'png');
     res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', playerRange, 'png');
+
+    res.image.info.playerIcons = [];
+    _.each(playerRange, function (playerIndex) {
+        var playerIcon;
+        if (typeof (playerIcons) == 'undefined' || cc.loader.loadBinarySync(playerIcons[playerIndex]) === null) {
+            playerIcon = 'res/info/defaultPlayerIcon.png';
+        } else {
+            playerIcon = playerIcons[playerIndex];
+        }
+        res.image.info.playerIcons.push(playerIcon);
+        g_resources.push(playerIcon);
+    });
 })();

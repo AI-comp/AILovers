@@ -52,6 +52,7 @@ var DateScene = ReplayerScene.extend({
         this.cursorPosition = -1;
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var datePanel = this.getDatePanel(playerIndex);
+            datePanel.getChildByName('PlayerIcon').loadTexture(res.image.info.playerIcons[playerIndex]);
             this.setupTargetPanels(datePanel, playerIndex);
             this.cursors.push(this.createCursor(datePanel));
         }, this);

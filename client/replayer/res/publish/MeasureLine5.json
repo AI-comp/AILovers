@@ -11,8 +11,7 @@
   "designWidth": 4,
   "textures": [],
   "texturesPng": [
-    "dummyPlayerIcon.png",
-    "dummyPlayerIcon.png",
+    "dummy.png",
     "dummy.png",
     "winner.png"
   ],
