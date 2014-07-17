@@ -18,7 +18,7 @@
 1. [node.js](http://nodejs.org/) のインストーラーをダウンロード＆実行
 2. `install.bat` を実行
 
-### Mac OS / Linux
+### Linux / Mac OS
 
 1. [nodebrew](https://github.com/hokaccha/nodebrew) および nodejs をインストール
     1. `curl -L git.io/nodebrew | perl - setup`
@@ -28,6 +28,11 @@
        zshを使っている人は `source ~/.zshrc`
     4. `nodebrew install stable`
     5. `nodebrew use stable`
+2. `install.sh` を実行
+
+### Mac OSa (nodebrewを使わない場合)
+
+1. [node.js](http://nodejs.org/) のインストーラーをダウンロード＆実行
 2. `install.sh` を実行
 
 ### ローカル環境での実行方法 via ブラウザ
