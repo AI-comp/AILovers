@@ -11,7 +11,7 @@
 - オンラインプレイ： [Contest Server](http://arena.ai-comp.net) にAIファイルを提出し、他のAIと対戦します。
 - オフラインプレイ： [node.js](http://nodejs.org/) をインストールする必要があります。以下の手順に従ってください。
 
-## インストール・実行手順
+## インストール手順
 
 ### Windows
 
@@ -30,10 +30,12 @@
     5. `nodebrew use stable`
 2. `install.sh` を実行
 
-### Mac OSa (nodebrewを使わない場合)
+### Mac OS (nodebrewを使わない場合)
 
 1. [node.js](http://nodejs.org/) のインストーラーをダウンロード＆実行
 2. `install.sh` を実行
+
+## 実行手順
 
 ### ローカル環境での実行方法 via ブラウザ
 
