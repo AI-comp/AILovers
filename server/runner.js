@@ -1,7 +1,8 @@
 var _ = require('underscore'),
     spawn = require('child_process').spawn,
     exec = require('child_process').exec,
-    Game = require('../game/game.js').Game;
+    Game = require('../game/game.js').Game,
+    asyncblock = require('asyncblock');
 
 function AI(executionCommand, parameters, wholeExecutionCommand, workingDir, pauseCommand, unpauseCommand, index, addLog) {
     this.pauseCommand = pauseCommand;
@@ -55,16 +56,28 @@ AI.prototype.clearTimer = function () {
     this.timeout = null;
 };
 
-AI.prototype.pause = function () {
-    if (this.pauseCommand) {
-        exec(this.pauseCommand);
-    }
+AI.prototype.pause = function (callback, self) {
+    if (this.pauseCommand) { console.warn('START: pause'); }
+    this.executeCommand(this.pauseCommand, callback, self);
+    if (this.unpauseCommand) { console.warn('END: pause'); }
 };
 
-AI.prototype.unpause = function () {
-    if (this.unpauseCommand) {
-        exec(this.unpauseCommand);
-    }
+AI.prototype.unpause = function (callback, self) {
+    if (this.pauseCommand) { console.warn('START: unpause'); }
+    this.executeCommand(this.unpauseCommand, callback, self);
+    if (this.unpauseCommand) { console.warn('END: unpause'); }
+};
+
+AI.prototype.executeCommand = function (command, callback, self) {
+    asyncblock(function (flow) {
+        if (command) {
+            exec(command, flow.add());
+            console.warn(flow.wait());
+        }
+        if (callback) {
+            callback.call(self || this);
+        }
+    });
 };
 
 AI.prototype.clearEventHandlers = function () {
@@ -140,8 +153,9 @@ function onReadyForBeginning() {
             ai.clearEventHandlers();
         }, this);
 
-        pauseAIs.call(this);
-        beginTurn.call(this);
+        pauseAIs.call(this, function () {
+            beginTurn.call(this);
+        });
     }
 }
 
@@ -156,12 +170,7 @@ function addLog(logMessage, aiIndex) {
     this.gameResult.log.push({ target: aiIndex, message: logMessage.trim() });
 }
 
-function onReady(currentAI) {
-    if (currentAI) {
-        currentAI.clearEventHandlers();
-        currentAI.pause();
-    }
-
+function onReady() {
     if (isEveryoneReady.call(this)) {
         var commands = _.map(this.ais, function (ai) {
             return ai.commands;
@@ -199,20 +208,21 @@ function beginTurn() {
 function finish() {
     addLog.call(this, 'Game finished');
 
-    unpauseAIs.call(this);
-    _.each(getAvailableAIs.call(this), function (ai) {
-        ai.clearEventHandlers();
-        var terminationText = this.game.getTerminationText();
-        if (terminationText) {
-            ai.write(terminationText);
-        }
-        ai.setTimer(1000);
-    }, this);
+    unpauseAIs.call(this, function () {
+        _.each(getAvailableAIs.call(this), function (ai) {
+            ai.clearEventHandlers();
+            var terminationText = this.game.getTerminationText();
+            if (terminationText) {
+                ai.write(terminationText);
+            }
+            ai.setTimer(1000);
+        }, this);
 
-    this.gameResult.replay = this.game.getReplay();
-    this.gameResult.winner = this.game.getWinner();
-    addLog.call(this, 'Winner: ' + this.gameResult.winner);
-    this.done();
+        this.gameResult.replay = this.game.getReplay();
+        this.gameResult.winner = this.game.getWinner();
+        addLog.call(this, 'Winner: ' + this.gameResult.winner);
+        this.done();
+    });
 };
 
 function getAvailableAIs() {
@@ -227,44 +237,64 @@ function getUnreadyAIs() {
     });
 }
 
-function pauseAIs() {
-    _.each(this.ais, function (ai) {
-        ai.pause();
-    }, this);
+function pauseAIs(callback) {
+    console.warn('START: pause all');
+    pauseOrUnpauseAIs.call(this, AI.prototype.pause, callback);
+    console.warn('END: pause all');
 }
 
-function unpauseAIs() {
-    _.each(this.ais, function (ai) {
-        ai.unpause();
-    }, this);
+function unpauseAIs(callback) {
+    console.warn('START: unpause all');
+    pauseOrUnpauseAIs.call(this, AI.prototype.unpause, callback);
+    console.warn('END: unpause all');
+}
+
+function pauseOrUnpauseAIs(controllFunction, callback) {
+    var self = this;
+    asyncblock(function (flow) {
+        _.each(self.ais, function (ai) {
+            controllFunction.call(ai, flow.add());
+        });
+        _.each(self.ais, function (ai) {
+            flow.wait();
+        });
+        callback.call(self);
+    });
 }
 
 function processNextAI() {
     var ai = _.first(getUnreadyAIs.call(this));
     var self = this;
 
+    var onReadyWithCurrentAI = function (currentAI) {
+        currentAI.clearEventHandlers();
+        currentAI.pause(function () {
+            onReady.call(this);
+        }, this);
+    }
     ai.onStdout = function (data) {
         ai.commands = data.toString().trim().split(' ');
         ai.ready = true;
         ai.clearTimer();
-        onReady.call(self, ai);
+        onReadyWithCurrentAI.call(self, ai);
     };
     ai.onExit = function () {
-        onReady.call(self, ai);
+        onReadyWithCurrentAI.call(self, ai);
     };
 
-    addLog.call(this, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
-    if (this.game.isInitialState()) {
-        var initialInformation = this.game.getInitialInformation();
-        ai.write(initialInformation);
-        addLog.call(this, initialInformation);
-    }
-    var turnInformation = this.game.getTurnInformation(ai.index);
-    ai.write(turnInformation);
-    addLog.call(this, turnInformation);
+    ai.unpause(function () {
+        addLog.call(this, 'AI' + ai.index + '>>' + 'Writing to stdin, waiting for stdout');
+        if (this.game.isInitialState()) {
+            var initialInformation = this.game.getInitialInformation();
+            ai.write(initialInformation);
+            addLog.call(this, initialInformation);
+        }
+        var turnInformation = this.game.getTurnInformation(ai.index);
+        ai.write(turnInformation);
+        addLog.call(this, turnInformation);
 
-    ai.unpause();
-    ai.setTimer(1000);
+        ai.setTimer(1000);
+    }, this);
 }
 
 exports.Runner = Runner;

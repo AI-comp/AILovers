@@ -8,16 +8,17 @@
     "start": "grunt dev"
   },
   "author": "AI-Comp",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/AI-comp/AILovers.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AI-comp/AILovers.git"
   },
   "dependencies": {
     "express": "~3.5.0",
     "jade": "~1.3.0",
     "underscore": "^1.6.0",
     "ws": "~0.4.31",
-    "optimist": "^0.6.1"
+    "optimist": "^0.6.1",
+    "asyncblock": "^2.1.21"
   },
   "devDependencies": {
     "grunt": "~0.4.3",
