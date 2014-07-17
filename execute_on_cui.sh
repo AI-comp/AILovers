@@ -1,1 +1,3 @@
-node server\standalone.js $@
+#!/bin/sh
+
+node server/standalone.js $@
