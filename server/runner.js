@@ -57,22 +57,18 @@ AI.prototype.clearTimer = function () {
 };
 
 AI.prototype.pause = function (callback, self) {
-    if (this.pauseCommand) { console.warn('START: pause'); }
     this.executeCommand(this.pauseCommand, callback, self);
-    if (this.unpauseCommand) { console.warn('END: pause'); }
 };
 
 AI.prototype.unpause = function (callback, self) {
-    if (this.pauseCommand) { console.warn('START: unpause'); }
     this.executeCommand(this.unpauseCommand, callback, self);
-    if (this.unpauseCommand) { console.warn('END: unpause'); }
 };
 
 AI.prototype.executeCommand = function (command, callback, self) {
     asyncblock(function (flow) {
         if (command) {
             exec(command, flow.add());
-            console.warn(flow.wait());
+            flow.wait();
         }
         if (callback) {
             callback.call(self || this);
@@ -238,15 +234,11 @@ function getUnreadyAIs() {
 }
 
 function pauseAIs(callback) {
-    console.warn('START: pause all');
     pauseOrUnpauseAIs.call(this, AI.prototype.pause, callback);
-    console.warn('END: pause all');
 }
 
 function unpauseAIs(callback) {
-    console.warn('START: unpause all');
     pauseOrUnpauseAIs.call(this, AI.prototype.unpause, callback);
-    console.warn('END: unpause all');
 }
 
 function pauseOrUnpauseAIs(controllFunction, callback) {
