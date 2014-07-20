@@ -152,8 +152,8 @@
         };
 
         Game.prototype.getRanking = function () {
-            var playersWithWinningPopularity = this.getPlayersWithTotalPopularity(true);
-            var playersWithLosingPopularity = this.getPlayersWithTotalPopularity(false);
+            var playersWithWinningPopularity = this.getPlayersWithTotalPopularity(true, true);
+            var playersWithLosingPopularity = this.getPlayersWithTotalPopularity(false, true);
 
             _(this.getNumPlayers()).times(function (playerIndex) {
                 playersWithWinningPopularity[playerIndex].integerPopularity -= playersWithLosingPopularity[playerIndex].integerPopularity;
@@ -162,14 +162,14 @@
             return playersWithWinningPopularity.slice(0).sort(Player.compareTo).reverse();
         };
 
-        Game.prototype.getPlayersWithTotalPopularity = function (winning) {
+        Game.prototype.getPlayersWithTotalPopularity = function (winning, real) {
             var players = _.map(_.range(this.getNumPlayers()), function (playerIndex) {
                 return new Player(playerIndex, this.getNumPlayers());
             }, this);
 
             _.each(this.heroines, function (heroine) {
                 var func = winning ? Math.max : Math.min;
-                var targetPlayers = heroine.filterPlayersByLove(players, func);
+                var targetPlayers = heroine.filterPlayersByLove(players, func, real);
                 _.each(targetPlayers, function (targetPlayer) {
                     targetPlayer.addPopularity(heroine.enthusiasm, _.size(targetPlayers));
                 });
@@ -259,11 +259,12 @@
             this.dated = true;
         };
 
-        Heroine.prototype.filterPlayersByLove = function (players, func) {
-            var targetLove = func.apply(null, this.realLove);
+        Heroine.prototype.filterPlayersByLove = function (players, func, real) {
+            var allLove = real ? this.realLove : this.revealedLove;
+            var targetLove = func.apply(null, allLove);
             var targetPlayers = [];
             _.each(players, function (player) {
-                if (this.realLove[player.index] === targetLove) {
+                if (allLove[player.index] === targetLove) {
                     targetPlayers.push(player);
                 }
             }, this);
