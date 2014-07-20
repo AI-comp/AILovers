@@ -152,22 +152,30 @@
         };
 
         Game.prototype.getRanking = function () {
-            var players = [];
-            for (var index = 0; index < this.numPlayers; index++) {
-                players.push(new Player(index, this.getNumPlayers()));
-            }
+            var playersWithWinningPopularity = this.getPlayersWithTotalPopularity(true);
+            var playersWithLosingPopularity = this.getPlayersWithTotalPopularity(false);
 
-            _.each(this.heroines, function (heroine) {
-                for (var i = 0; i < 2; i++) {
-                    var func = [Math.max, Math.min][i];
-                    var targetPlayers = heroine.filterPlayersByLove(players, func);
-                    _.each(targetPlayers, function (targetPlayer) {
-                        targetPlayer.addPopularity((i == 0 ? 1 : -1) * heroine.enthusiasm, _.size(targetPlayers));
-                    });
-                }
+            _(this.getNumPlayers()).times(function (playerIndex) {
+                playersWithWinningPopularity[playerIndex].integerPopularity -= playersWithLosingPopularity[playerIndex].integerPopularity;
             });
 
-            return players.slice(0).sort(Player.compareTo).reverse();
+            return playersWithWinningPopularity.slice(0).sort(Player.compareTo).reverse();
+        };
+
+        Game.prototype.getPlayersWithTotalPopularity = function (winning) {
+            var players = _.map(_.range(this.getNumPlayers()), function (playerIndex) {
+                return new Player(playerIndex, this.getNumPlayers());
+            }, this);
+
+            _.each(this.heroines, function (heroine) {
+                var func = winning ? Math.max : Math.min;
+                var targetPlayers = heroine.filterPlayersByLove(players, func);
+                _.each(targetPlayers, function (targetPlayer) {
+                    targetPlayer.addPopularity(heroine.enthusiasm, _.size(targetPlayers));
+                });
+            });
+
+            return players;
         };
 
         Game.prototype.getWinner = function () {
@@ -190,8 +198,8 @@
             return _.max(allLove);
         };
 
-        Game.prototype.getLargestPopularity = function () {
-            return _.max(_.map(this.getRanking(), function (player) {
+        Game.getLargestPopularity = function (players) {
+            return _.max(_.map(players, function (player) {
                 return Math.abs(player.getPopularity());
             }, this));
         };

@@ -1,6 +1,5 @@
 [
   "publish/dummy.png",
-  "publish/winner.png",
   "publish/control/proceed.png",
   "publish/control/proceed_pressed.png",
   "publish/control/proceed_disabled.png",
@@ -23,6 +22,7 @@
   "publish/control/bar_pressed.png",
   "publish/control/bar_disabled.png",
   "background.png",
+  "publish/winner.png",
   "draw.png",
   "publish\\ResultScene.json",
   "publish/HeroinePanel.json",

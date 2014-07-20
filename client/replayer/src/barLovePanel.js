@@ -6,7 +6,7 @@ var BarLovePanel = LovePanel.extend({
         this.innerPanel.getChildByName('RealLoveBar').loadTexture(res.image.info.realBars[playerIndex]);
 
         this.maxLove = maxLove <= 15 ? 15 : 45;
-        this.innerPanel.setBackGroundImage(res.image.info['measure' + this.maxLove]);
+        this.innerPanel.setBackGroundImage(res.image.info['loveMeasure' + this.maxLove]);
     },
 
     setLove: function (revealedLove, realLove) {

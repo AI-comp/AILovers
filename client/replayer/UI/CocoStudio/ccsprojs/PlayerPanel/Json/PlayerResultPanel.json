@@ -11,9 +11,7 @@
   "designWidth": 600,
   "textures": [],
   "texturesPng": [
-    "dummy.png",
-    "dummy.png",
-    "winner.png"
+    "dummy.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -103,8 +101,8 @@
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.126666665,
-          "sizePercentY": 0.275,
+          "sizePercentX": 0.11,
+          "sizePercentY": 0.233333334,
           "sizeType": 0,
           "tag": 29,
           "touchAble": false,

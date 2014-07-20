@@ -17,8 +17,12 @@ var res = {
     },
     image: {
         info: {
-            measure15: 'res/info/measure15.png',
-            measure45: 'res/info/measure45.png',
+            loveMeasure15: 'res/info/bar/measure15.png',
+            loveMeasure45: 'res/info/bar/measure45.png',
+            popularityMeasure15: 'res/info/popularityBar/measure15.png',
+            popularityMeasure45: 'res/info/popularityBar/measure45.png',
+            winningPopularityBar: 'res/info/popularityBar/winningBar.png',
+            losingPopularityBar: 'res/info/popularityBar/losingBar.png',
         },
         date: {
         },
@@ -40,6 +44,12 @@ var g_resources = [
     res.json.dateScreen,
     res.json.measureLine1,
     res.json.measureLine5,
+    res.image.info.loveMeasure15,
+    res.image.info.loveMeasure45,
+    res.image.info.popularityMeasure15,
+    res.image.info.popularityMeasure45,
+    res.image.info.winningPopularityBar,
+    res.image.info.losingPopularityBar,
 ];
 
 function addNumberedResources(directory, range, extension) {

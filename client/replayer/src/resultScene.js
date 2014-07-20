@@ -27,8 +27,9 @@ var ResultScene = InformationScene.extend({
         this._super();
         this.showMeasure();
 
-        var largestPopularity = this.game.getLargestPopularity();
-        _.each(this.game.getRanking(), function (player) {
+        var rankedPlayers = this.game.getRanking();
+        var largestPopularity = Game.getLargestPopularity(rankedPlayers);
+        _.each(rankedPlayers, function (player) {
             var playerPanel = this.getPlayerPanel(player.index);
             var popularityBar = this.getPopularityBar(playerPanel, player.getPopularity());
             popularityBar.loadTexture(res.image.info.revealedBars[player.index]);
@@ -81,7 +82,7 @@ var ResultScene = InformationScene.extend({
     },
 
     showMeasure: function () {
-        var largestPopularity = this.game.getLargestPopularity();
+        var largestPopularity = Game.getLargestPopularity(this.game.getRanking());
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var playerPanel = this.getPlayerPanel(playerIndex);
             _.each([-1, 1], function (direction) {
