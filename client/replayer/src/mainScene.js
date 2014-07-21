@@ -15,7 +15,7 @@ var MainScene = InformationScene.extend({
         var playersWithWinningPopularity = this.game.getPlayersWithTotalPopularity(true, real);
         var playersWithLosingPopularity = this.game.getPlayersWithTotalPopularity(false, real);
         var largestPopularity = Math.max(Game.getLargestPopularity(playersWithWinningPopularity), Game.getLargestPopularity(playersWithLosingPopularity));
-        largestPopularity = largestPopularity <= 15 ? 15 : 45;
+        largestPopularity = largestPopularity <= 15 ? 15 : largestPopularity <= 30 ? 30 : 45;
 
         _(this.game.getNumPlayers()).times(function (playerIndex) {
             var playerPanel = this.getPlayerPanel(playerIndex);

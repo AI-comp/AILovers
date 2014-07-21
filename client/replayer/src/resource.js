@@ -18,8 +18,10 @@ var res = {
     image: {
         info: {
             loveMeasure15: 'res/info/bar/measure15.png',
+            loveMeasure30: 'res/info/bar/measure30.png',
             loveMeasure45: 'res/info/bar/measure45.png',
             popularityMeasure15: 'res/info/popularityBar/measure15.png',
+            popularityMeasure30: 'res/info/popularityBar/measure30.png',
             popularityMeasure45: 'res/info/popularityBar/measure45.png',
             winningPopularityBar: 'res/info/popularityBar/winningBar.png',
             losingPopularityBar: 'res/info/popularityBar/losingBar.png',
