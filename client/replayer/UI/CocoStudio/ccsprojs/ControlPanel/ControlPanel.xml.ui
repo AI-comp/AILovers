@@ -17,7 +17,29 @@
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath>\\..\\..\\assets</ResRelativePath>
   <imageFileList />
-  <imagePngList />
+  <imagePngList>
+    <string>control/proceed.png</string>
+    <string>control/proceed_pressed.png</string>
+    <string>control/proceed_disabled.png</string>
+    <string>control/next.png</string>
+    <string>control/next_pressed.png</string>
+    <string>control/next_disabled.png</string>
+    <string>control/last.png</string>
+    <string>control/last_pressed.png</string>
+    <string>control/last_disabled.png</string>
+    <string>control/previous.png</string>
+    <string>control/previous_pressed.png</string>
+    <string>control/previous_disabled.png</string>
+    <string>control/first.png</string>
+    <string>control/first_pressed.png</string>
+    <string>control/first_disabled.png</string>
+    <string>control/heart.png</string>
+    <string>control/heart_pressed.png</string>
+    <string>control/heart_disabled.png</string>
+    <string>control/bar.png</string>
+    <string>control/bar_pressed.png</string>
+    <string>control/bar_disabled.png</string>
+  </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>ControlPanel.json</CurrentUIJson>
 </UIProject>

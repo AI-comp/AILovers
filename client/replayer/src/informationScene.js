@@ -58,7 +58,17 @@ var InformationScene = ReplayerScene.extend({
             heroinePanel.getChildByName('EnthusiasmImage').loadTexture(res.image.info.enthusiasms[heroine.enthusiasm]);
         }, this);
 
+        this.setupDatedImages();
         this.setupLovePanels();
+    },
+
+    setupDatedImages: function () {
+        _(this.game.getNumHeroines()).times(function (heroineIndex) {
+            var heroine = this.game.heroines[heroineIndex];
+            var heroinePanel = this.getHeroinePanel(heroineIndex);
+            var showDated = heroine.dated && this.getLovePanelMode() == InformationScene.HEART_LOVE_PANEL_MODE && this.game.isWeekday();
+            heroinePanel.getChildByName('DatedImage').setVisible(showDated);
+        }, this);
     },
 
     setupLovePanels: function () {
@@ -159,6 +169,7 @@ var InformationScene = ReplayerScene.extend({
 
     setLovePanelMode: function (mode) {
         InformationScene.prototype.lovePanelMode = mode;
+        this.setupDatedImages();
         this.setupLovePanels();
     },
 

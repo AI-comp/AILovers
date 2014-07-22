@@ -11,7 +11,8 @@
   "designWidth": 200,
   "textures": [],
   "texturesPng": [
-    "dummy.png"
+    "dummy.png",
+    "dated.png"
   ],
   "version": "1.5.0.0",
   "widgetTree": {
@@ -444,6 +445,60 @@
           "scale9Enable": false,
           "scale9Height": 58,
           "scale9Width": 50
+        }
+      },
+      {
+        "classname": "ImageView",
+        "name": null,
+        "children": [],
+        "options": {
+          "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
+          "classname": "ImageView",
+          "name": "DatedImage",
+          "ZOrder": 3,
+          "actiontag": 53591696,
+          "anchorPointX": 0.5,
+          "anchorPointY": 0.5,
+          "classType": "CocoStudio.EngineAdapterWrap.CSImageView",
+          "colorB": 255,
+          "colorG": 255,
+          "colorR": 255,
+          "customProperty": "",
+          "flipX": false,
+          "flipY": false,
+          "height": 25,
+          "ignoreSize": true,
+          "layoutParameter": null,
+          "opacity": 255,
+          "positionPercentX": 0.835,
+          "positionPercentY": 0.9583333,
+          "positionType": 0,
+          "rotation": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "sizePercentX": 0.4,
+          "sizePercentY": 0.208333328,
+          "sizeType": 0,
+          "tag": 234,
+          "touchAble": false,
+          "useMergedTexture": false,
+          "visible": true,
+          "width": 59,
+          "x": 167,
+          "y": 368,
+          "capInsetsHeight": 1,
+          "capInsetsWidth": 1,
+          "capInsetsX": 0,
+          "capInsetsY": 0,
+          "fileName": null,
+          "fileNameData": {
+            "path": "dated.png",
+            "plistFile": "",
+            "resourceType": 0
+          },
+          "scale9Enable": false,
+          "scale9Height": 25,
+          "scale9Width": 59
         }
       }
     ],
