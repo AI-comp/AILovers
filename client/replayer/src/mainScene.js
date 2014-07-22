@@ -11,7 +11,7 @@ var MainScene = InformationScene.extend({
     setupPlayerPanels: function () {
         this._super();
 
-        var real = this.getLovePanelMode() == InformationScene.BAR_LOVE_PANEL_MODE;
+        var real = this.getLovePanelMode() == ReplayerScene.BAR_LOVE_PANEL_MODE;
         var playersWithWinningPopularity = this.game.getPlayersWithTotalPopularity(true, real);
         var playersWithLosingPopularity = this.game.getPlayersWithTotalPopularity(false, real);
         var largestPopularity = Math.max(Game.getLargestPopularity(playersWithWinningPopularity), Game.getLargestPopularity(playersWithLosingPopularity));

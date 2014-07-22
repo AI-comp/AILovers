@@ -29,6 +29,8 @@ var res = {
         date: {
         },
     },
+    settings: {
+    },
 };
 
 var g_resources = [
@@ -65,32 +67,38 @@ function addNumberedResources(directory, range, extension) {
     return resources;
 }
 
-(function () {
-    var playerRange = _.range(4),
-        heroineRange = _.range(9),
-        backgroundRange = _.range(10);
+function addSecretResource(list, directory, extension) {
+    list.secret = 'res/' + directory + '/secret.' + extension;
+    g_resources.push(list.secret);
+}
 
-    res.image.info.heroines = addNumberedResources('info/heroine', heroineRange, 'png');
-    res.image.info.heroineBackgrounds = addNumberedResources('info/heroineBackground', heroineRange, 'png');
-    res.image.info.hearts = addNumberedResources('info/heart', playerRange, 'png');
-    res.image.info.revealedBars = addNumberedResources('info/bar/revealed', playerRange, 'png');
-    res.image.info.realBars = addNumberedResources('info/bar/real', playerRange, 'png');
-    res.image.info.enthusiasms = addNumberedResources('info/enthusiasm', _.range(3, 6 + 1), 'png');
-    res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground', playerRange, 'png');
-    res.image.date.heroines = addNumberedResources('date/heroine', heroineRange, 'png');
-    res.image.date.backgrounds = addNumberedResources('date/background', backgroundRange, 'png');
-    res.image.date.targets = addNumberedResources('date/target', heroineRange, 'png');
-    res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', playerRange, 'png');
+res.settings.playerRange = _.range(4);
+res.settings.heroineRange = _.range(9);
+res.settings.backgroundRange = _.range(10);
 
-    res.image.info.playerIcons = [];
-    _.each(playerRange, function (playerIndex) {
-        var playerIcon;
-        if (typeof (playerIcons) == 'undefined' || cc.loader.loadBinarySync(playerIcons[playerIndex]) === null) {
-            playerIcon = 'res/info/defaultPlayerIcon.png';
-        } else {
-            playerIcon = playerIcons[playerIndex];
-        }
-        res.image.info.playerIcons.push(playerIcon);
-        g_resources.push(playerIcon);
-    });
-})();
+res.image.info.heroines = addNumberedResources('info/heroine', res.settings.heroineRange, 'png');
+res.image.info.heroineBackgrounds = addNumberedResources('info/heroineBackground', res.settings.heroineRange, 'png');
+res.image.info.hearts = addNumberedResources('info/heart', res.settings.playerRange, 'png');
+res.image.info.revealedBars = addNumberedResources('info/bar/revealed', res.settings.playerRange, 'png');
+res.image.info.realBars = addNumberedResources('info/bar/real', res.settings.playerRange, 'png');
+res.image.info.enthusiasms = addNumberedResources('info/enthusiasm', _.range(3, 6 + 1), 'png');
+res.image.info.playerBackgrounds = addNumberedResources('info/playerBackground', res.settings.playerRange, 'png');
+res.image.date.heroines = addNumberedResources('date/heroine', res.settings.heroineRange, 'png');
+addSecretResource(res.image.date.heroines, 'date/heroine', 'png');
+res.image.date.backgrounds = addNumberedResources('date/background', res.settings.backgroundRange, 'png');
+addSecretResource(res.image.date.backgrounds, 'date/background', 'png');
+res.image.date.targets = addNumberedResources('date/target', res.settings.heroineRange, 'png');
+addSecretResource(res.image.date.targets, 'date/target', 'png');
+res.image.date.targetBackgrounds = addNumberedResources('date/targetBackground', res.settings.playerRange, 'png');
+
+res.image.info.playerIcons = [];
+_.each(res.settings.playerRange, function (playerIndex) {
+    var playerIcon;
+    if (typeof (playerIcons) == 'undefined' || cc.loader.loadBinarySync(playerIcons[playerIndex]) === null) {
+        playerIcon = 'res/info/defaultPlayerIcon.png';
+    } else {
+        playerIcon = playerIcons[playerIndex];
+    }
+    res.image.info.playerIcons.push(playerIcon);
+    g_resources.push(playerIcon);
+});

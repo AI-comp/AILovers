@@ -66,7 +66,7 @@ var InformationScene = ReplayerScene.extend({
         _(this.game.getNumHeroines()).times(function (heroineIndex) {
             var heroine = this.game.heroines[heroineIndex];
             var heroinePanel = this.getHeroinePanel(heroineIndex);
-            var showDated = heroine.dated && this.getLovePanelMode() == InformationScene.HEART_LOVE_PANEL_MODE && this.game.isWeekday();
+            var showDated = heroine.dated && this.getLovePanelMode() == ReplayerScene.HEART_LOVE_PANEL_MODE && this.game.isWeekday();
             heroinePanel.getChildByName('DatedImage').setVisible(showDated);
         }, this);
     },
@@ -81,11 +81,11 @@ var InformationScene = ReplayerScene.extend({
                 loveArea.removeAllChildren(true);
 
                 switch (this.getLovePanelMode()) {
-                    case InformationScene.HEART_LOVE_PANEL_MODE:
+                    case ReplayerScene.HEART_LOVE_PANEL_MODE:
                     default:
                         var lovePanel = new HeartLovePanel(playerIndex);
                         break;
-                    case InformationScene.BAR_LOVE_PANEL_MODE:
+                    case ReplayerScene.BAR_LOVE_PANEL_MODE:
                         var lovePanel = new BarLovePanel(playerIndex, this.game.getMaxLove());
                         break;
                 }
@@ -112,8 +112,8 @@ var InformationScene = ReplayerScene.extend({
         this.addTouchEventListenerToButton(nextButton, _.partial(this.transitToSpecificTurn, this.game.turn + 1));
         this.addTouchEventListenerToButton(firstButton, _.partial(this.transitToSpecificTurn, this.game.initialTurn));
         this.addTouchEventListenerToButton(lastButton, _.partial(this.transitToSpecificTurn, this.game.lastTurn + 1));
-        this.addTouchEventListenerToButton(heartButton, _.partial(this.setLovePanelMode, InformationScene.HEART_LOVE_PANEL_MODE));
-        this.addTouchEventListenerToButton(barButton, _.partial(this.setLovePanelMode, InformationScene.BAR_LOVE_PANEL_MODE));
+        this.addTouchEventListenerToButton(heartButton, _.partial(this.setLovePanelMode, ReplayerScene.HEART_LOVE_PANEL_MODE));
+        this.addTouchEventListenerToButton(barButton, _.partial(this.setLovePanelMode, ReplayerScene.BAR_LOVE_PANEL_MODE));
 
         if (this.game.turn <= this.game.initialTurn) {
             previousButton.setBright(false);
@@ -135,7 +135,7 @@ var InformationScene = ReplayerScene.extend({
         }
 
         var turnText = this.game.turn <= this.game.lastTurn ? 'Turn ' + this.game.turn : 'Finished';
-        controlPanel.getChildByName('TurnLabel').setText(turnText);
+        controlPanel.getChildByName('TurnLabel').setString(turnText);
     },
 
     addTouchEventListenerToButton: function (button, callback) {
@@ -166,18 +166,4 @@ var InformationScene = ReplayerScene.extend({
 
         cc.director.runScene(this.getNextInformationScene(game));
     },
-
-    setLovePanelMode: function (mode) {
-        InformationScene.prototype.lovePanelMode = mode;
-        this.setupDatedImages();
-        this.setupLovePanels();
-    },
-
-    getLovePanelMode: function () {
-        return this.lovePanelMode;
-    },
 });
-
-InformationScene.HEART_LOVE_PANEL_MODE = 0;
-InformationScene.BAR_LOVE_PANEL_MODE = 1;
-InformationScene.prototype.lovePanelMode = InformationScene.HEART_LOVE_PANEL_MODE;

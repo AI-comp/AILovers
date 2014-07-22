@@ -6,7 +6,7 @@ var runGame = function () {
     ReplayerScene.prototype.heroineIds = [];
     var mt = new MersenneTwister(replay.seed);
     var numHeroines = game.getNumHeroines();
-    var remainingHeroineIds = _.range(_.size(res.image.info.heroines));
+    var remainingHeroineIds = _.clone(res.settings.heroineRange);
     _(numHeroines).times(function (i) {
         var heroineId = remainingHeroineIds[Math.floor(mt.random() * _.size(remainingHeroineIds))];
         remainingHeroineIds = _.without(remainingHeroineIds, heroineId);
@@ -16,7 +16,7 @@ var runGame = function () {
     ReplayerScene.prototype.backgroundIds = _.map(_.range(game.getNumTurns()), function (i) {
         return _.map(_.range(game.getNumPlayers()), function (j) {
             return _.map(_.range(game.getNumRequiredCommands()), function (k) {
-                return Math.floor(mt.random() * _.size(res.image.date.backgrounds));
+                return Math.floor(mt.random() * _.size(res.settings.backgroundRange));
             }, this);
         }, this);
     }, this);

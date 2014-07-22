@@ -15,7 +15,7 @@ var ResultScene = InformationScene.extend({
     },
 
     getLovePanelMode: function () {
-        return InformationScene.BAR_LOVE_PANEL_MODE;
+        return ReplayerScene.BAR_LOVE_PANEL_MODE;
     },
 
     getPopularityBar: function (playerPanel, popularity) {

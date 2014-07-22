@@ -15,11 +15,6 @@ var ReplayerScene = cc.Scene.extend({
         return this.getElement(this.commands, game, playerIndex, commandIndex);
     },
 
-    getBackgroundImage: function (game, playerIndex, commandIndex) {
-        var backgroundId = this.getElement(this.backgroundIds, game, playerIndex, commandIndex);
-        return res.image.date.backgrounds[backgroundId];
-    },
-
     getCurrentElement: function (array, game) {
         return array[game.turn - 1];
     },
@@ -39,4 +34,18 @@ var ReplayerScene = cc.Scene.extend({
             return new MainScene(game);
         }
     },
+
+    setLovePanelMode: function (mode) {
+        ReplayerScene.prototype.lovePanelMode = mode;
+        this.setupDatedImages();
+        this.setupLovePanels();
+    },
+
+    getLovePanelMode: function () {
+        return this.lovePanelMode;
+    },
 });
+
+ReplayerScene.HEART_LOVE_PANEL_MODE = 0;
+ReplayerScene.BAR_LOVE_PANEL_MODE = 1;
+ReplayerScene.prototype.lovePanelMode = ReplayerScene.HEART_LOVE_PANEL_MODE;

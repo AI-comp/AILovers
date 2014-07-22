@@ -66,7 +66,7 @@ var DateScene = ReplayerScene.extend({
 
         _(this.game.getNumRequiredCommands()).times(function (commandIndex) {
             var targetHeroine = this.getCommand(this.game, playerIndex, commandIndex);
-            var targetHeroineImage = res.image.date.targets[this.getHeroineId(targetHeroine)];
+            var targetHeroineImage = res.image.date.targets[this.filterImageId(this.getHeroineId(targetHeroine))];
             targetPanel.getChildByName('Heroine' + commandIndex).loadTexture(targetHeroineImage);
         }, this);
     },
@@ -99,8 +99,9 @@ var DateScene = ReplayerScene.extend({
         var targetHeroine = this.getCommand(this.game, playerIndex, this.cursorPosition);
 
         var nextScreen = ccs.uiReader.widgetFromJsonFile(res.json.dateScreen);
-        nextScreen.getChildByName('BackgroundImage').loadTexture(this.getBackgroundImage(this.game, playerIndex, this.cursorPosition));
-        var heroineImage = res.image.date.heroines[this.getHeroineId(targetHeroine)];
+        var backgroundImage = this.getBackgroundImage(this.game, playerIndex, this.cursorPosition);
+        nextScreen.getChildByName('BackgroundImage').loadTexture(backgroundImage);
+        var heroineImage = res.image.date.heroines[this.filterImageId(this.getHeroineId(targetHeroine))];
         nextScreen.getChildByName('HeroineImage').loadTexture(heroineImage);
         nextScreen.setPosition(new cc.Point(0, -screen.height));
         screenArea.addChild(nextScreen);
@@ -121,6 +122,19 @@ var DateScene = ReplayerScene.extend({
 
         var moveTo = cc.MoveTo.create(DateScene.SLIDE_DURATION, targetHeroineImage.getPosition());
         this.cursors[playerIndex].runAction(cc.EaseOut.create(moveTo, DateScene.SLIDE_EASEOUT_RATE));
+    },
+
+    getBackgroundImage: function (game, playerIndex, commandIndex) {
+        var backgroundId = this.getElement(this.backgroundIds, game, playerIndex, commandIndex);
+        return res.image.date.backgrounds[this.filterImageId(backgroundId)];
+    },
+
+    filterImageId: function (imageId) {
+        if (this.getLovePanelMode() == ReplayerScene.HEART_LOVE_PANEL_MODE && !this.game.isWeekday()) {
+            return 'secret';
+        } else {
+            return imageId;
+        }
     },
 });
 
