@@ -123,6 +123,9 @@ var InformationScene = ReplayerScene.extend({
             barButton.setBright(false);
             barButton.setTouchEnabled(false);
         }
+
+        var turnText = this.game.turn <= this.game.lastTurn ? 'Turn ' + this.game.turn : 'Finished';
+        controlPanel.getChildByName('TurnLabel').setText(turnText);
     },
 
     addTouchEventListenerToButton: function (button, callback) {
