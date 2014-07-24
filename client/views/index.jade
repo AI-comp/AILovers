@@ -1,6 +1,6 @@
 html
     head
-        link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/lib/bootstrap/bootstrap.min.css')
         link(rel='stylesheet', href='/css/app.css')
     body
         - for (var i=0; i<4; i++) {
@@ -16,8 +16,7 @@ html
             iframe#replayer(src='' style='width:1024px; height:768px;' scrolling='no')
         div(style='clear:both')
 
-        script(src='/components/jquery/dist/jquery.min.js')
-        script(src='/components/underscore/underscore.js')
-        //script(src='/components/bootstrap/dist/js/bootstrap.min.js')
+        script(src='/lib/jquery/jquery.min.js')
+        script(src='/lib/underscore/underscore.js')
         script(src='/js/app.js')
         

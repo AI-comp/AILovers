@@ -1,6 +1,5 @@
 .idea/
 npm-debug.log
-client/components
 client/css/*.css
 client/js/*.bundle.js
 
@@ -33,6 +32,4 @@ node_modules
 __pycache__
 *.pyc
 *.swp
-
-# Mac
 .DS_Store

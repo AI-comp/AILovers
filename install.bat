@@ -1,1 +1,1 @@
-npm install -g bower grunt-cli & npm update -g bower grunt-cli & npm install & npm update & bower install
+npm install -g grunt-cli & npm update -g grunt-cli & npm install & npm update & install

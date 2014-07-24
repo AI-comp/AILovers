@@ -27,7 +27,6 @@ Here are some basic instructions on how to run the server.
 In order to run the server you need to install Node.js (and the bundled npm) from the [Node.js site](http://nodejs.org/).
 Other developer tools that you need can then be installed by running the following npm commands:
 ```
-npm install -g bower
 npm install -g grunt-cli
 ```
 
@@ -40,7 +39,6 @@ npm install -g node-inspector
 Dependencies can be installed by running the following commands:
 ```
 npm install
-bower install
 ```
 
 ## Fire up the server
