@@ -2,16 +2,27 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class SampleAI {
-	static int MaxTurn, Turn, PlayersNum, HeroinesNum;
-	static char Day;
-	static Heroine[] Heroines;
-	static final Scanner scanner = new Scanner(System.in);
-	static final PrintWriter writer = new PrintWriter(System.out, true);
+	private static Random random;
+	private static int maxTurn, turn, playersNum, heroinesNum;
+	private static char day;
+	private static Heroine[] heroines;
+	private static final Scanner scanner = new Scanner(System.in);
+	private static final PrintWriter writer = new PrintWriter(System.out, true);
 
 	public static void main(String[] args) {
+		if (args.length > 1) {
+			try {
+				random = new Random(Long.parseLong(args[0]));
+			} catch (Exception e) {
+			}
+		}
+		if (random == null) {
+			random = new Random();
+		}
+
 		writer.println("READY");
 		readInitialData();
-		for (int t = 0; t < MaxTurn; t++) {
+		for (int t = 0; t < maxTurn; t++) {
 			readData();
 			writeCommand();
 		}
@@ -19,45 +30,43 @@ public class SampleAI {
 		writer.close();
 	}
 
-	static void readInitialData() {
-		MaxTurn = scanner.nextInt();
-		PlayersNum = scanner.nextInt();
-		HeroinesNum = scanner.nextInt();
-		Heroines = new Heroine[HeroinesNum];
-		for (int i = 0; i < HeroinesNum; i++) {
+	private static void readInitialData() {
+		maxTurn = scanner.nextInt();
+		playersNum = scanner.nextInt();
+		heroinesNum = scanner.nextInt();
+		heroines = new Heroine[heroinesNum];
+		for (int i = 0; i < heroinesNum; i++) {
 			int enthusiasm = scanner.nextInt();
-			Heroine h = new Heroine(enthusiasm);
-			Heroines[i] = h;
+			heroines[i] = new Heroine(enthusiasm);
 		}
 	}
 
-	static void readData() {
-		Turn = scanner.nextInt();
-		Day = scanner.next().charAt(0);
-		for (int i = 0; i < HeroinesNum; i++) {
-			int[] revealedScore = new int[PlayersNum];
-			for (int j = 0; j < PlayersNum; j++) {
+	private static void readData() {
+		turn = scanner.nextInt();
+		day = scanner.next().charAt(0);
+		for (int i = 0; i < heroinesNum; i++) {
+			int[] revealedScore = new int[playersNum];
+			for (int j = 0; j < playersNum; j++) {
 				revealedScore[j] = scanner.nextInt();
 			}
-			Heroines[i].revealedScore = revealedScore;
+			heroines[i].revealedScore = revealedScore;
 		}
-		for (int i = 0; i < HeroinesNum; i++) {
+		for (int i = 0; i < heroinesNum; i++) {
 			int realScore = scanner.nextInt();
-			Heroines[i].realScore = realScore;
+			heroines[i].realScore = realScore;
 		}
-		if (Day == 'W') {
-			for (int i = 0; i < HeroinesNum; i++) {
+		if (day == 'W') {
+			for (int i = 0; i < heroinesNum; i++) {
 				int dated = scanner.nextInt();
-				Heroines[i].dated = (dated == 1);
+				heroines[i].dated = (dated == 1);
 			}
 		}
 	}
 
-	static void writeCommand() {
+	private static void writeCommand() {
 		StringBuilder command = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < (Day == 'W' ? 5 : 2); i++) {
-			int c = random.nextInt(HeroinesNum);
+		for (int i = 0; i < (day == 'W' ? 5 : 2); i++) {
+			int c = random.nextInt(heroinesNum);
 			command.append(c);
 			if (i < 4) {
 				command.append(" ");
