@@ -174,7 +174,6 @@ function onReady() {
         this.game.processTurn(commands);
         addLog.call(this, 'Turn finished. Game status:');
         addLog.call(this, this.game.getStatus());
-        addLog.call(this, '');
 
         if (this.game.isFinished()) {
             finish.call(this);
@@ -187,7 +186,8 @@ function onReady() {
 }
 
 function beginTurn() {
-    addLog.call(this, 'Starting a new turn');
+    addLog.call(this, '');
+    addLog.call(this, 'Turn ' + this.game.turn);
 
     var availableAIs = getAvailableAIs.call(this);
     if (_.isEmpty(availableAIs)) {
@@ -202,6 +202,7 @@ function beginTurn() {
 }
 
 function finish() {
+    addLog.call(this, '');
     addLog.call(this, 'Game finished');
 
     unpauseAIs.call(this, function () {
