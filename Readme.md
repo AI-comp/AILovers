@@ -6,11 +6,6 @@ Web Sites
 
 # For Participants
 
-There are two ways to play the game.
-
-- Play online. Go to [the contest server](arena.ai-comp.net) and submit your AI.
-- Play on your machine. You need to install [node.js](http://nodejs.org/) to execute the game. Follow the instructions below.
-
 ## How to Play the Game on Your Machine
 
 1. Run `install.bat` or `install.sh`.

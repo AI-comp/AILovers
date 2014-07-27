@@ -4,13 +4,6 @@
 - http://www.ai-comp.net/cedec2014/
 - http://cedec.cesa.or.jp/2014/session/ENG/13108.html
 
-# 参加者の皆さんへ
-
-このゲームで遊ぶには二つの方法があります。
-
-- オンラインプレイ： [Contest Server](http://arena.ai-comp.net) にAIファイルを提出し、他のAIと対戦します。
-- オフラインプレイ： [node.js](http://nodejs.org/) をインストールする必要があります。以下の手順に従ってください。
-
 ## インストール手順
 
 ### Windows
