@@ -41,6 +41,6 @@
 1. `execute_on_cui.bat -a "1つ目のAIの実行コマンド" -a "2つ目のAIの実行コマンド"` (or `execute_on_cui.sh ...`) のように、AIに使用するコマンドを指定して実行。
 この例では、1つ目と2つ目のAIには指定した実行コマンドが使用され、3つ目と4つ目のAIにはデフォルトのコマンド（`node SampleAI/JavaScript/SampleAI.js`）が使用される。
 
-# ライセンス
+## ライセンス
 
 [NOTICE](NOTICE)を参照してください。
