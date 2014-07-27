@@ -4,9 +4,9 @@ Web Sites
 - http://www.ai-comp.net/cedec2014/
 - http://cedec.cesa.or.jp/2014/session/ENG/13108.html
 
-# For Participants
+## For Participants
 
-## How to Play the Game on Your Machine
+### How to Play the Game on Your Machine
 
 1. Run `install.bat` or `install.sh`.
 2. Execute `execute_on_browser.bat` or `execute_on_browser.sh`.
@@ -15,10 +15,10 @@ Web Sites
 
 For detailed instructions, see [Readme.ja.md](Readme.ja.md).
 
-# For Contributors
+## For Contributors
 Here are some basic instructions on how to run the server.
 
-## Install development tools
+### Install development tools
 In order to run the server you need to install Node.js (and the bundled npm) from the [Node.js site](http://nodejs.org/).
 Other developer tools that you need can then be installed by running the following npm commands:
 ```
@@ -30,18 +30,18 @@ Optional, but recommended for development:
 npm install -g node-inspector
 ```
 
-## Install dependencies
+### Install dependencies
 Dependencies can be installed by running the following commands:
 ```
 npm install
 ```
 
-## Fire up the server
+### Fire up the server
 Finally the server can be started by running this command:
 ```
 npm start
 ```
 
-# License
+## License
 
 See [NOTICE](NOTICE).
