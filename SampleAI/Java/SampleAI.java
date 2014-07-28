@@ -19,7 +19,6 @@ public class SampleAI {
 			}
 		}
 		if (random == null) {
-			writer.println("NO SEED");
 			random = new Random();
 		}
 
