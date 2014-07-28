@@ -86,15 +86,14 @@ var MersenneTwister = function MersenneTwister(seed) {
 MersenneTwister.prototype.init_genrand = function(s) {
     this.mt[0] = s >>> 0;
     for (this.mti=1; this.mti<this.N; this.mti++) {
-            var s = this.mt[this.mti-1] ^ (this.mt[this.mti-1] >>> 30);
-     this.mt[this.mti] = (((((s & 0xffff0000) >>> 16) * 1812433253) << 16) + (s & 0x0000ffff) * 1812433253)
-    + this.mti;
-            /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
-            /* In the previous versions, MSBs of the seed affect     */
-            /* only MSBs of the array mt[].                                                */
-            /* 2002/01/09 modified by Makoto Matsumoto                         */
-            this.mt[this.mti] >>>= 0;
-            /* for >32 bit machines */
+        var s = this.mt[this.mti-1] ^ (this.mt[this.mti-1] >>> 30);
+        this.mt[this.mti] = (((((s & 0xffff0000) >>> 16) * 1812433253) << 16) + (s & 0x0000ffff) * 1812433253) + this.mti;
+        /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
+        /* In the previous versions, MSBs of the seed affect     */
+        /* only MSBs of the array mt[].                                                */
+        /* 2002/01/09 modified by Makoto Matsumoto                         */
+        this.mt[this.mti] >>>= 0;
+        /* for >32 bit machines */
     }
 }
  

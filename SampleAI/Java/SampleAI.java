@@ -10,13 +10,16 @@ public class SampleAI {
 	private static final PrintWriter writer = new PrintWriter(System.out, true);
 
 	public static void main(String[] args) {
-		if (args.length > 1) {
+		if (args.length > 0) {
 			try {
-				random = new Random(Long.parseLong(args[0]));
+				Long seed = Long.parseLong(args[0]);
+				writer.println("SEED: " + seed);
+				random = new Random(seed);
 			} catch (Exception e) {
 			}
 		}
 		if (random == null) {
+			writer.println("NO SEED");
 			random = new Random();
 		}
 
