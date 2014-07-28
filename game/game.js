@@ -21,14 +21,10 @@
             this.populateHeroines(numHeroines || this.numPlayers * 2);
         };
 
-        Game.prototype.nextInt = function (inclusiveMin, inclusiveMax) {
-            return (this.mt.genrand_int32() & 0x7FFFFFFF) % (inclusiveMax - inclusiveMin + 1) + inclusiveMin
-        };
-
         Game.prototype.populateHeroines = function (numHeroines) {
             this.heroines = [];
             for (var i = 0; i < numHeroines; i++) {
-                var enthusiasm = this.nextInt(3, 6);
+                var enthusiasm = Math.floor(this.mt.random() * 4) + 3;
                 this.heroines.push(new Heroine(enthusiasm, this.numPlayers));
             }
         };
