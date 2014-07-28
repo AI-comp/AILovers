@@ -9,7 +9,7 @@ module.exports = function (ws) {
 
     ws.on('message', function (message) {
         var data = JSON.parse(message);
-        var runner = new Runner(data.commands);
+        var runner = new Runner(data.commands, data.workingDirs);
         runner.runGame(function () {
             var response = JSON.stringify(runner.gameResult);
             ws.send(response, function () { /* No error handling yet */ });
