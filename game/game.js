@@ -159,7 +159,7 @@
                 playersWithWinningPopularity[playerIndex].integerPopularity -= playersWithLosingPopularity[playerIndex].integerPopularity;
             });
 
-            return playersWithWinningPopularity.slice(0).sort(Player.compareTo).reverse();
+            return playersWithWinningPopularity.sort(Player.compareTo);
         };
 
         Game.prototype.getPlayersWithTotalPopularity = function (winning, real) {
@@ -215,7 +215,7 @@
         }
 
         Player.compareTo = function (self, other) {
-            return self.integerPopularity > other.integerPopularity ? 1 : -1;
+            return self.integerPopularity > other.integerPopularity ? -1 : 1;
         };
 
         Player.prototype.addPopularity = function (numerator, denominator) {
