@@ -89,7 +89,7 @@ AI.prototype.write = function (message) {
     }
 };
 
-function Runner(executionCommands, workingDirs, pauseCommands, unpauseCommands) {
+function Runner(executionCommands, workingDirs, pauseCommands, unpauseCommands, seed) {
     this.executionCommands = executionCommands;
     var defaultArray = _.map(executionCommands, function () {
         return undefined;
@@ -97,6 +97,7 @@ function Runner(executionCommands, workingDirs, pauseCommands, unpauseCommands) 
     this.workingDirs = workingDirs || defaultArray;
     this.pauseCommands = pauseCommands || defaultArray;
     this.unpauseCommands = unpauseCommands || defaultArray;
+    this.seed = isNaN(seed) ? undefined : seed;
 }
 
 Runner.LOG_FOR_EVERYONE = -1;
@@ -105,7 +106,7 @@ Runner.prototype.runGame = function (done) {
     var self = this;
 
     this.done = done;
-    var seed = new Date().getTime();
+    var seed = this.seed || new Date().getTime();
     this.game = new Game(seed);
     this.game.initialize();
 
