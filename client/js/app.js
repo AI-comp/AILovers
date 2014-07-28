@@ -9,7 +9,11 @@ $(function () {
         ws.send(JSON.stringify({
             commands: _.map(_.range(4), function (i) {
                 return $('#ai' + i).val();
-            })
+            }),
+            workingDirs: _.map(_.range(4), function (i) {
+                return $('#dir' + i).val();
+            }),
+            seed: $('#seed').val(),
         }));
         $('#log').html('Running a game...');
     });

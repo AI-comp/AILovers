@@ -7,7 +7,14 @@ html
             div
                 label(for='ai'+i) AI #{i}
                 input(id='ai'+i, type='text', value='node SampleAI/JavaScript/SampleAI.js')
+                label(for='dir'+i) Working Dir
+                input(id='dir'+i, type='text', value='.')
         - }
+        div
+            label(for='seed') Seed
+            input(id='seed', type='text', value='')
+            span (leave blank to use a random value)
+
         div
             button#runGame Run Game
 
