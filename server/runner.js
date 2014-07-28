@@ -89,15 +89,15 @@ AI.prototype.write = function (message) {
     }
 };
 
-function Runner(executionCommands, workingDirs, pauseCommands, unpauseCommands, seed) {
+function Runner(executionCommands, workingDirs, seed, pauseCommands, unpauseCommands) {
     this.executionCommands = executionCommands;
     var defaultArray = _.map(executionCommands, function () {
         return undefined;
     });
     this.workingDirs = workingDirs || defaultArray;
+    this.seed = isNaN(seed) ? undefined : seed;
     this.pauseCommands = pauseCommands || defaultArray;
     this.unpauseCommands = unpauseCommands || defaultArray;
-    this.seed = isNaN(seed) ? undefined : seed;
 }
 
 Runner.LOG_FOR_EVERYONE = -1;
