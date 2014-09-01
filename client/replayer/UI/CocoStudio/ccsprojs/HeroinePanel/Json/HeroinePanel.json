@@ -10,10 +10,7 @@
   "designHeight": 384,
   "designWidth": 200,
   "textures": [],
-  "texturesPng": [
-    "dummy.png",
-    "dated.png"
-  ],
+  "texturesPng": [],
   "version": "1.5.0.0",
   "widgetTree": {
     "classname": "Panel",
@@ -476,8 +473,8 @@
           "rotation": 0,
           "scaleX": 1,
           "scaleY": 1,
-          "sizePercentX": 0.4,
-          "sizePercentY": 0.208333328,
+          "sizePercentX": 0.295,
+          "sizePercentY": 0.0651041642,
           "sizeType": 0,
           "tag": 234,
           "touchAble": false,

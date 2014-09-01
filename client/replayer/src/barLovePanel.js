@@ -15,4 +15,14 @@ var BarLovePanel = LovePanel.extend({
         this.innerPanel.getChildByName('RevealedLoveBar').setPercent(revealedLove / this.maxLove * 100);
         this.innerPanel.getChildByName('RealLoveBar').setPercent(realLove / this.maxLove * 100);
     },
+
+    emphasize: function (max) {
+        var highlight = this.innerPanel.getChildByName('Highlight')
+        highlight.setVisible(true);
+        if (max) {
+            highlight.loadTexture(res.image.info.maxLoveHighlight);
+        } else {
+            highlight.loadTexture(res.image.info.minLoveHighlight);
+        }
+    },
 });

@@ -20,6 +20,8 @@ var res = {
             loveMeasure15: 'res/info/bar/measure15.png',
             loveMeasure30: 'res/info/bar/measure30.png',
             loveMeasure45: 'res/info/bar/measure45.png',
+            maxLoveHighlight: 'res/info/bar/maxLoveHighlight.png',
+            minLoveHighlight: 'res/info/bar/minLoveHighlight.png',
             popularityMeasure15: 'res/info/popularityBar/measure15.png',
             popularityMeasure30: 'res/info/popularityBar/measure30.png',
             popularityMeasure45: 'res/info/popularityBar/measure45.png',

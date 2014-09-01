@@ -100,6 +100,22 @@ var ResultScene = InformationScene.extend({
             }, this);
         }, this);
     },
+
+    setupLovePanels: function () {
+        this._super();
+        _(this.game.getNumHeroines()).times(function (heroineIndex) {
+            var heroine = this.game.heroines[heroineIndex];
+            var heroinePanel = this.getHeroinePanel(heroineIndex);
+
+            _.each([true, false], function (max) {
+                var playersWithMaxLove = heroine.filterPlayersByLove(this.game.getRanking(), max ? Math.max : Math.min, true);
+                _.each(playersWithMaxLove, function (player) {
+                    var loveArea = heroinePanel.getChildByName('LoveArea' + player.index);
+                    loveArea.getChildByName('LovePanel').emphasize(max);
+                }, this);
+            }, this);
+        }, this);
+    }
 });
 
 ResultScene.INTERVAL = 0.03;

@@ -21,8 +21,7 @@
   <imageFileList />
   <imagePngList>
     <string>dummy.png</string>
-    <string>dated.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>HeroinePanel.json</CurrentUIJson>
+  <CurrentUIJson>BarLovePanel.json</CurrentUIJson>
 </UIProject>

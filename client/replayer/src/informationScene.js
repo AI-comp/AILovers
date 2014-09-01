@@ -89,6 +89,7 @@ var InformationScene = ReplayerScene.extend({
                         var lovePanel = new BarLovePanel(playerIndex, this.game.getMaxLove());
                         break;
                 }
+                lovePanel.setName('LovePanel');
                 loveArea.addChild(lovePanel);
                 lovePanel.setLove(heroine.revealedLove[playerIndex], heroine.realLove[playerIndex]);
             }, this);
