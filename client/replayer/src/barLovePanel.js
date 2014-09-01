@@ -19,10 +19,6 @@ var BarLovePanel = LovePanel.extend({
     emphasize: function (max) {
         var highlight = this.innerPanel.getChildByName('Highlight')
         highlight.setVisible(true);
-        if (max) {
-            highlight.loadTexture(res.image.info.maxLoveHighlight);
-        } else {
-            highlight.loadTexture(res.image.info.minLoveHighlight);
-        }
+        highlight.loadTexture(res.image.info[max ? 'maxLoveHighlight' : 'minLoveHighlight']);
     },
 });

@@ -54,6 +54,8 @@ var g_resources = [
     res.image.info.loveMeasure45,
     res.image.info.popularityMeasure15,
     res.image.info.popularityMeasure45,
+    res.image.info.maxLoveHighlight,
+    res.image.info.minLoveHighlight,
     res.image.info.winningPopularityBar,
     res.image.info.losingPopularityBar,
 ];
