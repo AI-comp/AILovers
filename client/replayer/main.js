@@ -3,8 +3,10 @@ var runGame = function () {
     game.initialize();
     ReplayerScene.prototype.commands = replay.commands;
 
+    var mtForSeed = new MersenneTwister(replay.seed);
+	var mt = new MersenneTwister(mtForSeed.genrand_int32());
+
     ReplayerScene.prototype.heroineIds = [];
-    var mt = new MersenneTwister(replay.seed);
     var numHeroines = game.getNumHeroines();
     var remainingHeroineIds = _.clone(res.settings.heroineRange);
     _(numHeroines).times(function (i) {
